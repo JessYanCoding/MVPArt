@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 
 import me.jessyan.art.mvp.BaseView;
@@ -30,15 +31,17 @@ public class ThirdDialog extends DialogFragment implements BaseView, View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mPresenter = new MainPresenter();
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         mRootView = inflater.inflate(R.layout.dialog_third, container);
+        mRootView.findViewById(R.id.btn_confirm).setOnClickListener(this);
         return mRootView;
     }
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mRootView.findViewById(R.id.btn_confirm).setOnClickListener(this);
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
     }
 
     @Override
