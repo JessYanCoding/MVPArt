@@ -42,4 +42,13 @@
         android:text="third"
         android:layout_centerHorizontal="true"
         />
+
+    <Button
+        android:layout_below="@id/btn_third"
+        android:id="@+id/btn_fourth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fourth"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>

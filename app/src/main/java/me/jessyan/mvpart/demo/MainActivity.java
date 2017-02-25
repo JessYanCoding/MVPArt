@@ -12,6 +12,7 @@ import me.jessyan.art.mvp.BaseView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.mvpart.demo.demo2.SecondActivity;
 import me.jessyan.mvpart.demo.demo3.ThirdDialog;
+import me.jessyan.mvpart.demo.demo4.FourthActivity;
 
 /**
  * Model层需要自行封装,demo中没有网络请求,presenter中只是模拟了一个请求
@@ -72,7 +73,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements BaseVie
     }
 
 
-     @OnClick({R.id.btn_request,R.id.btn_second,R.id.btn_third})
+     @OnClick({R.id.btn_request,R.id.btn_second,R.id.btn_third,R.id.btn_fourth})
          public void onClick(View v) {
              switch (v.getId()) {
                  case R.id.btn_request:
@@ -83,6 +84,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements BaseVie
                      break;
                  case R.id.btn_third:
                      mDialog.show(getSupportFragmentManager(),"dialog");
+                     break;
+                 case R.id.btn_fourth:
+                     startActivity(new Intent(getApplicationContext(),FourthActivity.class));
                      break;
              }
          }
