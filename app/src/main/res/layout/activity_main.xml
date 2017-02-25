@@ -18,10 +18,28 @@
         android:text="Hello World!"/>
 
     <Button
-        android:id="@+id/btn_change"
+        android:id="@+id/btn_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="change"
+        android:text="request"
         android:layout_centerInParent="true"
+        />
+
+    <Button
+        android:layout_below="@id/btn_request"
+        android:id="@+id/btn_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="second"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:layout_below="@id/btn_second"
+        android:id="@+id/btn_third"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="third"
+        android:layout_centerHorizontal="true"
         />
 </RelativeLayout>

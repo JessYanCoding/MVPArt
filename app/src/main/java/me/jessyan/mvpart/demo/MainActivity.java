@@ -10,14 +10,34 @@ import butterknife.OnClick;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.mvp.BaseView;
 import me.jessyan.art.mvp.Message;
+import me.jessyan.mvpart.demo.demo2.SecondActivity;
+import me.jessyan.mvpart.demo.demo3.ThirdDialog;
 
+/**
+ * Model层需要自行封装,demo中没有网络请求,presenter中只是模拟了一个请求
+ */
 public class MainActivity extends BaseActivity<MainPresenter> implements BaseView {
 
     @BindView(R.id.tv_main)
     TextView mTextView;
     @BindView(R.id.activity_main)
     RelativeLayout mRoot;
+    private ThirdDialog mDialog;
 
+    @Override
+    protected int initView() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initData() {
+        mDialog = new ThirdDialog();
+    }
+
+    @Override
+    protected MainPresenter getPresenter() {
+        return new MainPresenter();
+    }
 
     @Override
     public void showLoading() {
@@ -36,7 +56,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements BaseVie
 
     @Override
     public void launchActivity(Intent intent) {
-
+        startActivity(intent);
     }
 
     @Override
@@ -51,27 +71,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements BaseVie
         }
     }
 
-    @Override
-    protected int initView() {
-        return R.layout.activity_main;
-    }
 
-    @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected MainPresenter getPresenter() {
-        return new MainPresenter();
-    }
-
-
-     @OnClick({R.id.btn_change})
+     @OnClick({R.id.btn_request,R.id.btn_second,R.id.btn_third})
          public void onClick(View v) {
              switch (v.getId()) {
-                 case R.id.btn_change:
-                     mPresenter.compute(Message.obtain(this));
+                 case R.id.btn_request:
+                     mPresenter.request(Message.obtain(this,"jess!"));
+                     break;
+                 case R.id.btn_second:
+                     startActivity(new Intent(getApplicationContext(),SecondActivity.class));
+                     break;
+                 case R.id.btn_third:
+                     mDialog.show(getSupportFragmentManager(),"dialog");
                      break;
              }
          }

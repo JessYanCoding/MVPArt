@@ -65,6 +65,11 @@ public final class Message implements Parcelable {
     public String str;
 
     /**
+     * 记录presenter的类名,当一个页面需要持有多个Presenter时使用
+     */
+    public String presenter;
+
+    /**
      * An arbitrary object to send to the recipient.  When using
      * {@link Messenger} to send the message across processes this can only
      * be non-null if it contains a Parcelable of a framework class (not one
@@ -179,7 +184,30 @@ public final class Message implements Parcelable {
     public static Message obtain(BaseView v) {
         Message m = obtain();
         m.target = v;
+        return m;
+    }
 
+    public static Message obtain(BaseView v, Object obj) {
+        Message m = obtain();
+        m.target = v;
+        m.obj = obj;
+        return m;
+    }
+
+
+    public static Message obtain(BaseView v, Class presenter) {
+        Message m = obtain();
+        m.target = v;
+        m.presenter = presenter.getSimpleName();
+        return m;
+    }
+
+
+    public static Message obtain(BaseView v, Object obj,Class presenter) {
+        Message m = obtain();
+        m.target = v;
+        m.obj = obj;
+        m.presenter = presenter.getSimpleName();
         return m;
     }
 
