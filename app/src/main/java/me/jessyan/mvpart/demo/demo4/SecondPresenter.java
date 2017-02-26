@@ -15,7 +15,7 @@ public class SecondPresenter extends BasePresenter {
 
     /**
      * 这里为了展示一个页面使用多个presenter时,what冲突的情况
-     * 故意使用MainPresenter中使用过的what数字
+     * 故意使用MainPresenter中使用过的what值
      * @param message
      */
     public void request3(Message message){

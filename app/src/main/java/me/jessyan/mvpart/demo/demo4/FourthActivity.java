@@ -75,8 +75,8 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
     @Override
     public void handleMessage(Message message) {
         switch (message.what) {
-            // 两个presenter都使用了"2"这个what字段,所以使用presenter来区分
-            // 但记的每次调用presenter方法前将此presenter的类名赋值给message的presenter字段
+            // 两个presenter都使用了"2"这个what字段,所以使用presenter字段来区分
+            // 但记得每次调用presenter方法前将此presenter的类名赋值给message的presenter字段
             case 2:
                 if (message.presenter.equals(MainPresenter.class.getSimpleName())) {
                     mRoot.setBackgroundResource(R.color.colorAccent);
@@ -93,7 +93,7 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_request:
-                // 使用多个presenter时,同一个what数字可能都使用过,存在冲突的情况
+                // 使用多个presenter时,可能都使用过同一个what值,存在冲突的情况
                 // 所以message提供一个presenter字段,避免这个冲突的情况
                 // 这个方法也就是将presenter的类名赋值给message.presenter
                 mPresenter.request2(Message.obtain(this, MainPresenter.class));
