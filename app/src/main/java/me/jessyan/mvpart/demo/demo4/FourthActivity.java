@@ -1,7 +1,12 @@
 package me.jessyan.mvpart.demo.demo4;
 
 import android.content.Intent;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.mvp.BaseView;
 import me.jessyan.art.mvp.Message;
@@ -15,7 +20,14 @@ import me.jessyan.mvpart.demo.R;
  * 而不用担心,实现多余的view接口,也可以减少大量Presenter类
  */
 
-public class FourthActivity extends BaseActivity<MainPresenter> implements BaseView{
+public class FourthActivity extends BaseActivity<MainPresenter> implements BaseView {
+
+    private SecondPresenter mSecondPresenter;
+
+    @BindView(R.id.activity_main)
+    RelativeLayout mRoot;
+
+
     @Override
     protected int initView() {
         return R.layout.activity_fourth;
@@ -28,6 +40,7 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
 
     @Override
     protected MainPresenter getPresenter() {
+        mSecondPresenter = new SecondPresenter();
         return new MainPresenter();
     }
 
@@ -43,7 +56,7 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
 
     @Override
     public void showMessage(String message) {
-
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -53,8 +66,30 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
 
     @Override
     public void handleMessage(Message message) {
-        switch (message.what){
+        switch (message.what) {
+            // 两个presenter都使用了"2"这个what字段,所以使用presenter来区分
+            // 但记的每次调用presenter方法前将此presenter的类名赋值给message的presenter字段
+            case 2:
+                if (message.presenter.equals(MainPresenter.class.getSimpleName())){
+                    mRoot.setBackgroundResource(R.color.colorAccent);
+                    // 在一个请求链中重用多个不同presenter的方法来完成所有请求,灵活重用presenter使MVP更强大
+                    mSecondPresenter.request3(Message.obtain(this, SecondPresenter.class));
+                }else if(message.presenter.equals(SecondPresenter.class.getSimpleName())){
+                    showMessage("MVPArt");
+                }
+                break;
+        }
+    }
 
+    @OnClick({R.id.btn_request})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_request:
+                // 使用多个presenter时,同一个what数字可能都使用过,存在冲突的情况
+                // 所以message提供一个presenter字段,避免这个冲突的情况
+                // 这个方法也就是将presenter的类名赋值给message.presenter
+                mPresenter.request2(Message.obtain(this, MainPresenter.class));
+                break;
         }
     }
 }

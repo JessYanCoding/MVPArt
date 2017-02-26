@@ -58,7 +58,7 @@ public class SecondFragment extends BaseFragment<MainPresenter> implements BaseV
     public void handleMessage(Message message) {
         switch (message.what) {
             case 0:
-                mRootView.setBackgroundColor(getResources().getColor(message.arg1));
+                mRootView.setBackgroundResource(message.arg1);
                 break;
             case 1:
                 Toast.makeText(getContext(),message.str,Toast.LENGTH_LONG).show();

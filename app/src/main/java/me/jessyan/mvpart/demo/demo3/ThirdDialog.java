@@ -18,7 +18,7 @@ import me.jessyan.mvpart.demo.R;
 /**
  * Created by jess on 25/02/2017 19:18
  * Contact with jess.yan.effort@gmail.com
- * * 这里为了展示可以在dialog或其他任何view中直接重用MainPresenter
+ * 这里为了展示可以在dialog或其他任何view中直接重用MainPresenter
  */
 
 public class ThirdDialog extends DialogFragment implements BaseView, View.OnClickListener {
@@ -68,7 +68,7 @@ public class ThirdDialog extends DialogFragment implements BaseView, View.OnClic
     public void handleMessage(Message message) {
         switch (message.what) {
             case 0:
-                mRootView.findViewById(R.id.btn_confirm).setBackgroundColor(getContext().getResources().getColor(message.arg1));
+                mRootView.findViewById(R.id.btn_confirm).setBackgroundResource(message.arg1);
                 break;
             case 1:
                 ((Button)mRootView.findViewById(R.id.btn_confirm)).setText(message.str);

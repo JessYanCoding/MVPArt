@@ -16,6 +16,11 @@ import me.jessyan.mvpart.demo.demo4.FourthActivity;
 
 /**
  * Model层需要自行封装,demo中没有网络请求,presenter中只是模拟了一个请求
+ * 区别于传统MVP模式,Activity持有Presenter,但是Presenter并不直接持有view
+ * 每个Presenter方法通过message间接持有view,每个方法执行完就自动释放view的引用
+ * 这样做是想让大家重用presenter时,不必考虑presenter中的方法,是否都适合重用
+ * 哪怕其中只有一个方法可以重用,那也可以直接重用整个presenter,不会有其他影响
+ * 方法执行完即表示和view的关系解除
  */
 public class MainActivity extends BaseActivity<MainPresenter> implements BaseView {
 
@@ -64,7 +69,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements BaseVie
     public void handleMessage(Message message) {
         switch (message.what) {
             case 0:
-                mRoot.setBackgroundColor(getResources().getColor(message.arg1));
+                mRoot.setBackgroundResource(message.arg1);
                 break;
             case 1:
                 mTextView.setText(message.str);
