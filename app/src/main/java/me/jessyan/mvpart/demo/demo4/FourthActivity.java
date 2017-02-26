@@ -45,6 +45,14 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSecondPresenter != null)
+            mSecondPresenter.onDestroy();
+        mSecondPresenter = null;
+    }
+
+    @Override
     public void showLoading() {
 
     }
@@ -56,7 +64,7 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -70,11 +78,11 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
             // 两个presenter都使用了"2"这个what字段,所以使用presenter来区分
             // 但记的每次调用presenter方法前将此presenter的类名赋值给message的presenter字段
             case 2:
-                if (message.presenter.equals(MainPresenter.class.getSimpleName())){
+                if (message.presenter.equals(MainPresenter.class.getSimpleName())) {
                     mRoot.setBackgroundResource(R.color.colorAccent);
                     // 在一个请求链中重用多个不同presenter的方法来完成所有请求,灵活重用presenter使MVP更强大
                     mSecondPresenter.request3(Message.obtain(this, SecondPresenter.class));
-                }else if(message.presenter.equals(SecondPresenter.class.getSimpleName())){
+                } else if (message.presenter.equals(SecondPresenter.class.getSimpleName())) {
                     showMessage("MVPArt");
                 }
                 break;
