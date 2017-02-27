@@ -22,7 +22,10 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment {
     protected P mPresenter;
     private Unbinder mUnbinder;
 
-    public BaseFragment() {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mPresenter = getPresenter();
     }
 

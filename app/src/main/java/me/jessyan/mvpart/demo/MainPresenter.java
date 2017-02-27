@@ -34,6 +34,7 @@ public class MainPresenter extends BasePresenter {
                         //只有最后一次,才调用HandleMessageToTarget()
                         //因为HandleMessageToTarget()处理完操作后,会把message中的所有字段置为空,包括view的引用
                         //并且不管你要对view操作几次,必须在最后调用HandleMessageToTarget(),否则可能发生内存泄漏
+                        //message.getTarget().showMessage();使用message.getTarget()可以拿到BaserView的引用从而调用一些默认的方法
                         message.what = 0;
                         message.arg1 = R.color.colorPrimaryDark;
                         message.HandleMessageToTargetUnrecycle();

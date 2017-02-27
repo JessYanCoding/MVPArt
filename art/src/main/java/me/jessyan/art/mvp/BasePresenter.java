@@ -12,12 +12,6 @@ public class BasePresenter implements IPresenter{
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeSubscription mCompositeSubscription;
 
-
-
-//    public BasePresenter(AppComponent component) {
-//        onStart();
-//    }
-
     public BasePresenter() {
         onStart();
     }

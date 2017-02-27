@@ -17,14 +17,11 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected P mPresenter;
 
 
-    public BaseActivity() {
-        mPresenter = getPresenter();
-    }
-
     @Nullable
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = getPresenter();
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);//注册到事件主线
         setContentView(initView());

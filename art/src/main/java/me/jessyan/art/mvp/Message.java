@@ -82,6 +82,9 @@ public final class Message implements Parcelable {
      */
     public Object obj;
 
+
+    public Object[] objs;
+
     /**
      * Optional Messenger where replies to this message can be sent.  The
      * semantics of exactly how this is used are up to the sender and
@@ -163,9 +166,12 @@ public final class Message implements Parcelable {
     public static Message obtain(Message orig) {
         Message m = obtain();
         m.what = orig.what;
+        m.str = orig.str;
+        m.presenter = orig.presenter;
         m.arg1 = orig.arg1;
         m.arg2 = orig.arg2;
         m.obj = orig.obj;
+        m.objs = orig.objs;
         m.replyTo = orig.replyTo;
         m.sendingUid = orig.sendingUid;
         if (orig.data != null) {
@@ -195,6 +201,13 @@ public final class Message implements Parcelable {
         return m;
     }
 
+    public static Message obtain(BaseView v, Object[] objs) {
+        Message m = obtain();
+        m.target = v;
+        m.objs = objs;
+        return m;
+    }
+
 
     public static Message obtain(BaseView v, Class presenter) {
         Message m = obtain();
@@ -208,6 +221,14 @@ public final class Message implements Parcelable {
         Message m = obtain();
         m.target = v;
         m.obj = obj;
+        m.presenter = presenter.getSimpleName();
+        return m;
+    }
+
+    public static Message obtain(BaseView v, Object[] objs, Class presenter) {
+        Message m = obtain();
+        m.target = v;
+        m.objs = objs;
         m.presenter = presenter.getSimpleName();
         return m;
     }
@@ -339,6 +360,7 @@ public final class Message implements Parcelable {
         arg1 = 0;
         arg2 = 0;
         obj = null;
+        objs = null;
         str = null;
         presenter = null;
         replyTo = null;
@@ -363,9 +385,12 @@ public final class Message implements Parcelable {
     public void copyFrom(Message o) {
         this.flags = o.flags & ~FLAGS_TO_CLEAR_ON_COPY_FROM;
         this.what = o.what;
+        this.str = o.str;
+        this.presenter = o.presenter;
         this.arg1 = o.arg1;
         this.arg2 = o.arg2;
         this.obj = o.obj;
+        this.objs = o.objs;
         this.replyTo = o.replyTo;
         this.sendingUid = o.sendingUid;
 
@@ -534,6 +559,7 @@ public final class Message implements Parcelable {
                 b.append(str);
             }
 
+
             if (arg1 != 0) {
                 b.append(" arg1=");
                 b.append(arg1);
@@ -581,6 +607,8 @@ public final class Message implements Parcelable {
         dest.writeInt(what);
         dest.writeInt(arg1);
         dest.writeInt(arg2);
+        dest.writeString(str);
+        dest.writeString(presenter);
         if (obj != null) {
             try {
                 Parcelable p = (Parcelable) obj;
@@ -602,6 +630,8 @@ public final class Message implements Parcelable {
         what = source.readInt();
         arg1 = source.readInt();
         arg2 = source.readInt();
+        str = source.readString();
+        presenter = source.readString();
         if (source.readInt() != 0) {
             obj = source.readParcelable(getClass().getClassLoader());
         }
