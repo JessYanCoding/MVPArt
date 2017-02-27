@@ -1,6 +1,5 @@
 package me.jessyan.mvpart.demo.demo4;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -68,21 +67,17 @@ public class FourthActivity extends BaseActivity<MainPresenter> implements BaseV
     }
 
     @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
     public void handleMessage(Message message) {
         switch (message.what) {
             // 两个presenter都使用了"2"这个what字段,所以使用presenter字段来区分
             // 但记得每次调用presenter方法前将此presenter的类名赋值给message的presenter字段
             case 2:
-                if (message.presenter.equals(MainPresenter.class.getSimpleName())) {
+                if (message.isFromThisPresenter(MainPresenter.class)) {
                     mRoot.setBackgroundResource(R.color.colorAccent);
                     // 在一个请求链中重用多个不同presenter的方法来完成所有请求,灵活重用presenter使MVP更强大
                     mSecondPresenter.request3(Message.obtain(this, SecondPresenter.class));
-                } else if (message.presenter.equals(SecondPresenter.class.getSimpleName())) {
+
+                } else if (message.isFromThisPresenter(SecondPresenter.class)) {
                     showMessage("MVPArt");
                 }
                 break;

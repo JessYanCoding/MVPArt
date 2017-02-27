@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.Messenger;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * Created by jess on 24/02/2017 10:15
@@ -290,6 +291,15 @@ public final class Message implements Parcelable {
     }
 
     /**
+     * 这个消息是否是这个Presenter发送的
+     * @param presenter
+     * @return
+     */
+    public boolean isFromThisPresenter(Class presenter){
+        return this.presenter.equals(presenter.getSimpleName());
+    }
+
+    /**
      * @hide
      */
     public static void updateCheckRecycle(int targetSdkVersion) {
@@ -330,6 +340,7 @@ public final class Message implements Parcelable {
         arg2 = 0;
         obj = null;
         str = null;
+        presenter = null;
         replyTo = null;
         sendingUid = -1;
         target = null;
@@ -512,6 +523,16 @@ public final class Message implements Parcelable {
 
             b.append(" what=");
             b.append(what);
+
+            if (!TextUtils.isEmpty(presenter)){
+                b.append(" presenter=");
+                b.append(presenter);
+            }
+
+            if (!TextUtils.isEmpty(str)){
+                b.append(" str=");
+                b.append(str);
+            }
 
             if (arg1 != 0) {
                 b.append(" arg1=");

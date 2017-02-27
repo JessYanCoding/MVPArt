@@ -1,6 +1,5 @@
 package me.jessyan.mvpart.demo.demo2;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +45,9 @@ public class SecondFragment extends BaseFragment<MainPresenter> implements BaseV
 
     @Override
     public void showMessage(String message) {
-
+        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void launchActivity(Intent intent) {
-
-    }
 
     @Override
     public void handleMessage(Message message) {
@@ -61,7 +56,7 @@ public class SecondFragment extends BaseFragment<MainPresenter> implements BaseV
                 mRootView.setBackgroundResource(message.arg1);
                 break;
             case 1:
-                Toast.makeText(getContext(),message.str,Toast.LENGTH_LONG).show();
+                showMessage(message.str);
                 break;
         }
     }
