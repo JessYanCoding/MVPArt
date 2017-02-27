@@ -217,7 +217,7 @@ public final class Message implements Parcelable {
     }
 
 
-    public static Message obtain(BaseView v, Object obj,Class presenter) {
+    public static Message obtain(BaseView v, Object obj, Class presenter) {
         Message m = obtain();
         m.target = v;
         m.obj = obj;
@@ -313,10 +313,11 @@ public final class Message implements Parcelable {
 
     /**
      * 这个消息是否是这个Presenter发送的
+     *
      * @param presenter
      * @return
      */
-    public boolean isFromThisPresenter(Class presenter){
+    public boolean isFromThisPresenter(Class presenter) {
         return this.presenter.equals(presenter.getSimpleName());
     }
 
@@ -549,12 +550,12 @@ public final class Message implements Parcelable {
             b.append(" what=");
             b.append(what);
 
-            if (!TextUtils.isEmpty(presenter)){
+            if (!TextUtils.isEmpty(presenter)) {
                 b.append(" presenter=");
                 b.append(presenter);
             }
 
-            if (!TextUtils.isEmpty(str)){
+            if (!TextUtils.isEmpty(str)) {
                 b.append(" str=");
                 b.append(str);
             }
@@ -621,10 +622,24 @@ public final class Message implements Parcelable {
         } else {
             dest.writeInt(0);
         }
+
+        if (objs != null) {
+            try {
+                Parcelable[] p = (Parcelable[]) objs;
+                dest.writeInt(1);
+                dest.writeParcelableArray(p, flags);
+            } catch (ClassCastException e) {
+                throw new RuntimeException(
+                        "Can't marshal non-Parcelable objects across processes.");
+            }
+        } else {
+            dest.writeInt(0);
+        }
         dest.writeBundle(data);
         Messenger.writeMessengerOrNullToParcel(replyTo, dest);
         dest.writeInt(sendingUid);
     }
+
 
     private void readFromParcel(Parcel source) {
         what = source.readInt();
@@ -634,6 +649,9 @@ public final class Message implements Parcelable {
         presenter = source.readString();
         if (source.readInt() != 0) {
             obj = source.readParcelable(getClass().getClassLoader());
+        }
+        if (source.readInt() != 0) {
+            objs = source.readParcelableArray(getClass().getClassLoader());
         }
         data = source.readBundle();
         replyTo = Messenger.readMessengerOrNullFromParcel(source);
