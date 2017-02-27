@@ -7,6 +7,8 @@
 
 qq群:301733278 有什么问题可以直接问我
 
+[传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
+
 ## Introduction
 * 此框架是一个轻量级框架,比较适合中小型项目,大型项目请使用[MVPArms](https://github.com/JessYanCoding/MVPArms)
 * 此框架指在解决传统**MVP**类和接口太多,并且**Presenter**和**View**通过接口通信过于繁琐,重用**Presenter**代价太大等问题
