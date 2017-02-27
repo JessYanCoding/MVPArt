@@ -7,14 +7,22 @@
 
 qq群:301733278 有什么问题可以直接问我
 
-##Architectural
+## Introduction
+* 此框架是一个轻量级框架,比较适合中小型项目,大型项目请使用[MVPArms](https://github.com/JessYanCoding/MVPArms)
+* 此框架指在解决传统**MVP**类和接口太多,并且**Presenter**和**View**通过接口通信过于繁琐,重用**Presenter**代价太大等问题
+* 传统MVP每个页面对应一个presenter,而大多数presenter只有一两个方法,这样导致存在大量代码寥寥无几的**Presenter**,此框架指在解决复用**Presenter**时需要实现过多多余接口方法的问题,鼓励开发者将相近的逻辑写在一个**Presenter**中,不断重用**Presenter**,减少大量类文件
+
+## Architectural
 <img src="https://github.com/JessYanCoding/MVPArt/raw/master/image/Architecture.png" width="80%" height="80%">
 
-##About Me
+## TODO
+* 后面会开个分支提交比较完整的包含网络层的框架和文档,像[MVPArms](https://github.com/JessYanCoding/MVPArms)一样
+
+## About Me
 * **Email**: jess.yan.effort@gmail.com
 * **Home**: http://jessyan.me
 
-##License
+## License
 ```
  Copyright 2017, jessyan
 
