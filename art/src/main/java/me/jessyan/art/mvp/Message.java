@@ -464,7 +464,7 @@ public final class Message implements Parcelable {
     }
 
     /**
-     * 分发消息,调用{@link BaseView#handleMessage(Message)}处理消息后
+     * 分发消息(这里需要自己切换线程),调用{@link BaseView#handleMessage(Message)}处理消息后
      * 将消息放入消息池,供下次{@link #obtain()}
      */
     public void HandleMessageToTarget() {
@@ -474,7 +474,7 @@ public final class Message implements Parcelable {
     }
 
     /**
-     * 分发消息,调用{@link BaseView#handleMessage(Message)}处理消息
+     * 分发消息(这里需要自己切换线程),调用{@link BaseView#handleMessage(Message)}处理消息
      */
     public void HandleMessageToTargetUnrecycle() {
         if (target == null) throw new IllegalArgumentException("target is null");
