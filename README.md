@@ -22,8 +22,10 @@ qq群:301733278 有什么问题可以直接问我
 * 后面会开个分支提交比较完整的包含网络层的框架和文档,像[MVPArms](https://github.com/JessYanCoding/MVPArms)一样
 
 ## About Me
-* **Email**: jess.yan.effort@gmail.com
-* **Home**: http://jessyan.me
+* **Email**: <jess.yan.effort@gmail.com>  
+* **Home**: <http://jessyan.me>
+* **掘金**: <https://gold.xitu.io/user/57a9dbd9165abd0061714613>
+* **简书**: <http://www.jianshu.com/u/1d0c0bc634db>
 
 ## License
 ```
