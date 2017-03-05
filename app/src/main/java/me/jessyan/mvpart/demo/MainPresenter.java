@@ -19,7 +19,7 @@ public class MainPresenter extends BasePresenter {
      * @param message
      */
     public void request(Message message) {
-        addSubscrebe(Observable.just(message)
+        addSubscribe(Observable.just(message)
                 .filter(new Func1<Message, Boolean>() {
                     @Override
                     public Boolean call(Message message) {
@@ -53,7 +53,7 @@ public class MainPresenter extends BasePresenter {
      * @param message
      */
     public void request2(Message message) {
-        addSubscrebe(Observable.just(message)
+        addSubscribe(Observable.just(message)
                 .filter(new Func1<Message, Boolean>() {
                     @Override
                     public Boolean call(Message message) {
