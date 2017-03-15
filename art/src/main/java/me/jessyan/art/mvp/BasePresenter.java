@@ -8,9 +8,10 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by jess on 16/4/28.
  */
-public class BasePresenter implements IPresenter{
+public class BasePresenter implements IPresenter {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeSubscription mCompositeSubscription;
+
 
     public BasePresenter() {
         onStart();
@@ -40,7 +41,7 @@ public class BasePresenter implements IPresenter{
     }
 
 
-    protected void addSubscribe(Subscription subscription) {
+    protected void addSubscrebe(Subscription subscription) {
         if (mCompositeSubscription == null) {
             mCompositeSubscription = new CompositeSubscription();
         }

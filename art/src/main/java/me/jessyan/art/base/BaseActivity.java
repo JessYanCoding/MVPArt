@@ -1,8 +1,15 @@
 package me.jessyan.art.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
+import android.view.View;
+
+import com.zhy.autolayout.AutoFrameLayout;
+import com.zhy.autolayout.AutoLinearLayout;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 import org.simple.eventbus.EventBus;
 
@@ -15,6 +22,34 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     private Unbinder mUnbinder;
 
     protected P mPresenter;
+
+    private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
+    private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
+    private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
+
+
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        View view = null;
+        if (name.equals(LAYOUT_FRAMELAYOUT)) {
+            view = new AutoFrameLayout(context, attrs);
+        }
+
+        if (name.equals(LAYOUT_LINEARLAYOUT)) {
+            view = new AutoLinearLayout(context, attrs);
+        }
+
+        if (name.equals(LAYOUT_RELATIVELAYOUT)) {
+            view = new AutoRelativeLayout(context, attrs);
+        }
+
+        if (view != null) return view;
+
+        return super.onCreateView(name, context, attrs);
+    }
+
+
 
 
     @Nullable
