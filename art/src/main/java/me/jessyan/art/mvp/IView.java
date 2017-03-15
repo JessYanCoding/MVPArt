@@ -7,7 +7,7 @@ package me.jessyan.art.mvp;
  * 因为View的实现类可能会是Activity,Fragment或者Dialog以及一些自定义View,所以不能定义一些某个类特有的方法
  * 比如startActivity就是Activity特有的,其他view实现类并不一定具备这个功能
  */
-public interface BaseView {
+public interface IView {
 
     /**
      * 显示加载

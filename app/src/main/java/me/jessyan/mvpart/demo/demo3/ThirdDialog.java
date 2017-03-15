@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
-import me.jessyan.art.mvp.BaseView;
+import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.mvpart.demo.MainPresenter;
 import me.jessyan.mvpart.demo.R;
@@ -20,7 +20,7 @@ import me.jessyan.mvpart.demo.R;
  * 这里为了展示可以在dialog或其他任何view中直接重用MainPresenter
  */
 
-public class ThirdDialog extends DialogFragment implements BaseView, View.OnClickListener {
+public class ThirdDialog extends DialogFragment implements IView, View.OnClickListener {
     private MainPresenter mPresenter;
     private View mRootView;
 

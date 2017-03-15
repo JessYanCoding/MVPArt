@@ -8,7 +8,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.jessyan.art.base.BaseActivity;
-import me.jessyan.art.mvp.BaseView;
+import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.mvpart.demo.demo2.SecondActivity;
 import me.jessyan.mvpart.demo.demo3.ThirdDialog;
@@ -28,7 +28,7 @@ import me.jessyan.mvpart.demo.demo4.FourthActivity;
  * 方法执行完即表示和view的关系解除
  * 当然很多不同的逻辑都写在一个Presenter中,虽然可以少写很多类,但是后面的扩展性肯定不好,所以这个粒度需要自己控制,但是对于外包项目简直是福音
  */
-public class MainActivity extends BaseActivity<MainPresenter> implements BaseView {
+public class MainActivity extends BaseActivity<MainPresenter> implements IView {
 
     @BindView(R.id.tv_main)
     TextView mTextView;

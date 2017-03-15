@@ -7,7 +7,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.jessyan.art.base.BaseActivity;
-import me.jessyan.art.mvp.BaseView;
+import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.mvpart.demo.MainPresenter;
 import me.jessyan.mvpart.demo.R;
@@ -19,7 +19,7 @@ import me.jessyan.mvpart.demo.R;
  * 而不用担心,实现多余的view接口,也可以减少大量Presenter类
  */
 
-public class FourthActivity extends BaseActivity<MainPresenter> implements BaseView {
+public class FourthActivity extends BaseActivity<MainPresenter> implements IView {
 
     private SecondPresenter mSecondPresenter;
 

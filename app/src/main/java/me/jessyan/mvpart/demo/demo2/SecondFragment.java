@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import me.jessyan.art.base.BaseFragment;
-import me.jessyan.art.mvp.BaseView;
+import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.mvpart.demo.MainPresenter;
 import me.jessyan.mvpart.demo.R;
@@ -17,7 +17,7 @@ import me.jessyan.mvpart.demo.R;
  * 这里为了展示可以在fragment中直接重用MainPresenter
  */
 
-public class SecondFragment extends BaseFragment<MainPresenter> implements BaseView {
+public class SecondFragment extends BaseFragment<MainPresenter> implements IView {
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_second, container, false);
