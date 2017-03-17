@@ -5,7 +5,7 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.AppComponent;
+import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.mvp.BasePresenter;
 import me.jessyan.art.mvp.Message;
@@ -36,7 +36,7 @@ public class UserPresenter extends BasePresenter {
     public UserPresenter(AppComponent appComponent) {
         super();
         this.mErrorHandler = appComponent.rxErrorHandler();
-        this.mModel = appComponent.userRepository();
+        this.mModel = appComponent.repositoryManager().createRepository(UserRepository.class);
     }
 
     public void requestUsers(final Message msg) {

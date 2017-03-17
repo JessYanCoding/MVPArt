@@ -1,4 +1,4 @@
-package common;
+package me.jessyan.mvpart.demo.app;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -15,8 +15,6 @@ import me.jessyan.art.di.module.GlobeConfigModule;
 import me.jessyan.art.http.GlobeHttpHandler;
 import me.jessyan.art.utils.UiUtils;
 import me.jessyan.mvpart.demo.BuildConfig;
-import me.jessyan.mvpart.demo.di.module.CacheModule;
-import me.jessyan.mvpart.demo.di.module.ServiceModule;
 import me.jessyan.mvpart.demo.mvp.model.api.Api;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
@@ -29,21 +27,11 @@ import timber.log.Timber;
  * contact with jess.yan.effort@gmail.com
  */
 public class WEApplication extends BaseApplication {
-    private AppComponent mAppComponent;
     private RefWatcher mRefWatcher;//leakCanary观察器
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mAppComponent = DaggerAppComponent
-                .builder()
-                .appModule(getAppModule())//baseApplication提供
-                .clientModule(getClientModule())//baseApplication提供
-                .imageModule(getImageModule())//baseApplication提供
-                .globeConfigModule(getGlobeConfigModule())//全局配置
-                .serviceModule(new ServiceModule())//需自行创建
-                .cacheModule(new CacheModule())//需自行创建
-                .build();
 
         if (BuildConfig.LOG_DEBUG) {//Timber日志打印
             Timber.plant(new Timber.DebugTree());
@@ -56,8 +44,6 @@ public class WEApplication extends BaseApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if (mAppComponent != null)
-            this.mAppComponent = null;
         if (mRefWatcher != null)
             this.mRefWatcher = null;
     }
@@ -80,15 +66,6 @@ public class WEApplication extends BaseApplication {
         return application.mRefWatcher;
     }
 
-
-    /**
-     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例, 在getAppComponent()拿到对象后都可以直接使用
-     *
-     * @return
-     */
-    public AppComponent getAppComponent() {
-        return mAppComponent;
-    }
 
 
     /**

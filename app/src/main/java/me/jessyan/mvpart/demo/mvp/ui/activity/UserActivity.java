@@ -9,7 +9,7 @@ import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
-import common.WEApplication;
+import me.jessyan.mvpart.demo.app.WEApplication;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.mvp.IView;

@@ -10,7 +10,7 @@ import me.jessyan.art.widget.imageloader.ImageLoader;
 import me.jessyan.art.widget.imageloader.glide.GlideImageConfig;
 
 import butterknife.BindView;
-import common.WEApplication;
+import me.jessyan.mvpart.demo.app.WEApplication;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.model.entity.User;
 

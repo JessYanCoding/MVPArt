@@ -8,8 +8,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import me.jessyan.art.http.BaseCacheManager;
-import me.jessyan.art.http.BaseServiceManager;
+import io.rx_cache.internal.RxCache;
+import retrofit2.Retrofit;
 
 /**
  * Created by jess on 16/03/2017 14:25
@@ -17,15 +17,17 @@ import me.jessyan.art.http.BaseServiceManager;
  */
 
 @Singleton
-public class RepositoryManager<S extends BaseServiceManager, C extends BaseCacheManager> {
-    protected S mServiceManager;//服务管理类,用于网络请求
-    protected C mCacheManager;//缓存管理类,用于管理本地或者内存缓存
+public class RepositoryManager {
+    private Retrofit mRetrofit;
+    private RxCache mRxCache;
     private final Map<String, IModel> mRepositoryCache = new LinkedHashMap<>();
+    private final Map<String, Object> mRetrofitServiceCache = new LinkedHashMap<>();
+    private final Map<String, Object> mCacheServiceCache = new LinkedHashMap<>();
 
     @Inject
-    public RepositoryManager(S serviceManager, C cacheManager) {
-        this.mServiceManager = serviceManager;
-        this.mCacheManager = cacheManager;
+    public RepositoryManager(Retrofit retrofit, RxCache rxCache) {
+        this.mRetrofit = retrofit;
+        this.mRxCache = rxCache;
     }
 
     public <T extends IModel> T createRepository(Class<T> repository) {
@@ -50,13 +52,30 @@ public class RepositoryManager<S extends BaseServiceManager, C extends BaseCache
     }
 
 
-    public S getServiceManager() {
-        return mServiceManager;
+    public <T> T CreateRetrofitService(Class<T> service) {
+        T retrofitService;
+        synchronized (mRetrofitServiceCache) {
+            retrofitService = (T) mRetrofitServiceCache.get(service.getName());
+            if (retrofitService == null) {
+                retrofitService = mRetrofit.create(service);
+                mRetrofitServiceCache.put(service.getName(), retrofitService);
+            }
+        }
+        return retrofitService;
     }
 
-    public C getCacheManager() {
-        return mCacheManager;
+    public <T> T CreateCacheService(Class<T> cache) {
+        T cacheService;
+        synchronized (mCacheServiceCache) {
+            cacheService = (T) mCacheServiceCache.get(cache.getName());
+            if (cacheService == null) {
+                cacheService = mRxCache.using(cache);
+                mCacheServiceCache.put(cache.getName(), cacheService);
+            }
+        }
+        return cacheService;
     }
+
 
     private static Constructor<? extends IModel> findConstructorForClass(Class<?> cls) {
         Constructor<? extends IModel> bindingCtor = null;

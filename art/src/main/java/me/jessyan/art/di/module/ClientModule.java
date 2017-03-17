@@ -13,7 +13,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.rx_cache.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
-import me.jessyan.art.base.AppManager;
 import me.jessyan.art.http.RequestIntercept;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -31,12 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ClientModule {
     private static final int TIME_OUT = 10;
-    private AppManager mAppManager;
 
-
-    public ClientModule(AppManager appManager) {
-        this.mAppManager = appManager;
-    }
 
     /**
      * @param builder
@@ -147,17 +141,6 @@ public class ClientModule {
                 .build();
     }
 
-
-    /**
-     * 提供管理所有activity的管理类
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    AppManager provideAppManager() {
-        return mAppManager;
-    }
 
 
 //    .addNetworkInterceptor(new Interceptor() {
