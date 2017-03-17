@@ -8,6 +8,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.jessyan.art.mvp.IRepositoryManager;
+import me.jessyan.art.mvp.RepositoryManager;
 
 /**
  * Created by jess on 8/4/16.
@@ -28,6 +30,14 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public Gson provideGson(){return new Gson();}
+    public Gson provideGson() {
+        return new Gson();
+    }
+
+    @Singleton
+    @Provides
+    public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
+        return repositoryManager;
+    }
 
 }

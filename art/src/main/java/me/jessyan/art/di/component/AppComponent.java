@@ -13,7 +13,7 @@ import me.jessyan.art.di.module.AppModule;
 import me.jessyan.art.di.module.ClientModule;
 import me.jessyan.art.di.module.GlobeConfigModule;
 import me.jessyan.art.di.module.ImageModule;
-import me.jessyan.art.mvp.RepositoryManager;
+import me.jessyan.art.mvp.IRepositoryManager;
 import me.jessyan.art.widget.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
@@ -41,8 +41,8 @@ public interface AppComponent {
     //用于管理所有activity
     AppManager appManager();
 
-    //用于管理所有仓库
-    RepositoryManager repositoryManager();
+    //用于管理所有仓库,网络请求层,以及数据缓存层
+    IRepositoryManager repositoryManager();
 
     void inject(BaseApplication application);
 }

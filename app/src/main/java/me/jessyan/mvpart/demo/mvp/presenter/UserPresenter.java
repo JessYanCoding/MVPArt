@@ -34,7 +34,7 @@ public class UserPresenter extends BasePresenter {
 
 
     public UserPresenter(AppComponent appComponent) {
-        super();
+        super();//记得这个super()必须加上,里面做一些初始化工作
         this.mErrorHandler = appComponent.rxErrorHandler();
         this.mModel = appComponent.repositoryManager().createRepository(UserRepository.class);
     }
