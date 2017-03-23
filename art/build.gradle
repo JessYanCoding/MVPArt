@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
+
+
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -82,7 +84,10 @@ dependencies {
     compile rootProject.ext.dependencies["timber"]
     compile rootProject.ext.dependencies["glide"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
-    compile (project(':rxerrorhandler')){
+    compile (rootProject.ext.dependencies['rxerrorhandler']){
         exclude module: 'rxjava'
     }
 }
+
+
+apply from: 'bintray.gradle'

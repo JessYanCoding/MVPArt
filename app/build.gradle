@@ -56,7 +56,7 @@ dependencies {
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
     provided rootProject.ext.dependencies["javax.annotation"]
     apt rootProject.ext.dependencies["butterknife-apt"]
-    compile project(':art')
+    compile "me.jessyan:art:1.0.1"
     compile rootProject.ext.dependencies["paginate"]
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
