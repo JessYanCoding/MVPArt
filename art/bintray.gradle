@@ -7,6 +7,7 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 def gitUrl = 'https://github.com/JessYanCoding/MVPArt.git'   // Git仓库的url
 def siteUrl = 'https://github.com/JessYanCoding/MVPArt'   // 项目的主页
 
+version = rootProject.ext.android["versionName"]
 group = "me.jessyan"
 
 
@@ -25,7 +26,7 @@ bintray {
             name = rootProject.ext.android["versionName"]
             desc = 'A New Android MVP Architecture.'
             released  = new Date()
-            vcsTag = 'v1.0.1'
+            vcsTag = 'v' + rootProject.ext.android["versionName"]
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }
@@ -41,7 +42,7 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                name 'A New Android MVP Architecture.'
+                name 'MVPArt'
                 description 'A New Android MVP Architecture.'
                 url siteUrl
                 // Set your license
