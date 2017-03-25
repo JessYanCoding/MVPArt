@@ -7,15 +7,14 @@
 
 qq群:301733278 有什么问题可以直接问我
 
-请参阅[传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
-
-> [**master**分支](https://github.com/JessYanCoding/MVPArt/tree/master)
->> **master**分支是一个不含网络层的简易框架,主要通过4个**Demo**介绍本框架的思想,特性以及使用方法,小巧灵活适合已经有一整套现有框架但又需要重构为**MVP**结构的项目    
+> [**Master**分支](https://github.com/JessYanCoding/MVPArt/tree/master)
+>> **Master**分支是一个不含网络层的简易框架,主要通过4个**Demo**介绍本框架的思想,特性以及使用方法,小巧灵活适合已经有一整套现有框架但又需要重构为**MVP**结构的项目    
   
-> [**complete**分支](https://github.com/JessYanCoding/MVPArt/tree/complete)
->> **complete**分支是一个含有网络层的完整框架
+> [**Complete**分支](https://github.com/JessYanCoding/MVPArt/tree/complete)
+>> **Complete**分支是一个含有网络层的完整框架
 
 ## Introduction
+* 使用之前,请参阅[传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
 * 此框架是一个轻量级框架,比较适合中小型项目,大型项目请使用[MVPArms](https://github.com/JessYanCoding/MVPArms)
 * 此框架指在解决传统**MVP**类和接口太多,并且**Presenter**和**View**通过接口通信过于繁琐,重用**Presenter**代价太大等问题
 * 传统MVP每个页面对应一个presenter,而大多数presenter只有一两个方法,这样导致存在大量代码寥寥无几的**Presenter**,此框架指在解决复用**Presenter**时需要实现过多多余接口方法的问题,鼓励开发者将相近的逻辑写在一个**Presenter**中,不断重用**Presenter**,减少大量类文件
