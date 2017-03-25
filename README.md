@@ -9,10 +9,8 @@ qq群:301733278 有什么问题可以直接问我
 
 请参阅[传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
 
-[**master**分支](https://github.com/JessYanCoding/MVPArt/tree/master)是一个不含网络层的简易框架,[**complete**分支](https://github.com/JessYanCoding/MVPArt/tree/complete)是一个含有网络层的完整框架
-
 > [**master**分支](https://github.com/JessYanCoding/MVPArt/tree/master)
->> **master**分支是一个不含网络层的简易框架,主要通过4个**Demo**介绍本框架的思想,特性以及使用方法,小巧灵活适合已经有一整套现有框架但又需要重构为**MVP**结构的项目
+>> **master**分支是一个不含网络层的简易框架,主要通过4个**Demo**介绍本框架的思想,特性以及使用方法,小巧灵活适合已经有一整套现有框架但又需要重构为**MVP**结构的项目  
 > [**complete**分支](https://github.com/JessYanCoding/MVPArt/tree/complete)
 >> **complete**分支是一个含有网络层的完整框架
 
