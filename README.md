@@ -11,6 +11,11 @@ qq群:301733278 有什么问题可以直接问我
 
 [**master**分支](https://github.com/JessYanCoding/MVPArt/tree/master)是一个不含网络层的简易框架,[**complete**分支](https://github.com/JessYanCoding/MVPArt/tree/complete)是一个含有网络层的完整框架
 
+> [**master**分支](https://github.com/JessYanCoding/MVPArt/tree/master)
+>> **master**分支是一个不含网络层的简易框架,主要通过4个**Demo**介绍本框架的思想,特性以及使用方法,小巧灵活适合已经有一整套现有框架但又需要重构为**MVP**结构的项目
+> [**complete**分支](https://github.com/JessYanCoding/MVPArt/tree/complete)
+>> **complete**分支是一个含有网络层的完整框架
+
 ## Introduction
 * 此框架是一个轻量级框架,比较适合中小型项目,大型项目请使用[MVPArms](https://github.com/JessYanCoding/MVPArms)
 * 此框架指在解决传统**MVP**类和接口太多,并且**Presenter**和**View**通过接口通信过于繁琐,重用**Presenter**代价太大等问题
