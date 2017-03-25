@@ -17,6 +17,13 @@ qq群:301733278 有什么问题可以直接问我
 > [**Complete**分支](https://github.com/JessYanCoding/MVPArt/tree/complete)
 >> **Complete**分支是一个含有网络层的完整框架,将**Retrofit**作为网络层并使用**Dagger2**管理所有对象,成熟强大适合新建的项目
 
+## Download
+```
+dependencies {
+    compile 'me.jessyan:art:1.0.1'
+}
+```
+
 ## Notice
 * 使用之前,请参阅[传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
 
