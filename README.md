@@ -10,7 +10,7 @@ qq群:301733278 有什么问题可以直接问我
 ## Architectural
 <img src="https://github.com/JessYanCoding/MVPArt/raw/master/image/Architecture.png" width="80%" height="80%">
 
-## Intro
+## Introduction
 > [**Master**分支](https://github.com/JessYanCoding/MVPArt/tree/master)
 >> **Master**分支是一个不含网络层的简易框架,主要通过4个**Demo**介绍本框架的思想,特性以及使用方法,小巧灵活适合已经有一整套现有框架但又需要重构为**MVP**结构的项目    
   
