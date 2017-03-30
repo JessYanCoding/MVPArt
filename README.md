@@ -5,7 +5,7 @@
 
 ## A New Android MVP Architecture
 
-「引用请注明出处」qq群:301733278 有什么问题可以直接问我
+「**引用请注明出处**」qq群:301733278 有什么问题可以直接问我
 
 ## Architectural
 <img src="https://github.com/JessYanCoding/MVPArt/raw/master/image/Architecture.png" width="80%" height="80%">
