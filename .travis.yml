@@ -23,3 +23,5 @@ android:
 script:
     - ./gradlew clean
     - ./gradlew assembleDebug
+    - ./gradlew install
+    - ./gradlew bintrayUpload
