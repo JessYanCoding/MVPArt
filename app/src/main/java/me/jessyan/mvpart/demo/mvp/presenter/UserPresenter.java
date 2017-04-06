@@ -5,8 +5,8 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.base.DefaultAdapter;
+import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.mvp.BasePresenter;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.PermissionUtil;
@@ -17,7 +17,6 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 /**
@@ -51,11 +50,8 @@ public class UserPresenter extends BasePresenter {
 
 
         //请求外部存储权限用于适配android6.0的权限管理机制
-        PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
-            @Override
-            public void onRequestPermissionSuccess() {
-                //request permission success, do something.
-            }
+        PermissionUtil.externalStorage(() -> {
+            //request permission success, do something.
         }, (RxPermissions) msg.objs[1], msg.getTarget(), mErrorHandler);
 
 
@@ -73,52 +69,43 @@ public class UserPresenter extends BasePresenter {
         addSubscrebe(mModel.getUsers(lastUserId, isEvictCache)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        if (pullToRefresh)
-                            msg.getTarget().showLoading();//显示上拉刷新的进度条
-                        else {
-                            //显示下拉加载更多的进度条
-                            msg.what = 1;
-                            msg.HandleMessageToTargetUnrecycle();
-                        }
+                .doOnSubscribe(() -> {
+                    if (pullToRefresh)
+                        msg.getTarget().showLoading();//显示上拉刷新的进度条
+                    else {
+                        //显示下拉加载更多的进度条
+                        msg.what = 1;
+                        msg.HandleMessageToTargetUnrecycle();
                     }
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(new Action0() {
-                    @Override
-                    public void call() {
-                        if (pullToRefresh) {
-                            msg.getTarget().hideLoading();//隐藏上拉刷新的进度条
-                            //因为hideLoading,为默认方法,直接可以调用所以不需要发送消息给handleMessage()来处理,
-                            //HandleMessageToTarget()的原理就是发送消息并回收消息
-                            //调用默认方法后不需要调用HandleMessageToTarget(),但是如果后面对view没有其他操作了请调用message.recycle()回收消息
-                            msg.recycle();
-                        } else {
-                            //隐藏下拉加载更多的进度条
-                            msg.what = 2;
-                            msg.HandleMessageToTarget();//方法最后必须调HandleMessageToTarget,将消息所有引用清空后回收进消息池
-                        }
+                .doAfterTerminate(() -> {
+                    if (pullToRefresh) {
+                        msg.getTarget().hideLoading();//隐藏上拉刷新的进度条
+                        //因为hideLoading,为默认方法,直接可以调用所以不需要发送消息给handleMessage()来处理,
+                        //HandleMessageToTarget()的原理就是发送消息并回收消息
+                        //调用默认方法后不需要调用HandleMessageToTarget(),但是如果后面对view没有其他操作了请调用message.recycle()回收消息
+                        msg.recycle();
+                    } else {
+                        //隐藏下拉加载更多的进度条
+                        msg.what = 2;
+                        msg.HandleMessageToTarget();//方法最后必须调HandleMessageToTarget,将消息所有引用清空后回收进消息池
                     }
                 })
                 .subscribe(new ErrorHandleSubscriber<List<User>>(mErrorHandler) {
                     @Override
                     public void onNext(List<User> users) {
                         lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
-                        preEndIndex = mUsers.size();//更新之前列表总长度,用于确定加载更多的起始位置
 
                         if (pullToRefresh) mUsers.clear();//如果是上拉刷新则清空列表
-                        for (User user : users) {
-                            mUsers.add(user);
-                        }
+
+                        preEndIndex = mUsers.size();//更新之前列表总长度,用于确定加载更多的起始位置
+                        mUsers.addAll(users);
+
                         if (pullToRefresh)
-                            mAdapter.notifyDataSetChanged();//通知更新数据
-                        else if (!pullToRefresh && users.size() == 0) {
-                            msg.getTarget().showMessage("没有更多数据!");
-                        } else {
+                            mAdapter.notifyDataSetChanged();
+                        else
                             mAdapter.notifyItemRangeInserted(preEndIndex, users.size());
-                        }
                     }
                 }));
     }
