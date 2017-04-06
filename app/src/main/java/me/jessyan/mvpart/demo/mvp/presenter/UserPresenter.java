@@ -31,6 +31,7 @@ public class UserPresenter extends BasePresenter {
     private DefaultAdapter mAdapter;
     private int lastUserId = 1;
     private boolean isFirst = true;
+    private int preEndIndex;
 
 
     public UserPresenter(AppComponent appComponent) {
@@ -94,7 +95,7 @@ public class UserPresenter extends BasePresenter {
                             //HandleMessageToTarget()的原理就是发送消息并回收消息
                             //调用默认方法后不需要调用HandleMessageToTarget(),但是如果后面对view没有其他操作了请调用message.recycle()回收消息
                             msg.recycle();
-                        }else {
+                        } else {
                             //隐藏下拉加载更多的进度条
                             msg.what = 2;
                             msg.HandleMessageToTarget();//方法最后必须调HandleMessageToTarget,将消息所有引用清空后回收进消息池
@@ -105,11 +106,19 @@ public class UserPresenter extends BasePresenter {
                     @Override
                     public void onNext(List<User> users) {
                         lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
+                        preEndIndex = mUsers.size();//更新之前列表总长度,用于确定加载更多的起始位置
+
                         if (pullToRefresh) mUsers.clear();//如果是上拉刷新则清空列表
                         for (User user : users) {
                             mUsers.add(user);
                         }
-                        mAdapter.notifyDataSetChanged();//通知更新数据
+                        if (pullToRefresh)
+                            mAdapter.notifyDataSetChanged();//通知更新数据
+                        else if (!pullToRefresh && users.size() == 0) {
+                            msg.getTarget().showMessage("没有更多数据!");
+                        } else {
+                            mAdapter.notifyItemRangeInserted(preEndIndex, users.size());
+                        }
                     }
                 }));
     }
