@@ -22,4 +22,5 @@ android:
     - '.+'
 
 script:
-    - ./gradlew bintrayUpload
+    - ./gradlew clean
+    - ./gradlew assembleDebug
