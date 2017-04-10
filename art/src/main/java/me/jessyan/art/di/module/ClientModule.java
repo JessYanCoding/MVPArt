@@ -13,7 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.rx_cache.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
-import me.jessyan.art.http.RequestIntercept;
+import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
@@ -94,7 +94,7 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    Interceptor provideIntercept(RequestIntercept intercept) {
+    Interceptor provideInterceptor(RequestInterceptor intercept) {
         return intercept;//打印请求信息的拦截器
     }
 

@@ -9,12 +9,16 @@ import com.bumptech.glide.load.engine.cache.DiskCache;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheWrapper;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.GlideModule;
 
 import java.io.File;
+import java.io.InputStream;
 
+import me.jessyan.art.base.BaseApplication;
+import me.jessyan.art.di.component.AppComponent;
+import me.jessyan.art.http.OkHttpUrlLoader;
 import me.jessyan.art.utils.DataHelper;
-import me.jessyan.art.utils.UiUtils;
 
 /**
  * Created by jess on 16/4/15.
@@ -28,8 +32,8 @@ public class GlideConfiguration implements GlideModule {
             @Override
             public DiskCache build() {
                 // Careful: the external cache directory doesn't enforce permissions
-                File cacheDirectory = new File(DataHelper.getCacheFile(UiUtils.getContext()), "Glide");
-                return DiskLruCacheWrapper.get(DataHelper.makeDirs(cacheDirectory), IMAGE_DISK_CACHE_MAX_SIZE);
+                AppComponent appComponent = ((BaseApplication)context.getApplicationContext()).getAppComponent();
+                return DiskLruCacheWrapper.get(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glidexx")), IMAGE_DISK_CACHE_MAX_SIZE);
             }
         });
 
@@ -42,11 +46,12 @@ public class GlideConfiguration implements GlideModule {
 
         builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
         builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
-
     }
 
     @Override
     public void registerComponents(Context context, Glide glide) {
-
+        //Glide默认使用HttpURLConnection做网络请求,在这切换成okhttp请求
+        AppComponent appComponent = ((BaseApplication)context.getApplicationContext()).getAppComponent();
+        glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(appComponent.okHttpClient()));
     }
 }

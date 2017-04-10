@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -43,6 +45,9 @@ public interface AppComponent {
 
     //用于管理所有仓库,网络请求层,以及数据缓存层
     IRepositoryManager repositoryManager();
+
+    //缓存文件根目录(RxCache和Glide的的缓存都已经作为子文件夹在这个目录里),应该将所有缓存放到这个根目录里,便于管理和清理,可在GlobeConfigModule里配置
+    File cacheFile();
 
     void inject(BaseApplication application);
 }
