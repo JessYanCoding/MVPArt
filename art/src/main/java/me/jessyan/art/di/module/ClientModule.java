@@ -13,6 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.rx_cache.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
+import me.jessyan.art.http.GlobeHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -61,15 +62,14 @@ public class ClientModule {
     @Singleton
     @Provides
     OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
-            , List<Interceptor> interceptors) {
+            , List<Interceptor> interceptors, GlobeHttpHandler handler) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())))
                 .addNetworkInterceptor(intercept);
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
-            for (Interceptor interceptor : interceptors) {
-                builder.addInterceptor(interceptor);
-            }
+            interceptors.forEach(builder::addInterceptor);
         }
         return builder
                 .build();
@@ -88,8 +88,6 @@ public class ClientModule {
     OkHttpClient.Builder provideClientBuilder() {
         return new OkHttpClient.Builder();
     }
-
-
 
 
     @Singleton
@@ -140,7 +138,6 @@ public class ClientModule {
                 .responseErroListener(listener)
                 .build();
     }
-
 
 
 //    .addNetworkInterceptor(new Interceptor() {

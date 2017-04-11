@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import me.jessyan.art.base.BaseApplication;
 import me.jessyan.art.di.module.GlobeConfigModule;
 import me.jessyan.art.http.GlobeHttpHandler;
+import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.utils.UiUtils;
 import me.jessyan.mvpart.demo.BuildConfig;
 import me.jessyan.mvpart.demo.mvp.model.api.Api;
@@ -86,7 +87,7 @@ public class WEApplication extends BaseApplication {
                         //这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
                         //重新请求token,并重新执行请求
                         try {
-                            if (!TextUtils.isEmpty(httpResult)) {
+                            if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body())) {
                                 JSONArray array = new JSONArray(httpResult);
                                 JSONObject object = (JSONObject) array.get(0);
                                 String login = object.getString("login");
@@ -115,13 +116,13 @@ public class WEApplication extends BaseApplication {
                         return response;
                     }
 
-                    // 这里可以在请求服务器之前可以拿到request,做一些操作比如给request统一添加token或者header
+                    // 这里可以在请求服务器之前可以拿到request,做一些操作比如给request统一添加token或者header以及数据加密等操作
                     @Override
                     public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
                         //如果需要再请求服务器之前做一些操作,则重新返回一个做过操作的的requeat如增加header,不做操作则直接返回request参数
 
-                        //return chain.request().newBuilder().header("token", tokenId)
-//                .build();
+//                        return chain.request().newBuilder().header("token", tokenId)
+//                               .build();
                         return request;
                     }
                 })

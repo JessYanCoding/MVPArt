@@ -33,7 +33,7 @@ public class GlideConfiguration implements GlideModule {
             public DiskCache build() {
                 // Careful: the external cache directory doesn't enforce permissions
                 AppComponent appComponent = ((BaseApplication)context.getApplicationContext()).getAppComponent();
-                return DiskLruCacheWrapper.get(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glidexx")), IMAGE_DISK_CACHE_MAX_SIZE);
+                return DiskLruCacheWrapper.get(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
             }
         });
 
