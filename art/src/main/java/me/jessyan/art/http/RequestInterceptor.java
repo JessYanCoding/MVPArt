@@ -28,6 +28,7 @@ import timber.log.Timber;
 
 /**
  * Created by jess on 7/1/16.
+ * Contact with jess.yan.effort@gmail.com
  */
 @Singleton
 public class RequestInterceptor implements Interceptor {
