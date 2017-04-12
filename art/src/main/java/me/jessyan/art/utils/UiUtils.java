@@ -23,7 +23,7 @@ import org.simple.eventbus.EventBus;
 
 import java.security.MessageDigest;
 
-import me.jessyan.art.base.AppManager;
+import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.base.BaseApplication;
 
 /**

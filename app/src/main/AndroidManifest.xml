@@ -39,6 +39,11 @@
             android:name="me.jessyan.art.widget.imageloader.glide.GlideConfiguration"
             android:value="GlideModule"/>
 
+        <!--art配置-->
+        <meta-data
+            android:name="me.jessyan.mvpart.demo.app.GlobalConfiguration"
+            android:value="ConfigModule"/>
+
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package me.jessyan.art.base;
+package me.jessyan.art.integration;
 
 import android.app.Activity;
 import android.app.ActivityManager;

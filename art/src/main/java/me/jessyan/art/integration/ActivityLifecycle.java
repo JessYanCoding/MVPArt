@@ -1,4 +1,4 @@
-package me.jessyan.art.base;
+package me.jessyan.art.integration;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import me.jessyan.art.base.BaseActivity;
 
 /**
  * Created by jess on 21/02/2017 14:23

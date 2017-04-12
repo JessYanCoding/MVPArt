@@ -9,7 +9,7 @@ import java.io.File;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import me.jessyan.art.base.AppManager;
+import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.base.BaseApplication;
 import me.jessyan.art.di.module.AppModule;
 import me.jessyan.art.di.module.ClientModule;
