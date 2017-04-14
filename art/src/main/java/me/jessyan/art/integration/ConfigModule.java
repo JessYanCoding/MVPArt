@@ -12,5 +12,10 @@ import me.jessyan.art.di.module.GlobeConfigModule;
 
 public interface ConfigModule {
 
+    /**
+     * 使用{@link GlobeConfigModule.Builder}给框架配置一些配置参数
+     * @param context
+     * @param builder
+     */
     void applyOptions(Context context, GlobeConfigModule.Builder builder);
 }

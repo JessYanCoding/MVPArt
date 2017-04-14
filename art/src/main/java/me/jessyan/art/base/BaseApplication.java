@@ -59,14 +59,16 @@ public abstract class BaseApplication extends Application {
         if (mActivityLifecycle != null) {
             unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
-        if (mApplication != null)
-            this.mApplication = null;
+        this.mAppComponent = null;
+        this.mActivityLifecycle = null;
+        this.mApplication = null;
     }
 
 
     /**
      * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
      * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
+     *
      * @return
      */
     private GlobeConfigModule getGlobeConfigModule(Application context) {
@@ -85,7 +87,7 @@ public abstract class BaseApplication extends Application {
 
 
     /**
-     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例, 在getAppComponent()拿到对象后都可以直接使用
+     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例,在getAppComponent()拿到对象后都可以直接使用
      *
      * @return
      */

@@ -20,7 +20,7 @@ public interface IRepositoryManager {
      * @param <T>
      * @return
      */
-    <T> T CreateRetrofitService(Class<T> service);
+    <T> T createRetrofitService(Class<T> service);
 
     /**
      * 根据传入的Class创建对应的RxCache service
@@ -28,5 +28,5 @@ public interface IRepositoryManager {
      * @param <T>
      * @return
      */
-    <T> T CreateCacheService(Class<T> cache);
+    <T> T createCacheService(Class<T> cache);
 }

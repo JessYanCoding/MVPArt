@@ -38,10 +38,10 @@ public class UserRepository implements IModel {
 
 
     public Observable<List<User>> getUsers(int lastIdQueried, boolean update) {
-        Observable<List<User>> users = mManager.CreateRetrofitService(UserService.class)
+        Observable<List<User>> users = mManager.createRetrofitService(UserService.class)
                 .getUsers(lastIdQueried, USERS_PER_PAGE);
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
-        return mManager.CreateCacheService(CommonCache.class)
+        return mManager.createCacheService(CommonCache.class)
                 .getUsers(users
                         , new DynamicKey(lastIdQueried)
                         , new EvictDynamicKey(update))

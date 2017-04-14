@@ -13,7 +13,6 @@ import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.utils.UiUtils;
 import me.jessyan.mvpart.demo.mvp.model.api.Api;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -75,14 +74,11 @@ public class GlobalConfiguration implements ConfigModule {
                         return request;
                     }
                 })
-                .responseErroListener(new ResponseErroListener() {
+                .responseErroListener((context1, e) -> {
                     /* 用来提供处理所有错误的监听
                        rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效 */
-                    @Override
-                    public void handleResponseError(Context context, Exception e) {
-                        Timber.w("------------>" + e.getMessage());
-                        UiUtils.SnackbarText("net error");
-                    }
+                    Timber.w("------------>" + e.getMessage());
+                    UiUtils.SnackbarText("net error");
                 });
     }
 }

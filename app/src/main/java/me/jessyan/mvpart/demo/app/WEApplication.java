@@ -31,8 +31,7 @@ public class WEApplication extends BaseApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if (mRefWatcher != null)
-            this.mRefWatcher = null;
+        this.mRefWatcher = null;
     }
 
     /**

@@ -71,7 +71,7 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T> T CreateRetrofitService(Class<T> service) {
+    public <T> T createRetrofitService(Class<T> service) {
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
             retrofitService = (T) mRetrofitServiceCache.get(service.getName());
@@ -91,7 +91,7 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T> T CreateCacheService(Class<T> cache) {
+    public <T> T createCacheService(Class<T> cache) {
         T cacheService;
         synchronized (mCacheServiceCache) {
             cacheService = (T) mCacheServiceCache.get(cache.getName());
@@ -105,7 +105,7 @@ public class RepositoryManager implements IRepositoryManager {
 
 
     private static Constructor<? extends IModel> findConstructorForClass(Class<?> cls) {
-        Constructor<? extends IModel> bindingCtor = null;
+        Constructor<? extends IModel> bindingCtor;
 
         String clsName = cls.getName();
 
