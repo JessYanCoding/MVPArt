@@ -1,7 +1,11 @@
 package me.jessyan.mvpart.demo.app;
 
+import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
+
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +19,7 @@ import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.utils.UiUtils;
+import me.jessyan.mvpart.demo.BuildConfig;
 import me.jessyan.mvpart.demo.mvp.model.api.Api;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -87,6 +92,23 @@ public class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
+        // AppDelegate.Lifecycle 的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
+        lifecycles.add(new AppDelegate.Lifecycle() {
+            private RefWatcher mRefWatcher;//leakCanary观察器
 
+            @Override
+            public void onCreate(Application application) {
+                if (BuildConfig.LOG_DEBUG) {//Timber日志打印
+                    Timber.plant(new Timber.DebugTree());
+                }
+                //leakCanary内存泄露检查
+                this.mRefWatcher = BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED;
+            }
+
+            @Override
+            public void onTerminate(Application application) {
+                this.mRefWatcher = null;
+            }
+        });
     }
 }

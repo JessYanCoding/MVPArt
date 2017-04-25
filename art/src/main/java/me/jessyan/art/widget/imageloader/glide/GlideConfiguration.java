@@ -15,7 +15,7 @@ import com.bumptech.glide.module.GlideModule;
 import java.io.File;
 import java.io.InputStream;
 
-import me.jessyan.art.base.BaseApplication;
+import me.jessyan.art.base.App;
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.http.OkHttpUrlLoader;
 import me.jessyan.art.utils.DataHelper;
@@ -32,7 +32,7 @@ public class GlideConfiguration implements GlideModule {
             @Override
             public DiskCache build() {
                 // Careful: the external cache directory doesn't enforce permissions
-                AppComponent appComponent = ((BaseApplication)context.getApplicationContext()).getAppComponent();
+                AppComponent appComponent = ((App) context.getApplicationContext()).getAppComponent();
                 return DiskLruCacheWrapper.get(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
             }
         });
@@ -51,7 +51,7 @@ public class GlideConfiguration implements GlideModule {
     @Override
     public void registerComponents(Context context, Glide glide) {
         //Glide默认使用HttpURLConnection做网络请求,在这切换成okhttp请求
-        AppComponent appComponent = ((BaseApplication)context.getApplicationContext()).getAppComponent();
+        AppComponent appComponent = ((App) context.getApplicationContext()).getAppComponent();
         glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(appComponent.okHttpClient()));
     }
 }

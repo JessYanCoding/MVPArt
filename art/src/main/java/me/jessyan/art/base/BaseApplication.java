@@ -14,7 +14,7 @@ import me.jessyan.art.di.component.AppComponent;
  * +androideventbus
  * +butterknife组成
  */
-public class BaseApplication extends Application implements App{
+public class BaseApplication extends Application implements App {
     private AppDelegate mAppDelegate;
 
 
