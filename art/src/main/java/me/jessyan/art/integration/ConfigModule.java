@@ -2,6 +2,9 @@ package me.jessyan.art.integration;
 
 import android.content.Context;
 
+import java.util.List;
+
+import me.jessyan.art.base.delegate.AppDelegate;
 import me.jessyan.art.di.module.GlobalConfigModule;
 
 /**
@@ -18,4 +21,10 @@ public interface ConfigModule {
      * @param builder
      */
     void applyOptions(Context context, GlobalConfigModule.Builder builder);
+
+    /**
+     * 使用{@link AppDelegate.Lifecycle}在Application的声明周期中注入一些操作
+     * @return
+     */
+    void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles);
 }

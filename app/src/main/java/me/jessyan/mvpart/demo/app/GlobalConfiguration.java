@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import me.jessyan.art.base.delegate.AppDelegate;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
@@ -80,5 +83,10 @@ public class GlobalConfiguration implements ConfigModule {
                     Timber.w("------------>" + e.getMessage());
                     UiUtils.SnackbarText("net error");
                 });
+    }
+
+    @Override
+    public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
+
     }
 }
