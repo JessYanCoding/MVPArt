@@ -7,8 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import me.jessyan.art.di.module.GlobeConfigModule;
-import me.jessyan.art.http.GlobeHttpHandler;
+import me.jessyan.art.di.module.GlobalConfigModule;
+import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.utils.UiUtils;
@@ -27,9 +27,9 @@ import timber.log.Timber;
 
 public class GlobalConfiguration implements ConfigModule {
     @Override
-    public void applyOptions(Context context, GlobeConfigModule.Builder builder) {
+    public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
         builder.baseurl(Api.APP_DOMAIN)
-                .globeHttpHandler(new GlobeHttpHandler() {// 这里可以提供一个全局处理Http请求和响应结果的处理类,
+                .globalHttpHandler(new GlobalHttpHandler() {// 这里可以提供一个全局处理Http请求和响应结果的处理类,
                     // 这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
                     @Override
                     public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {

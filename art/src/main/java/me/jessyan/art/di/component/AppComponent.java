@@ -13,7 +13,7 @@ import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.base.BaseApplication;
 import me.jessyan.art.di.module.AppModule;
 import me.jessyan.art.di.module.ClientModule;
-import me.jessyan.art.di.module.GlobeConfigModule;
+import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.di.module.ImageModule;
 import me.jessyan.art.mvp.IRepositoryManager;
 import me.jessyan.art.widget.imageloader.ImageLoader;
@@ -24,7 +24,7 @@ import okhttp3.OkHttpClient;
  * Created by jess on 8/4/16.
  */
 @Singleton
-@Component(modules = {AppModule.class, ClientModule.class, ImageModule.class, GlobeConfigModule.class})
+@Component(modules = {AppModule.class, ClientModule.class, ImageModule.class, GlobalConfigModule.class})
 public interface AppComponent {
     Application Application();
 
