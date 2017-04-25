@@ -9,13 +9,13 @@ import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
-import me.jessyan.mvpart.demo.app.WEApplication;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.UiUtils;
 import me.jessyan.mvpart.demo.R;
+import me.jessyan.mvpart.demo.app.WEApplication;
 import me.jessyan.mvpart.demo.mvp.presenter.UserPresenter;
 
 
