@@ -41,17 +41,19 @@ public class UserItemHolder extends BaseHolder<User> {
 
         mName.setText(data.getLogin());
 
-        mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity(), GlideImageConfig
-                .builder()
-                .url(data.getAvatarUrl())
-                .imageView(mAvater)
-                .build());
+        mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
+                        ? mAppComponent.Application() : mAppComponent.appManager().getCurrentActivity(),
+                GlideImageConfig
+                        .builder()
+                        .url(data.getAvatarUrl())
+                        .imageView(mAvater)
+                        .build());
     }
 
 
     @Override
     protected void onRelease() {
-        mImageLoader.clear(mAppComponent.Application(),GlideImageConfig.builder()
+        mImageLoader.clear(mAppComponent.Application(), GlideImageConfig.builder()
                 .imageViews(mAvater)
                 .build());
     }
