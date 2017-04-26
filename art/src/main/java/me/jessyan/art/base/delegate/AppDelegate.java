@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import me.jessyan.art.base.App;
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.di.component.DaggerAppComponent;
 import me.jessyan.art.di.module.AppModule;
@@ -27,7 +28,7 @@ import me.jessyan.art.integration.ManifestParser;
  * Contact with jess.yan.effort@gmail.com
  */
 
-public class AppDelegate {
+public class AppDelegate implements App {
     private Application mApplication;
     private AppComponent mAppComponent;
     @Inject
@@ -102,6 +103,7 @@ public class AppDelegate {
      *
      * @return
      */
+    @Override
     public AppComponent getAppComponent() {
         return mAppComponent;
     }
