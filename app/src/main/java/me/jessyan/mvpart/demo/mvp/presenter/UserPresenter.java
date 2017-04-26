@@ -23,10 +23,9 @@ import rx.schedulers.Schedulers;
  * Created by jess on 9/4/16 10:59
  * Contact with jess.yan.effort@gmail.com
  */
-public class UserPresenter extends BasePresenter {
+public class UserPresenter extends BasePresenter<UserRepository> {
     private RxErrorHandler mErrorHandler;
     private List<User> mUsers = new ArrayList<>();
-    private UserRepository mModel;
     private DefaultAdapter mAdapter;
     private int lastUserId = 1;
     private boolean isFirst = true;
@@ -34,9 +33,8 @@ public class UserPresenter extends BasePresenter {
 
 
     public UserPresenter(AppComponent appComponent) {
-        super();//记得这个super()必须加上,里面做一些初始化工作
+        super(appComponent.repositoryManager().createRepository(UserRepository.class));
         this.mErrorHandler = appComponent.rxErrorHandler();
-        this.mModel = appComponent.repositoryManager().createRepository(UserRepository.class);
     }
 
     public void requestUsers(final Message msg) {
