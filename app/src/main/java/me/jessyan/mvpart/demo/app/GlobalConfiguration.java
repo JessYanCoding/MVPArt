@@ -124,7 +124,7 @@ public class GlobalConfiguration implements ConfigModule {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 //这里全局给Activity设置toolbar和title,退出动画,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
-                if (activity.findViewById(R.id.toolbar) != null) {
+                if (activity.findViewById(R.id.toolbar) != null && activity instanceof AppCompatActivity) {
                     ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
                     ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
                 }
@@ -134,7 +134,7 @@ public class GlobalConfiguration implements ConfigModule {
                 if (activity.findViewById(R.id.toolbar_back) != null) {
                     activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {
                         activity.onBackPressed();
-                        activity.overridePendingTransition(R.anim.translate_left_to_center,R.anim.translate_center_to_right);
+                        activity.overridePendingTransition(R.anim.translate_left_to_center, R.anim.translate_center_to_right);
                     });
                 }
             }
