@@ -23,7 +23,7 @@ import me.jessyan.art.integration.ManifestParser;
  * 而我的框架要求Application要继承于BaseApplication
  * 所以当遇到某些三方库需要继承于它的Application的时候,就只有自定义Application继承于三方库的Application
  * 再将BaseApplication的代码复制进去,而现在就不用再复制代码,只用在对应的生命周期调用AppDelegate对应的方法(Application一定要实现APP接口)
- *
+ * <p>
  * Created by jess on 24/04/2017 09:44
  * Contact with jess.yan.effort@gmail.com
  */
@@ -34,13 +34,15 @@ public class AppDelegate implements App {
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
     private final List<ConfigModule> mModules;
-    private List<Lifecycle> mLifecycles = new ArrayList<>();
+    private List<Lifecycle> mAppLifecycles = new ArrayList<>();
+    private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
 
     public AppDelegate(Application application) {
         this.mApplication = application;
         this.mModules = new ManifestParser(mApplication).parse();
         for (ConfigModule module : mModules) {
-            module.injectAppLifecycle(mApplication, mLifecycles);
+            module.injectAppLifecycle(mApplication, mAppLifecycles);
+            module.injectActivityLifecycle(mApplication, mActivityLifecycles);
         }
     }
 
@@ -57,8 +59,11 @@ public class AppDelegate implements App {
 
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
+        for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
+            mApplication.registerActivityLifecycleCallbacks(lifecycle);
+        }
 
-        for (Lifecycle lifecycle : mLifecycles) {
+        for (Lifecycle lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
 
@@ -69,11 +74,16 @@ public class AppDelegate implements App {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
+        if (mActivityLifecycles != null && mActivityLifecycles.size() > 0) {
+            for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
+                mApplication.unregisterActivityLifecycleCallbacks(lifecycle);
+            }
+        }
         this.mAppComponent = null;
         this.mActivityLifecycle = null;
         this.mApplication = null;
 
-        for (Lifecycle lifecycle : mLifecycles) {
+        for (Lifecycle lifecycle : mAppLifecycles) {
             lifecycle.onTerminate(mApplication);
         }
     }

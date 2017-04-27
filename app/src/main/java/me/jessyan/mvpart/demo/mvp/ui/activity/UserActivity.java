@@ -1,6 +1,9 @@
 package me.jessyan.mvpart.demo.mvp.ui.activity;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,19 +37,25 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
 
     @Override
-    protected int initView() {
+    public int initView() {
+        getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
+            @Override
+            public void onFragmentPreAttached(FragmentManager fm, Fragment f, Context context) {
+                super.onFragmentPreAttached(fm, f, context);
+            }
+        },true);
         return R.layout.activity_user;
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         this.mRxPermissions = new RxPermissions(this);
         initRecycleView();
         mPresenter.requestUsers(Message.obtain(this, new Object[]{true, mRxPermissions}));//打开app时自动加载列表
     }
 
     @Override
-    protected UserPresenter getPresenter() {
+    public UserPresenter obtainPresenter() {
         return new UserPresenter(((App) getApplication()).getAppComponent());
     }
 

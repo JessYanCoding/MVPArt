@@ -1,5 +1,6 @@
 package me.jessyan.art.integration;
 
+import android.app.Application;
 import android.content.Context;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public interface ConfigModule {
 
     /**
      * 使用{@link GlobalConfigModule.Builder}给框架配置一些配置参数
+     *
      * @param context
      * @param builder
      */
@@ -24,7 +26,17 @@ public interface ConfigModule {
 
     /**
      * 使用{@link AppDelegate.Lifecycle}在Application的声明周期中注入一些操作
+     *
      * @return
      */
     void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles);
+
+
+    /**
+     * 使用{@link Application.ActivityLifecycleCallbacks}在Activity的声明周期中注入一些操作
+     *
+     * @param context
+     * @param lifecycles
+     */
+    void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles);
 }
