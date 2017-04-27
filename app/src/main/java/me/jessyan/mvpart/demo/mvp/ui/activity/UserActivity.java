@@ -1,9 +1,6 @@
 package me.jessyan.mvpart.demo.mvp.ui.activity;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,12 +35,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public int initView() {
-        getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
-            @Override
-            public void onFragmentPreAttached(FragmentManager fm, Fragment f, Context context) {
-                super.onFragmentPreAttached(fm, f, context);
-            }
-        },true);
         return R.layout.activity_user;
     }
 

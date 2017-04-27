@@ -1,4 +1,4 @@
-package me.jessyan.art.utils;
+package me.jessyan.mvpart.demo.app.utils;
 
 import me.jessyan.art.mvp.IView;
 import rx.Observable;
@@ -35,7 +35,4 @@ public class RxUtils {
             }
         };
     }
-
-
-
 }
