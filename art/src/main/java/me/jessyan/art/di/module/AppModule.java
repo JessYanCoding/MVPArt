@@ -1,8 +1,11 @@
 package me.jessyan.art.di.module;
 
 import android.app.Application;
+import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
+
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -38,6 +41,12 @@ public class AppModule {
     @Provides
     public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
         return repositoryManager;
+    }
+
+    @Singleton
+    @Provides
+    public Map<String, Object> provideExtras(){
+        return new ArrayMap<>();
     }
 
 }

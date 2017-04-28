@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -48,6 +49,9 @@ public interface AppComponent {
 
     //缓存文件根目录(RxCache和Glide的的缓存都已经作为子文件夹在这个目录里),应该将所有缓存放到这个根目录里,便于管理和清理,可在GlobeConfigModule里配置
     File cacheFile();
+
+    //用来存取一些整个App公用的数据,切勿大量存放大容量数据
+    Map<String, Object> extras();
 
     void inject(AppDelegate delegate);
 }

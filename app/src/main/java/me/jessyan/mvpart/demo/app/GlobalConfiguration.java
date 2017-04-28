@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import me.jessyan.art.base.App;
 import me.jessyan.art.base.delegate.AppDelegate;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
@@ -100,7 +101,6 @@ public class GlobalConfiguration implements ConfigModule {
     public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
         // AppDelegate.Lifecycle 的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
         lifecycles.add(new AppDelegate.Lifecycle() {
-            private RefWatcher mRefWatcher;//leakCanary观察器
 
             @Override
             public void onCreate(Application application) {
@@ -108,12 +108,11 @@ public class GlobalConfiguration implements ConfigModule {
                     Timber.plant(new Timber.DebugTree());
                 }
                 //leakCanary内存泄露检查
-                this.mRefWatcher = BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED;
+                ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }
 
             @Override
             public void onTerminate(Application application) {
-                this.mRefWatcher = null;
             }
         });
     }
@@ -123,7 +122,7 @@ public class GlobalConfiguration implements ConfigModule {
         lifecycles.add(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                //这里全局给Activity设置toolbar和title,退出动画,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
+                //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
                 if (activity.findViewById(R.id.toolbar) != null && activity instanceof AppCompatActivity) {
                     ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
                     ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -134,7 +133,6 @@ public class GlobalConfiguration implements ConfigModule {
                 if (activity.findViewById(R.id.toolbar_back) != null) {
                     activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {
                         activity.onBackPressed();
-                        activity.overridePendingTransition(R.anim.translate_left_to_center, R.anim.translate_center_to_right);
                     });
                 }
             }
