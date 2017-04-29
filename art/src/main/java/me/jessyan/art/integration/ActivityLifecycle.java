@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import me.jessyan.art.base.delegate.ActivityDelegate;
+import me.jessyan.art.base.delegate.ActivityDelegateImpl;
 import me.jessyan.art.base.delegate.IActivity;
 
 /**
@@ -36,7 +37,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             mAppManager.addActivity(activity);
 
         if (activity instanceof IActivity) {
-            ActivityDelegate activityDelegate = new ActivityDelegate(activity);
+            ActivityDelegate activityDelegate = new ActivityDelegateImpl(activity);
             activity.getIntent().putExtra(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
             activityDelegate.onCreate(savedInstanceState);
         }
