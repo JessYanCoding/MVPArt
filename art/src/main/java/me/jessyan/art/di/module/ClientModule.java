@@ -1,6 +1,7 @@
 package me.jessyan.art.di.module;
 
 import android.app.Application;
+import android.content.Context;
 
 import java.io.File;
 import java.util.List;
@@ -44,26 +45,27 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
-        return builder
+    Retrofit provideRetrofit(Application application, RetrofitConfiguration configuration, Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
+        builder
                 .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用rxjava
-                .addConverterFactory(GsonConverterFactory.create())//使用Gson
-                .build();
+                .addConverterFactory(GsonConverterFactory.create());//使用Gson
+        configuration.configRetrofit(application, builder);
+        return builder.build();
     }
 
     /**
      * 提供OkhttpClient
      *
-     * @param okHttpClient
+     * @param builder
      * @return
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
+    OkHttpClient provideClient(Application application, OkhttpConfiguration configuration, OkHttpClient.Builder builder, Interceptor intercept
             , List<Interceptor> interceptors, GlobalHttpHandler handler) {
-        OkHttpClient.Builder builder = okHttpClient
+        builder
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())))
@@ -71,8 +73,8 @@ public class ClientModule {
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
             interceptors.forEach(builder::addInterceptor);
         }
-        return builder
-                .build();
+        configuration.configOkhttp(application, builder);
+        return builder.build();
     }
 
 
@@ -105,9 +107,10 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxCache provideRxCache(@Named("RxCacheDirectory") File cacheDirectory) {
-        return new RxCache
-                .Builder()
+    RxCache provideRxCache(Application application, RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
+        RxCache.Builder builder = new RxCache.Builder();
+        configuration.configRxCache(application, builder);
+        return builder
                 .persistence(cacheDirectory, new GsonSpeaker());
     }
 
@@ -139,32 +142,36 @@ public class ClientModule {
                 .build();
     }
 
+    public interface RetrofitConfiguration {
+        RetrofitConfiguration EMPTY = new RetrofitConfiguration() {
+            @Override
+            public void configRetrofit(Context context, Retrofit.Builder builder) {
 
-//    .addNetworkInterceptor(new Interceptor() {
-//        @Override
-//        public Response intercept(Interceptor.Chain chain) throws IOException {
-//            Request request = chain.request();
-//            if(!DeviceUtils.netIsConnected(UiUtils.getContext())){
-//                request = request.newBuilder()
-//                        .cacheControl(CacheControl.FORCE_CACHE)
-//                        .build();
-//                LogUtils.warnInfo("http","no network");
-//            }
-//            Response originalResponse = chain.proceed(request);
-//            if(DeviceUtils.netIsConnected(UiUtils.getContext())){
-//                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-//                String cacheControl = request.cacheControl().toString();
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", cacheControl)
-//                        .removeHeader("Pragma")
-//                        .build();
-//            }else{
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", "public, only-if-cached, max-stale=2419200")
-//                        .removeHeader("Pragma")
-//                        .build();
-//            }
-//        }
-//    })
+            }
+        };
 
+        void configRetrofit(Context context, Retrofit.Builder builder);
+    }
+
+    public interface OkhttpConfiguration {
+        OkhttpConfiguration EMPTY = new OkhttpConfiguration() {
+            @Override
+            public void configOkhttp(Context context, OkHttpClient.Builder builder) {
+
+            }
+        };
+
+        void configOkhttp(Context context, OkHttpClient.Builder builder);
+    }
+
+    public interface RxCacheConfiguration {
+        RxCacheConfiguration EMPTY = new RxCacheConfiguration() {
+            @Override
+            public void configRxCache(Context context, RxCache.Builder builder) {
+
+            }
+        };
+
+        void configRxCache(Context context, RxCache.Builder builder);
+    }
 }
