@@ -13,7 +13,8 @@ import dagger.Module;
 import dagger.Provides;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.utils.DataHelper;
-import me.jessyan.art.utils.Preconditions;
+import me.jessyan.art.widget.imageloader.BaseImageLoaderStrategy;
+import me.jessyan.art.widget.imageloader.glide.GlideImageLoaderStrategy;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -24,6 +25,7 @@ import okhttp3.Interceptor;
 @Module
 public class GlobalConfigModule {
     private HttpUrl mApiUrl;
+    private BaseImageLoaderStrategy mLoaderStrategy;
     private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
     private ResponseErroListener mErroListener;
@@ -36,6 +38,7 @@ public class GlobalConfigModule {
      */
     private GlobalConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
+        this.mLoaderStrategy = builder.loaderStrategy;
         this.mHandler = builder.handler;
         this.mInterceptors = builder.interceptors;
         this.mErroListener = builder.responseErroListener;
@@ -57,7 +60,14 @@ public class GlobalConfigModule {
     @Singleton
     @Provides
     HttpUrl provideBaseUrl() {
-        return mApiUrl;
+        return mApiUrl == null ? HttpUrl.parse("https://api.github.com/") : mApiUrl;
+    }
+
+
+    @Singleton
+    @Provides
+    BaseImageLoaderStrategy provideImageLoaderStrategy() {//图片加载框架默认使用glide
+        return mLoaderStrategy == null ? new GlideImageLoaderStrategy() : mLoaderStrategy;
     }
 
 
@@ -91,7 +101,8 @@ public class GlobalConfigModule {
 
 
     public static final class Builder {
-        private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
+        private HttpUrl apiUrl;
+        private BaseImageLoaderStrategy loaderStrategy;
         private GlobalHttpHandler handler;
         private List<Interceptor> interceptors = new ArrayList<>();
         private ResponseErroListener responseErroListener;
@@ -105,6 +116,11 @@ public class GlobalConfigModule {
                 throw new IllegalArgumentException("baseurl can not be empty");
             }
             this.apiUrl = HttpUrl.parse(baseurl);
+            return this;
+        }
+
+        public Builder imageLoaderStrategy(BaseImageLoaderStrategy loaderStrategy) {//用来请求网络图片
+            this.loaderStrategy = loaderStrategy;
             return this;
         }
 
@@ -132,7 +148,6 @@ public class GlobalConfigModule {
 
 
         public GlobalConfigModule build() {
-            Preconditions.checkNotNull(apiUrl, "baseurl is required");
             return new GlobalConfigModule(this);
         }
 

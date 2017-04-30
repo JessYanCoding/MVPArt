@@ -13,7 +13,6 @@ import me.jessyan.art.di.component.DaggerAppComponent;
 import me.jessyan.art.di.module.AppModule;
 import me.jessyan.art.di.module.ClientModule;
 import me.jessyan.art.di.module.GlobalConfigModule;
-import me.jessyan.art.di.module.ImageModule;
 import me.jessyan.art.integration.ActivityLifecycle;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
@@ -52,7 +51,6 @@ public class AppDelegate implements App {
                 .builder()
                 .appModule(new AppModule(mApplication))//提供application
                 .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
-                .imageModule(new ImageModule())//图片加载框架默认使用glide
                 .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
                 .build();
         mAppComponent.inject(this);
