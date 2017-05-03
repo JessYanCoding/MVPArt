@@ -55,6 +55,8 @@ public class AppDelegate implements App {
                 .build();
         mAppComponent.inject(this);
 
+        mAppComponent.extras().put(ConfigModule.class.getName(), mModules);
+
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {

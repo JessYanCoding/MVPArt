@@ -17,6 +17,10 @@ import static me.jessyan.art.base.delegate.ActivityDelegate.LAYOUT_FRAMELAYOUT;
 import static me.jessyan.art.base.delegate.ActivityDelegate.LAYOUT_LINEARLAYOUT;
 import static me.jessyan.art.base.delegate.ActivityDelegate.LAYOUT_RELATIVELAYOUT;
 
+/**
+ * 因为java只能单继承,所以如果有需要继承特定Activity的三方库,那你就需要自己自定义Activity
+ * 继承于这个特定的Activity,然后按照将BaseActivity的格式,复制过去记住一定要实现{@link IActivity}
+ */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity<P> {
     protected final String TAG = this.getClass().getSimpleName();
     protected P mPresenter;
@@ -53,7 +57,18 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      *
      * @return
      */
+    @Override
     public boolean useEventBus() {
+        return true;
+    }
+
+    /**
+     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
+     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link com.jess.arms.base.BaseFragment} 的Fragment将不起任何作用
+     * @return
+     */
+    @Override
+    public boolean useFragment() {
         return true;
     }
 
