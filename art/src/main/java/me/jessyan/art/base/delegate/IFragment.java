@@ -29,7 +29,7 @@ public interface IFragment<P extends IPresenter> {
      *
      * 使用此方法时请注意调用时fragment的生命周期,如果调用此setData方法时onAttach
      * 还没执行,setData里调用presenter的方法时,是会报空的,因为presenter是在onAttach方法中创建的
-     * 如果要做一些初始化操作,可以不必让外部调setData,initData中初始化就可以了
+     * 如果要做一些初始化操作,可以不必让外部调setData,在initData中初始化就可以了
      * @param data
      */
     void setData(Object data);
