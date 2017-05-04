@@ -80,9 +80,9 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-        if (mUnbinder != null)
+        if (mUnbinder != null && mUnbinder != mUnbinder.EMPTY)
             mUnbinder.unbind();
-    }
+}
 
     @Override
     public void onDestroy() {
