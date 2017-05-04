@@ -1,5 +1,5 @@
 # MVPArt
-[ ![Bintray](https://img.shields.io/badge/bintray-v1.4-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArt/1.4/link)
+[ ![Bintray](https://img.shields.io/badge/bintray-v1.4.2-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArt/1.4.2/link)
 [ ![Build Status](https://travis-ci.org/JessYanCoding/MVPArt.svg?branch=complete) ](https://travis-ci.org/JessYanCoding/MVPArt)
 [ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
@@ -21,7 +21,7 @@
 ## Download
 ```
 dependencies {
-    compile 'me.jessyan:art:1.4'
+    compile 'me.jessyan:art:1.4.2'
 }
 ```
 

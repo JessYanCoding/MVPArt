@@ -2,6 +2,9 @@ package me.jessyan.art.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import org.simple.eventbus.EventBus;
@@ -9,6 +12,7 @@ import org.simple.eventbus.EventBus;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.jessyan.art.mvp.IPresenter;
+import timber.log.Timber;
 
 /**
  * Created by jess on 03/05/2017 10:09
@@ -80,9 +84,16 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-        if (mUnbinder != null && mUnbinder != mUnbinder.EMPTY)
-            mUnbinder.unbind();
-}
+        if (mUnbinder != null && mUnbinder != mUnbinder.EMPTY) {
+            try {
+                mUnbinder.unbind();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                //fix Bindings already cleared
+                Timber.w("onDestroyView: " + e.getMessage());
+            }
+        }
+    }
 
     @Override
     public void onDestroy() {
@@ -100,4 +111,34 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public void onDetach() {
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    protected FragmentDelegateImpl(Parcel in) {
+        this.mFragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
+        this.mFragment = in.readParcelable(Fragment.class.getClassLoader());
+        this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
+        this.mUnbinder = in.readParcelable(Unbinder.class.getClassLoader());
+        this.iPresenter = in.readParcelable(IPresenter.class.getClassLoader());
+    }
+
+    public static final Creator<FragmentDelegateImpl> CREATOR = new Creator<FragmentDelegateImpl>() {
+        @Override
+        public FragmentDelegateImpl createFromParcel(Parcel source) {
+            return new FragmentDelegateImpl(source);
+        }
+
+        @Override
+        public FragmentDelegateImpl[] newArray(int size) {
+            return new FragmentDelegateImpl[size];
+        }
+    };
 }
