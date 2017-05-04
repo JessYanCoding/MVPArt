@@ -1,10 +1,14 @@
 package me.jessyan.mvpart.demo.app.utils;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.art.mvp.IView;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by jess on 11/10/2016 16:39
@@ -13,22 +17,22 @@ import rx.schedulers.Schedulers;
 
 public class RxUtils {
 
-    public static <T> Observable.Transformer<T, T> applySchedulers(final IView view) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> applySchedulers(final IView view) {
+        return new ObservableTransformer<T,T>() {
             @Override
-            public Observable<T> call(Observable<T> observable) {
+            public Observable<T> apply(Observable<T> observable) {
                 return observable.subscribeOn(Schedulers.io())
-                        .doOnSubscribe(new Action0() {
+                        .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
-                            public void call() {//显示进度条
-                                view.showLoading();
+                            public void accept(@NonNull Disposable disposable) throws Exception {
+                                view.showLoading();//显示进度条
                             }
                         })
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doAfterTerminate(new Action0() {
+                        .doAfterTerminate(new Action() {
                             @Override
-                            public void call() {
+                            public void run() throws Exception {
                                 view.hideLoading();//隐藏进度条
                             }
                         });

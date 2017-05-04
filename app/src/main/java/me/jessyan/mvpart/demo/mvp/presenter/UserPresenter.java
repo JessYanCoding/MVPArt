@@ -1,10 +1,12 @@
 package me.jessyan.mvpart.demo.mvp.presenter;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.mvp.BasePresenter;
@@ -16,8 +18,6 @@ import me.jessyan.mvpart.demo.mvp.ui.adapter.UserAdapter;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by jess on 9/4/16 10:59
@@ -64,10 +64,11 @@ public class UserPresenter extends BasePresenter<UserRepository> {
             isEvictCache = false;
         }
 
-        addSubscrebe(mModel.getUsers(lastUserId, isEvictCache)
+        mModel.getUsers(lastUserId, isEvictCache)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                .doOnSubscribe(() -> {
+                .doOnSubscribe(disposable -> {
+                    addDispose(disposable);//在订阅时必须调用这个方法,不然Activity退出时可能内存泄漏
                     if (pullToRefresh)
                         msg.getTarget().showLoading();//显示上拉刷新的进度条
                     else {
@@ -105,7 +106,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                         else
                             mAdapter.notifyItemRangeInserted(preEndIndex, users.size());
                     }
-                }));
+                });
     }
 
     @Override

@@ -2,7 +2,7 @@ package me.jessyan.art.utils;
 
 import android.Manifest;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import me.jessyan.art.mvp.IView;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;

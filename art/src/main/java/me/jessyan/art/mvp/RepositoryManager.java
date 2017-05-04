@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.rx_cache.internal.RxCache;
+import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**

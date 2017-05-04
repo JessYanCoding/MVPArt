@@ -2,6 +2,7 @@ package me.jessyan.art.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcel;
 
 import org.simple.eventbus.EventBus;
 
@@ -69,4 +70,33 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         this.mActivity = null;
         this.iPresenter = null;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    protected ActivityDelegateImpl(Parcel in) {
+        this.mActivity = in.readParcelable(Activity.class.getClassLoader());
+        this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
+        this.mUnbinder = in.readParcelable(Unbinder.class.getClassLoader());
+        this.iPresenter = in.readParcelable(IPresenter.class.getClassLoader());
+    }
+
+    public static final Creator<ActivityDelegateImpl> CREATOR = new Creator<ActivityDelegateImpl>() {
+        @Override
+        public ActivityDelegateImpl createFromParcel(Parcel source) {
+            return new ActivityDelegateImpl(source);
+        }
+
+        @Override
+        public ActivityDelegateImpl[] newArray(int size) {
+            return new ActivityDelegateImpl[size];
+        }
+    };
 }
