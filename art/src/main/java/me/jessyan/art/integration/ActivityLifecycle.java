@@ -64,14 +64,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             }
             activityDelegate.onCreate(savedInstanceState);
         }
-    }
-
-    @Override
-    public void onActivityStarted(Activity activity) {
-        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
-        if (activityDelegate != null) {
-            activityDelegate.onStart();
-        }
 
         /**
          * 给每个Activity配置Fragment的监听,Activity可以通过 {@link IActivity#useFragment()} 设置是否使用监听
@@ -98,6 +90,14 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
                 ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
             }
 
+        }
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onStart();
         }
     }
 

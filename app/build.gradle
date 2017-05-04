@@ -61,7 +61,7 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["paginate"]
     //art
-//    compile 'me.jessyan:art:2.0.0'
+//    compile 'me.jessyan:art:2.0.1'
     compile project(':art')
     //test
     testCompile rootProject.ext.dependencies["junit"]
