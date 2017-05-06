@@ -52,7 +52,7 @@ public class BasePresenter<M extends IModel> implements IPresenter {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
-        mCompositeDisposable.add(disposable);//将所有subscription放入,集中处理
+        mCompositeDisposable.add(disposable);//将所有disposable放入,集中处理
     }
 
     protected void unDispose() {

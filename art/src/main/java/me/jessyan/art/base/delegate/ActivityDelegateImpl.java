@@ -33,7 +33,13 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         iActivity.setPresenter(iPresenter);
         if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(mActivity);//注册到事件主线
-        mActivity.setContentView(iActivity.initView());
+        try {
+            int layoutResID = iActivity.initView();
+            if (layoutResID != 0)//如果initView返回0,框架则不会调用setContentView()
+                mActivity.setContentView(layoutResID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(mActivity);
         iActivity.initData();
