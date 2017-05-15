@@ -20,6 +20,7 @@ public class BasePresenter<M extends IModel> implements IPresenter {
 
     public BasePresenter(M model) {
         this.mModel = model;
+        onStart();
     }
 
     public void onStart() {
