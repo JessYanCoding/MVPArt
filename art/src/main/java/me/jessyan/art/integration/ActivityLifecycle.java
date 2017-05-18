@@ -179,7 +179,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             Timber.w(f.toString() + "onFragmentAttached");
             if (f instanceof IFragment && f.getArguments() != null) {
                 FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
-                if (fragmentDelegate == null) {
+                if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
                     fragmentDelegate = new FragmentDelegateImpl(fm, f);
                     f.getArguments().putParcelable(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
                 }
