@@ -1,5 +1,6 @@
 package me.jessyan.mvpart.demo.mvp.ui.activity;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -34,12 +35,12 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
 
     @Override
-    public int initView() {
+    public int initView(Bundle savedInstanceState) {
         return R.layout.activity_user;
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         this.mRxPermissions = new RxPermissions(this);
         initRecycleView();
         mPresenter.requestUsers(Message.obtain(this, new Object[]{true, mRxPermissions}));//打开app时自动加载列表

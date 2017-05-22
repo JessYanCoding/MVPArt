@@ -1,5 +1,6 @@
 package me.jessyan.art.base.delegate;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,9 @@ import me.jessyan.art.mvp.IPresenter;
 public interface IFragment<P extends IPresenter> {
     boolean useEventBus();
 
-    View initView(LayoutInflater inflater, ViewGroup container);
+    View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
-    void initData();
+    void initData(Bundle savedInstanceState);
 
     P obtainPresenter();
 

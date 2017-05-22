@@ -1,5 +1,7 @@
 package me.jessyan.art.base.delegate;
 
+import android.os.Bundle;
+
 import me.jessyan.art.mvp.IPresenter;
 
 /**
@@ -14,10 +16,11 @@ public interface IActivity<P extends IPresenter> {
      * 如果initView返回0,框架则不会调用{@link android.app.Activity#setContentView(int)}
      *
      * @return
+     * @param savedInstanceState
      */
-    int initView();
+    int initView(Bundle savedInstanceState);
 
-    void initData();
+    void initData(Bundle savedInstanceState);
 
     P obtainPresenter();
 

@@ -34,7 +34,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         this.iPresenter = iActivity.obtainPresenter();
         iActivity.setPresenter(iPresenter);
         try {
-            int layoutResID = iActivity.initView();
+            int layoutResID = iActivity.initView(savedInstanceState);
             if (layoutResID != 0)//如果initView返回0,框架则不会调用setContentView()
                 mActivity.setContentView(layoutResID);
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         }
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(mActivity);
-        iActivity.initData();
+        iActivity.initData(savedInstanceState);
     }
 
     public void onStart() {

@@ -27,7 +27,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return initView(inflater,container);
+        return initView(inflater,container,savedInstanceState);
     }
 
     @Override
