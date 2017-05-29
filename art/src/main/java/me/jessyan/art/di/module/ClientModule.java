@@ -18,7 +18,7 @@ import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
+import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -136,11 +136,11 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
+    RxErrorHandler proRxErrorHandler(Application application, ResponseErrorListener listener) {
         return RxErrorHandler
                 .builder()
                 .with(application)
-                .responseErroListener(listener)
+                .responseErrorListener(listener)
                 .build();
     }
 

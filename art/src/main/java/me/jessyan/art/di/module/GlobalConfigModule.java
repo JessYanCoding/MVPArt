@@ -15,7 +15,7 @@ import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.art.widget.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.widget.imageloader.glide.GlideImageLoaderStrategy;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
+import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
@@ -28,7 +28,7 @@ public class GlobalConfigModule {
     private BaseImageLoaderStrategy mLoaderStrategy;
     private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
-    private ResponseErroListener mErroListener;
+    private ResponseErrorListener mErrorListener;
     private File mCacheFile;
     private ClientModule.RetrofitConfiguration mRetrofitConfiguration;
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
@@ -45,7 +45,7 @@ public class GlobalConfigModule {
         this.mLoaderStrategy = builder.loaderStrategy;
         this.mHandler = builder.handler;
         this.mInterceptors = builder.interceptors;
-        this.mErroListener = builder.responseErroListener;
+        this.mErrorListener = builder.responseErrorListener;
         this.mCacheFile = builder.cacheFile;
         this.mRetrofitConfiguration = builder.retrofitConfiguration;
         this.mOkhttpConfiguration = builder.okhttpConfiguration;
@@ -103,8 +103,8 @@ public class GlobalConfigModule {
      */
     @Singleton
     @Provides
-    ResponseErroListener provideResponseErroListener() {
-        return mErroListener == null ? ResponseErroListener.EMPTY : mErroListener;
+    ResponseErrorListener provideResponseErrorListener() {
+        return mErrorListener == null ? ResponseErrorListener.EMPTY : mErrorListener;
     }
 
     @Singleton
@@ -136,7 +136,7 @@ public class GlobalConfigModule {
         private BaseImageLoaderStrategy loaderStrategy;
         private GlobalHttpHandler handler;
         private List<Interceptor> interceptors = new ArrayList<>();
-        private ResponseErroListener responseErroListener;
+        private ResponseErrorListener responseErrorListener;
         private File cacheFile;
         private ClientModule.RetrofitConfiguration retrofitConfiguration;
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
@@ -171,8 +171,8 @@ public class GlobalConfigModule {
         }
 
 
-        public Builder responseErroListener(ResponseErroListener listener) {//处理所有Rxjava的onError逻辑
-            this.responseErroListener = listener;
+        public Builder responseErrorListener(ResponseErrorListener listener) {//处理所有Rxjava的onError逻辑
+            this.responseErrorListener = listener;
             return this;
         }
 
