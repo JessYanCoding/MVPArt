@@ -109,9 +109,10 @@ public class GlobalConfiguration implements ConfigModule {
                 })
                 .okhttpConfiguration((context1, okhttpBuilder) -> {//这里可以自己自定义配置Okhttp的参数
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
-                }).rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
-            rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
-        });
+                })
+                .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
+                    rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
+                });
     }
 
     @Override
@@ -139,7 +140,7 @@ public class GlobalConfiguration implements ConfigModule {
         lifecycles.add(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Timber.w(activity+" - onActivityCreated");
+                Timber.w(activity + " - onActivityCreated");
                 //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
                 if (activity.findViewById(R.id.toolbar) != null) {
                     if (activity instanceof AppCompatActivity) {
@@ -164,32 +165,32 @@ public class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onActivityStarted(Activity activity) {
-                Timber.w(activity+" - onActivityStarted");
+                Timber.w(activity + " - onActivityStarted");
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-                Timber.w(activity+" - onActivityResumed");
+                Timber.w(activity + " - onActivityResumed");
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-                Timber.w(activity+" - onActivityPaused");
+                Timber.w(activity + " - onActivityPaused");
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
-                Timber.w(activity+" - onActivityStopped");
+                Timber.w(activity + " - onActivityStopped");
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                Timber.w(activity+" - onActivitySaveInstanceState");
+                Timber.w(activity + " - onActivitySaveInstanceState");
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                Timber.w(activity+" - onActivityDestroyed");
+                Timber.w(activity + " - onActivityDestroyed");
             }
         });
     }
@@ -208,7 +209,7 @@ public class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                ((RefWatcher)((App) f.getActivity().getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(this);
+                ((RefWatcher) ((App) f.getActivity().getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(this);
             }
         });
     }

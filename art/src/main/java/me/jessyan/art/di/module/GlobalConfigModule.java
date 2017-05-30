@@ -1,6 +1,7 @@
 package me.jessyan.art.di.module;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -60,6 +61,7 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
+    @Nullable
     List<Interceptor> provideInterceptors() {
         return mInterceptors;
     }
@@ -81,8 +83,9 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
+    @Nullable
     GlobalHttpHandler provideGlobalHttpHandler() {
-        return mHandler == null ? GlobalHttpHandler.EMPTY : mHandler;//打印请求信息
+        return mHandler;//拦截Http请求和响应结果
     }
 
 
@@ -109,33 +112,37 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
+    @Nullable
     ClientModule.RetrofitConfiguration provideRetrofitConfiguration() {
-        return mRetrofitConfiguration == null ? ClientModule.RetrofitConfiguration.EMPTY : mRetrofitConfiguration;
+        return mRetrofitConfiguration;
     }
 
     @Singleton
     @Provides
+    @Nullable
     ClientModule.OkhttpConfiguration provideOkhttpConfiguration() {
-        return mOkhttpConfiguration == null ? ClientModule.OkhttpConfiguration.EMPTY : mOkhttpConfiguration;
+        return mOkhttpConfiguration;
     }
 
     @Singleton
     @Provides
+    @Nullable
     ClientModule.RxCacheConfiguration provideRxCacheConfiguration() {
-        return mRxCacheConfiguration == null ? ClientModule.RxCacheConfiguration.EMPTY : mRxCacheConfiguration;
+        return mRxCacheConfiguration;
     }
 
     @Singleton
     @Provides
+    @Nullable
     AppModule.GsonConfiguration provideGsonConfiguration() {
-        return mGsonConfiguration == null ? AppModule.GsonConfiguration.EMPTY : mGsonConfiguration;
+        return mGsonConfiguration;
     }
 
     public static final class Builder {
         private HttpUrl apiUrl;
         private BaseImageLoaderStrategy loaderStrategy;
         private GlobalHttpHandler handler;
-        private List<Interceptor> interceptors = new ArrayList<>();
+        private List<Interceptor> interceptors;
         private ResponseErrorListener responseErrorListener;
         private File cacheFile;
         private ClientModule.RetrofitConfiguration retrofitConfiguration;
@@ -166,6 +173,8 @@ public class GlobalConfigModule {
         }
 
         public Builder addInterceptor(Interceptor interceptor) {//动态添加任意个interceptor
+            if (interceptors == null)
+                interceptors = new ArrayList<>();
             this.interceptors.add(interceptor);
             return this;
         }

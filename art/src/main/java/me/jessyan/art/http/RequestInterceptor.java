@@ -33,7 +33,7 @@ public class RequestInterceptor implements Interceptor {
     private GlobalHttpHandler mHandler;
 
     @Inject
-    public RequestInterceptor(GlobalHttpHandler handler) {
+    public RequestInterceptor(@Nullable GlobalHttpHandler handler) {
         this.mHandler = handler;
     }
 
