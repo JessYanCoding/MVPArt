@@ -85,7 +85,7 @@ public class GlobalConfigModule {
     @Provides
     @Nullable
     GlobalHttpHandler provideGlobalHttpHandler() {
-        return mHandler;//拦截Http请求和响应结果
+        return mHandler;//处理Http请求和响应结果
     }
 
 

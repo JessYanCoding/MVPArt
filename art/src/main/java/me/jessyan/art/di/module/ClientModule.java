@@ -75,11 +75,12 @@ public class ClientModule {
         if (handler != null)
             builder.addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())));
 
-        if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的集合则遍历添加
+        if (interceptors != null) {//如果外部提供了interceptor的集合则遍历添加
             for (Interceptor interceptor : interceptors) {
                 builder.addInterceptor(interceptor);
             }
         }
+
         if (configuration != null)
             configuration.configOkhttp(application, builder);
         return builder.build();
