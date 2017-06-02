@@ -20,6 +20,9 @@ public class DataHelper {
     private static SharedPreferences mSharedPreferences;
     public static final String SP_NAME = "config";
 
+    private DataHelper() {
+    }
+
     /**
      * 存储重要信息到sharedPreferences；
      *

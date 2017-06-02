@@ -9,6 +9,10 @@ public class LogUtils {
     private final static boolean isLog = true;
     public static final String DEFAULT_TAG = "Mvparms";
 
+
+    private LogUtils() {
+    }
+
     public static void debugInfo(String tag, String msg) {
         if (!isLog || TextUtils.isEmpty(msg)) return;
         Log.d(tag, msg);

@@ -35,6 +35,9 @@ import static me.jessyan.art.integration.AppManager.START_ACTIVITY;
 public class UiUtils {
     static public Toast mToast;
 
+    private UiUtils() {
+    }
+
     /**
      * 设置hint大小
      *

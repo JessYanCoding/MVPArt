@@ -17,6 +17,9 @@ import me.jessyan.art.mvp.IView;
 
 public class RxUtils {
 
+    private RxUtils() {
+    }
+
     public static <T> ObservableTransformer<T, T> applySchedulers(final IView view) {
         return new ObservableTransformer<T,T>() {
             @Override
