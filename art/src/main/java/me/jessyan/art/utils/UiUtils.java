@@ -199,7 +199,7 @@ public class UiUtils {
      *
      * @param text
      */
-    public static void SnackbarText(String text) {
+    public static void snackbarText(String text) {
         Message message = new Message();
         message.what = SHOW_SNACKBAR;
         message.obj = text;
@@ -212,7 +212,7 @@ public class UiUtils {
      *
      * @param text
      */
-    public static void SnackbarTextWithLong(String text) {
+    public static void snackbarTextWithLong(String text) {
         Message message = new Message();
         message.what = SHOW_SNACKBAR;
         message.obj = text;
@@ -341,7 +341,7 @@ public class UiUtils {
      * @return
      * @throws Exception
      */
-    public static String MD5encode(String string) {
+    public static String encodeToMD5(String string) {
         byte[] hash = new byte[0];
         try {
             hash = MessageDigest.getInstance("MD5").digest(

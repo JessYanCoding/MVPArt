@@ -99,7 +99,7 @@
 -keepattributes *Annotation*
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
-# Application classes that will be serialized/deserialized over Gson
+# application classes that will be serialized/deserialized over Gson
 -keep class com.sunloto.shandong.bean.** { *; }
 
 ################umeng###############

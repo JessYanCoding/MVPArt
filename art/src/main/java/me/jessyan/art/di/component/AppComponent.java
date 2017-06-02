@@ -26,7 +26,7 @@ import okhttp3.OkHttpClient;
 @Singleton
 @Component(modules = {AppModule.class, ClientModule.class, GlobalConfigModule.class})
 public interface AppComponent {
-    Application Application();
+    Application application();
 
     //Rxjava错误处理管理类
     RxErrorHandler rxErrorHandler();

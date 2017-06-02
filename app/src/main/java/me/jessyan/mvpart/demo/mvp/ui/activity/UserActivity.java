@@ -1,7 +1,6 @@
 package me.jessyan.mvpart.demo.mvp.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,10 +21,8 @@ import me.jessyan.mvpart.demo.mvp.presenter.UserPresenter;
 
 public class UserActivity extends BaseActivity<UserPresenter> implements IView, SwipeRefreshLayout.OnRefreshListener {
 
-    @Nullable
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @Nullable
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -64,7 +61,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public void showMessage(String message) {
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
     @Override
