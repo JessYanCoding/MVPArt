@@ -19,7 +19,7 @@
 >> **Complete** 分支是一个含有网络层的完整框架,将 **Retrofit** 作为网络层并使用 **Dagger2** 管理所有对象,成熟强大适合新建的项目
 
 ## Download
-```
+``` gradle
 dependencies {
     compile 'me.jessyan:art:2.0.4'  //rxjava2
 }
