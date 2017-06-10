@@ -5,8 +5,8 @@
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
 [ ![QQGroup](https://img.shields.io/badge/QQ群-301733278-ff69b4.svg) ](https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917)
 
-## A New Android MVP Architecture
-**此框架旨在解决传统 **MVP** 类和接口太多,并且 **Presenter** 和 **View** 通过接口通信过于繁琐,重用 **Presenter** 代价太大等问题**
+## 一个新的MVP架构,此框架旨在解决传统 **MVP** 类和接口太多,并且 **Presenter** 和 **View** 通过接口通信过于繁琐,重用 **Presenter** 代价太大等问题
+
 
 
 ## Architectural
