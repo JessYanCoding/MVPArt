@@ -8,7 +8,7 @@
 [中文说明](README-zh.md)
 
 ## A New Android MVP Architecture
-** This framework is designed to solve the traditional **MVP** class and interface too much, and **Presenter** and **View** communicate too complicated through the interface, reuse **Presenter** too much cost**
+**This framework is designed to solve the traditional **MVP** class and interface too much, and **Presenter** and **View** communicate too complicated through the interface, reuse **Presenter** too much cost**
 
 
 ## Architectural
