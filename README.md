@@ -5,37 +5,34 @@
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
 [ ![QQGroup](https://img.shields.io/badge/QQ群-301733278-ff69b4.svg) ](https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917)
 
+[中文说明](README-zh.md)
+
 ## A New Android MVP Architecture
-**此框架旨在解决传统 **MVP** 类和接口太多,并且 **Presenter** 和 **View** 通过接口通信过于繁琐,重用 **Presenter** 代价太大等问题**
+** This framework is designed to solve the traditional **MVP** class and interface too much, and **Presenter** and **View** communicate too complicated through the interface, reuse **Presenter** too much cost**
 
 
 ## Architectural
 <img src="https://github.com/JessYanCoding/MVPArt/raw/master/image/Architecture.png" width="80%" height="80%">
 
 ## Introduction
-> [**Master** 分支](https://github.com/JessYanCoding/MVPArt/tree/master)
->> **Master** 分支是一个不含网络层的简易框架,主要通过4个 **Demo** 介绍本框架的思想,特性以及使用方法,小巧灵活适合已经有一整套现有框架但又需要重构为 **MVP** 结构的项目,但不管你使用哪个分支都强烈建议你先看看 **Master** 分支的 **Demo**    
+> [**Master** Branch](https://github.com/JessYanCoding/MVPArt/tree/master)
+>> **Master** branch is a simple framework without network layer, mainly through the four **Demo** introduced the framework of the ideas, features and use of methods, compact and flexible has a set of existing framework but need to refactor For **MVP** structure of the project, but no matter which branch you are using is strongly recommended that you first look at **Master** branch **Demo**
   
-> [**Complete** 分支](https://github.com/JessYanCoding/MVPArt/tree/complete)
->> **Complete** 分支是一个含有网络层的完整框架,将 **Retrofit** 作为网络层并使用 **Dagger2** 管理所有对象,成熟强大适合新建的项目
+> [**Complete** Branch](https://github.com/JessYanCoding/MVPArt/tree/complete)
+>> **Complete** branch is a complete framework with a network layer, **Retrofit** as a network layer and use **Dagger2** to manage all objects, mature and powerful for new projects
 
 ## Notice
-* 使用之前,请参阅 [传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
+* This framework is a lightweight framework, more suitable for small and medium-sized projects, large-scale projects please use [MVPArms](https://github.com/JessYanCoding/MVPArms)
 
-* 此框架是一个轻量级框架,比较适合中小型项目,大型项目请使用 [MVPArms](https://github.com/JessYanCoding/MVPArms)
-* 传统MVP每个页面对应一个 **Presenter** ,而大多数 **Presenter** 只有一两个方法,这样导致存在大量代码寥寥无几的 **Presenter** ,此框架旨在解决复用 **Presenter** 时需要实现过多多余接口方法的问题,鼓励开发者将相近的逻辑写在一个 **Presenter** 中,不断重用 **Presenter** ,减少大量类文件
-* 当然很多不同的逻辑都写在一个 **Presenter** 中,虽然可以少写很多类,但是后面的扩展性肯定不好,所以这个粒度需要自己控制,但是对于外包项目简直是福音
+* Traditional MVP corresponds to a **Presenter**, and most **Presenter** has only one or two methods, which leads to the existence of a large number of very few tags **Presenter**, this framework is designed to solve the reuse **Presenter** need to achieve too many redundant interface method, encourage developers to write similar logic in a **Presenter**, constantly reuse **Presenter**, reduce a large number of class files
+* Of course, many different logic is written in a **Presenter**, although you can write a lot of classes, but behind the expansion is certainly not good, so the size of their own control, but for the outsourcing project is very useful
 
 
 ## Download
 ``` gradle
-dependencies {
-    compile 'me.jessyan:art:2.0.4'  //rxjava2
-}
+ compile 'me.jessyan:art:2.0.4'  //rxjava2
 
-dependencies {
-    compile 'me.jessyan:art:1.4.3' //rxjava1
-}
+ compile 'me.jessyan:art:1.4.3' //rxjava1(Not maintained)
 ```
 
 ## About Me
