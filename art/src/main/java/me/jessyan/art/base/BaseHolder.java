@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.zhy.autolayout.utils.AutoUtils;
 
-import me.jessyan.art.utils.KnifeUtil;
+import me.jessyan.art.utils.ThirdViewUtil;
 
 /**
  * Created by jess on 2015/11/24.
@@ -17,7 +17,7 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
         super(itemView);
         itemView.setOnClickListener(this);//点击事件
         AutoUtils.autoSize(itemView);//适配
-        KnifeUtil.bindTarget(this, itemView);//绑定
+        ThirdViewUtil.bindTarget(this, itemView);//绑定
     }
 
 
