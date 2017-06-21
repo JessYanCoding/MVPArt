@@ -48,7 +48,7 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements I
 
     @Override
     public void showMessage(String message) {
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
     @Override
@@ -224,7 +224,7 @@ public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements I
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
 
