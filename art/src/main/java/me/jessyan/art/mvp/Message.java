@@ -464,9 +464,11 @@ public final class Message implements Parcelable {
     }
 
     /**
-     * 分发消息(这里需要自己切换线程),调用{@link IView#handleMessage(Message)}处理消息后
-     * 将消息放入消息池,供下次{@link #obtain()}
+     * 废弃,使用 {@link Message#handleMessageToTarget} 代替
+     * 分发消息(这里需要自己切换线程),调用 {@link IView#handleMessage(Message)} 处理消息后
+     * 将消息放入消息池,供下次 {@link #obtain()}
      */
+    @Deprecated
     public void HandleMessageToTarget() {
         if (target == null) throw new IllegalArgumentException("target is null");
         target.handleMessage(this);
@@ -474,9 +476,29 @@ public final class Message implements Parcelable {
     }
 
     /**
-     * 分发消息(这里需要自己切换线程),调用{@link IView#handleMessage(Message)}处理消息
+     * 分发消息(这里需要自己切换线程),调用 {@link IView#handleMessage(Message)} 处理消息后
+     * 将消息放入消息池,供下次 {@link #obtain()}
      */
+    public void handleMessageToTarget() {
+        if (target == null) throw new IllegalArgumentException("target is null");
+        target.handleMessage(this);
+        this.recycleUnchecked();
+    }
+
+    /**
+     * 废弃,使用 {@link Message#handleMessageToTargetUnrecycle} 代替
+     * 分发消息(这里需要自己切换线程),调用 {@link IView#handleMessage(Message)} 处理消息
+     */
+    @Deprecated
     public void HandleMessageToTargetUnrecycle() {
+        if (target == null) throw new IllegalArgumentException("target is null");
+        target.handleMessage(this);
+    }
+
+    /**
+     * 分发消息(这里需要自己切换线程),调用 {@link IView#handleMessage(Message)} 处理消息
+     */
+    public void handleMessageToTargetUnrecycle() {
         if (target == null) throw new IllegalArgumentException("target is null");
         target.handleMessage(this);
     }
@@ -627,7 +649,7 @@ public final class Message implements Parcelable {
             try {
                 Parcelable[] p = (Parcelable[]) objs;
                 dest.writeInt(1);
-                dest.writeParcelableArray(p,flags);
+                dest.writeParcelableArray(p, flags);
             } catch (ClassCastException e) {
                 throw new RuntimeException(
                         "Can't marshal non-Parcelable objects across processes.");
@@ -639,7 +661,6 @@ public final class Message implements Parcelable {
         Messenger.writeMessengerOrNullToParcel(replyTo, dest);
         dest.writeInt(sendingUid);
     }
-
 
 
     private void readFromParcel(Parcel source) {

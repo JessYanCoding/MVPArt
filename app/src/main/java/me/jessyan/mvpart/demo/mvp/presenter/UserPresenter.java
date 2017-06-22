@@ -43,7 +43,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
             mAdapter = new UserAdapter(mUsers);
             msg.what = 0;
             msg.obj = mAdapter;
-            msg.HandleMessageToTargetUnrecycle();
+            msg.handleMessageToTargetUnrecycle();
         }
 
 
@@ -82,7 +82,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                     else {
                         //显示下拉加载更多的进度条
                         msg.what = 1;
-                        msg.HandleMessageToTargetUnrecycle();
+                        msg.handleMessageToTargetUnrecycle();
                     }
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -96,7 +96,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                     } else {
                         //隐藏下拉加载更多的进度条
                         msg.what = 2;
-                        msg.HandleMessageToTarget();//方法最后必须调HandleMessageToTarget,将消息所有引用清空后回收进消息池
+                        msg.handleMessageToTarget();//方法最后必须调HandleMessageToTarget,将消息所有引用清空后回收进消息池
                     }
                 })
                 .subscribe(new ErrorHandleSubscriber<List<User>>(mErrorHandler) {

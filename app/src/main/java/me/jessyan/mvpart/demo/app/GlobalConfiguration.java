@@ -230,7 +230,12 @@ public class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                ((RefWatcher) ((App) f.getActivity().getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(f);
+                ((RefWatcher) ((App) f.getActivity()
+                        .getApplication())
+                        .getAppComponent()
+                        .extras()
+                        .get(RefWatcher.class.getName()))
+                        .watch(f);
             }
         });
     }
