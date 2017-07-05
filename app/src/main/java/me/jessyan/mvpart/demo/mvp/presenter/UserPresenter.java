@@ -61,13 +61,13 @@ public class UserPresenter extends BasePresenter<UserRepository> {
         }, (RxPermissions) msg.objs[1], mErrorHandler);
 
 
-        if (pullToRefresh) lastUserId = 1;//上拉刷新默认只请求第一页
+        if (pullToRefresh) lastUserId = 1;//下拉刷新默认只请求第一页
 
         //关于RxCache缓存库的使用请参考 http://www.jianshu.com/p/b58ef6b0624b
 
-        boolean isEvictCache = pullToRefresh;//是否驱逐缓存,为ture即不使用缓存,每次上拉刷新即需要最新数据,则不使用缓存
+        boolean isEvictCache = pullToRefresh;//是否驱逐缓存,为ture即不使用缓存,每次下拉刷新即需要最新数据,则不使用缓存
 
-        if (pullToRefresh && isFirst) {//默认在第一次上拉刷新时使用缓存
+        if (pullToRefresh && isFirst) {//默认在第一次下拉刷新时使用缓存
             isFirst = false;
             isEvictCache = false;
         }
@@ -78,9 +78,9 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                 .doOnSubscribe(disposable -> {
                     addDispose(disposable);//在订阅时必须调用这个方法,不然Activity退出时可能内存泄漏
                     if (pullToRefresh)
-                        msg.getTarget().showLoading();//显示上拉刷新的进度条
+                        msg.getTarget().showLoading();//显示下拉刷新的进度条
                     else {
-                        //显示下拉加载更多的进度条
+                        //显示上拉加载更多的进度条
                         msg.what = 1;
                         msg.handleMessageToTargetUnrecycle();
                     }
@@ -88,13 +88,13 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(() -> {
                     if (pullToRefresh) {
-                        msg.getTarget().hideLoading();//隐藏上拉刷新的进度条
+                        msg.getTarget().hideLoading();//隐藏下拉刷新的进度条
                         //因为hideLoading,为默认方法,直接可以调用所以不需要发送消息给handleMessage()来处理,
                         //HandleMessageToTarget()的原理就是发送消息并回收消息
                         //调用默认方法后不需要调用HandleMessageToTarget(),但是如果后面对view没有其他操作了请调用message.recycle()回收消息
                         msg.recycle();
                     } else {
-                        //隐藏下拉加载更多的进度条
+                        //隐藏上拉加载更多的进度条
                         msg.what = 2;
                         msg.handleMessageToTarget();//方法最后必须调HandleMessageToTarget,将消息所有引用清空后回收进消息池
                     }
@@ -104,7 +104,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                     public void onNext(List<User> users) {
                         lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
 
-                        if (pullToRefresh) mUsers.clear();//如果是上拉刷新则清空列表
+                        if (pullToRefresh) mUsers.clear();//如果是下拉刷新则清空列表
 
                         preEndIndex = mUsers.size();//更新之前列表总长度,用于确定加载更多的起始位置
                         mUsers.addAll(users);
