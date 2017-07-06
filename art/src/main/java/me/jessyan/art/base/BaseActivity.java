@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.jessyan.art.base.delegate.IActivity;
 import me.jessyan.art.mvp.IPresenter;
 
@@ -18,6 +20,7 @@ import static me.jessyan.art.utils.ThirdViewUtil.convertAutoView;
  */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity<P> {
     protected final String TAG = this.getClass().getSimpleName();
+    private Unbinder mUnbinder;
     protected P mPresenter;
 
     @Override
@@ -29,6 +32,15 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            int layoutResID = initView(savedInstanceState);
+            if (layoutResID != 0)//如果initView返回0,框架则不会调用setContentView()
+                setContentView(layoutResID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //绑定到butterknife
+        mUnbinder = ButterKnife.bind(this);
         initData(savedInstanceState);
     }
 
@@ -41,6 +53,14 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (mPresenter == null) mPresenter = obtainPresenter();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
+        this.mPresenter = null;
+        this.mUnbinder = null;
     }
 
     /**
@@ -56,6 +76,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     /**
      * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
      * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link BaseFragment} 的Fragment将不起任何作用
+     *
      * @return
      */
     @Override

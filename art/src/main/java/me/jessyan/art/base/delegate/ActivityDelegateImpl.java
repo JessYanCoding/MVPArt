@@ -6,8 +6,6 @@ import android.os.Parcel;
 
 import org.simple.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.jessyan.art.mvp.IPresenter;
 
 /**
@@ -18,7 +16,6 @@ import me.jessyan.art.mvp.IPresenter;
 public class ActivityDelegateImpl implements ActivityDelegate {
     private Activity mActivity;
     private IActivity iActivity;
-    private Unbinder mUnbinder;
     private IPresenter iPresenter;
 
 
@@ -33,15 +30,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             EventBus.getDefault().register(mActivity);//注册到事件主线
         this.iPresenter = iActivity.obtainPresenter();
         iActivity.setPresenter(iPresenter);
-        try {
-            int layoutResID = iActivity.initView(savedInstanceState);
-            if (layoutResID != 0)//如果initView返回0,框架则不会调用setContentView()
-                mActivity.setContentView(layoutResID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //绑定到butterknife
-        mUnbinder = ButterKnife.bind(mActivity);
     }
 
     @Override
@@ -71,11 +59,9 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onDestroy() {
-        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
         if (iActivity != null && iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(mActivity);
         if (iPresenter != null) iPresenter.onDestroy(); //释放资源
-        this.mUnbinder = null;
         this.iActivity = null;
         this.mActivity = null;
         this.iPresenter = null;
@@ -94,7 +80,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     protected ActivityDelegateImpl(Parcel in) {
         this.mActivity = in.readParcelable(Activity.class.getClassLoader());
         this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
-        this.mUnbinder = in.readParcelable(Unbinder.class.getClassLoader());
         this.iPresenter = in.readParcelable(IPresenter.class.getClassLoader());
     }
 
