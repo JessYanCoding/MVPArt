@@ -2,6 +2,7 @@ package me.jessyan.art.base.delegate;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;
+import android.content.Context;
 import android.content.res.Configuration;
 
 import java.util.ArrayList;
@@ -39,17 +40,23 @@ public class AppDelegate implements App {
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
 
-    public AppDelegate(Application application) {
-        this.mApplication = application;
-        this.mModules = new ManifestParser(mApplication).parse();
+    public AppDelegate(Context context) {
+        this.mModules = new ManifestParser(context).parse();
         for (ConfigModule module : mModules) {
-            module.injectAppLifecycle(mApplication, mAppLifecycles);
-            module.injectActivityLifecycle(mApplication, mActivityLifecycles);
+            module.injectAppLifecycle(context, mAppLifecycles);
+            module.injectActivityLifecycle(context, mActivityLifecycles);
+        }
+    }
+
+    public void attachBaseContext(Context base){
+        for (Lifecycle lifecycle : mAppLifecycles) {
+            lifecycle.attachBaseContext(base);
         }
     }
 
 
-    public void onCreate() {
+    public void onCreate(Application application) {
+        this.mApplication = application;
         mAppComponent = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(mApplication))//提供application
@@ -134,6 +141,8 @@ public class AppDelegate implements App {
 
 
     public interface Lifecycle {
+        void attachBaseContext(Context base);
+
         void onCreate(Application application);
 
         void onTerminate(Application application);
