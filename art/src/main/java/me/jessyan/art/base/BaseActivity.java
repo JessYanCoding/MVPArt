@@ -34,13 +34,14 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         super.onCreate(savedInstanceState);
         try {
             int layoutResID = initView(savedInstanceState);
-            if (layoutResID != 0)//如果initView返回0,框架则不会调用setContentView()
+            if (layoutResID != 0) {//如果initView返回0,框架则不会调用setContentView()
                 setContentView(layoutResID);
+                //绑定到butterknife
+                mUnbinder = ButterKnife.bind(this);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //绑定到butterknife
-        mUnbinder = ButterKnife.bind(this);
         initData(savedInstanceState);
     }
 
