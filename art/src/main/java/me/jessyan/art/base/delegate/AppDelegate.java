@@ -116,7 +116,7 @@ public class AppDelegate implements App {
      *
      * @return
      */
-    private GlobalConfigModule getGlobalConfigModule(Application context, List<ConfigModule> modules) {
+    private GlobalConfigModule getGlobalConfigModule(Context context, List<ConfigModule> modules) {
 
         GlobalConfigModule.Builder builder = GlobalConfigModule
                 .builder();

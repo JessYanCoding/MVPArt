@@ -167,31 +167,36 @@ public class GlobalConfiguration implements ConfigModule {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 Timber.w(activity + " - onActivityCreated");
-                //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
-                if (activity.findViewById(R.id.toolbar) != null) {
-                    if (activity instanceof AppCompatActivity) {
-                        ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
-                        ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
-                    } else {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.toolbar));
-                            activity.getActionBar().setDisplayShowTitleEnabled(false);
-                        }
-                    }
-                }
-                if (activity.findViewById(R.id.toolbar_title) != null) {
-                    ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
-                }
-                if (activity.findViewById(R.id.toolbar_back) != null) {
-                    activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {
-                        activity.onBackPressed();
-                    });
-                }
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
                 Timber.w(activity + " - onActivityStarted");
+                if (!activity.getIntent().getBooleanExtra("isInitToolbar", false)) {
+                    //由于加强框架的兼容性,故将 setContentView 放到 onActivityCreated 之后,onActivityStarted 之前执行
+                    //而 findViewById 必须在 Activity setContentView() 后才有效,所以将以下代码从之前的 onActivityCreated 中移动到 onActivityStarted 中执行
+                    activity.getIntent().putExtra("isInitToolbar", true);
+                    //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
+                    if (activity.findViewById(R.id.toolbar) != null) {
+                        if (activity instanceof AppCompatActivity) {
+                            ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
+                            ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.toolbar));
+                                activity.getActionBar().setDisplayShowTitleEnabled(false);
+                            }
+                        }
+                    }
+                    if (activity.findViewById(R.id.toolbar_title) != null) {
+                        ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
+                    }
+                    if (activity.findViewById(R.id.toolbar_back) != null) {
+                        activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {
+                            activity.onBackPressed();
+                        });
+                    }
+                }
             }
 
             @Override
@@ -229,6 +234,7 @@ public class GlobalConfiguration implements ConfigModule {
             public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
                 // 在配置变化的时候将这个 Fragment 保存下来,在 Activity 由于配置变化重建是重复利用已经创建的Fragment。
                 // https://developer.android.com/reference/android/app/Fragment.html?hl=zh-cn#setRetainInstance(boolean)
+                // 如果在 XML 中使用 <Fragment/> 标签,的方式创建 Fragment 请务必在标签中加上 android:id 或者 android:tag 属性,否则 setRetainInstance(true) 无效
                 // 在 Activity 中绑定少量的 Fragment 建议这样做,如果需要绑定较多的 Fragment 不建议设置此参数,如 ViewPager 需要展示较多 Fragment
                 f.setRetainInstance(true);
             }
