@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dagger.Lazy;
 import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
@@ -23,14 +24,14 @@ import retrofit2.Retrofit;
 
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
-    private Retrofit mRetrofit;
-    private RxCache mRxCache;
+    private Lazy<Retrofit> mRetrofit;
+    private Lazy<RxCache> mRxCache;
     private final Map<String, IModel> mRepositoryCache = new LinkedHashMap<>();
     private final Map<String, Object> mRetrofitServiceCache = new LinkedHashMap<>();
     private final Map<String, Object> mCacheServiceCache = new LinkedHashMap<>();
 
     @Inject
-    public RepositoryManager(Retrofit retrofit, RxCache rxCache) {
+    public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache) {
         this.mRetrofit = retrofit;
         this.mRxCache = rxCache;
     }
@@ -76,7 +77,7 @@ public class RepositoryManager implements IRepositoryManager {
         synchronized (mRetrofitServiceCache) {
             retrofitService = (T) mRetrofitServiceCache.get(service.getName());
             if (retrofitService == null) {
-                retrofitService = mRetrofit.create(service);
+                retrofitService = mRetrofit.get().create(service);
                 mRetrofitServiceCache.put(service.getName(), retrofitService);
             }
         }
@@ -96,7 +97,7 @@ public class RepositoryManager implements IRepositoryManager {
         synchronized (mCacheServiceCache) {
             cacheService = (T) mCacheServiceCache.get(cache.getName());
             if (cacheService == null) {
-                cacheService = mRxCache.using(cache);
+                cacheService = mRxCache.get().using(cache);
                 mCacheServiceCache.put(cache.getName(), cacheService);
             }
         }
