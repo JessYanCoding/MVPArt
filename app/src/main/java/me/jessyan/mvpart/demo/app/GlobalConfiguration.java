@@ -45,12 +45,10 @@ import retrofit2.HttpException;
 import timber.log.Timber;
 
 /**
- * app的全局配置信息在此配置,需要将此实现类声明到AndroidManifest中
+ * app 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
  * Created by jess on 12/04/2017 17:25
  * Contact with jess.yan.effort@gmail.com
  */
-
-
 public class GlobalConfiguration implements ConfigModule {
 //    public static String sDomain = Api.APP_DOMAIN;
 

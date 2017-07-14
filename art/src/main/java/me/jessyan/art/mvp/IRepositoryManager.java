@@ -8,6 +8,7 @@ package me.jessyan.art.mvp;
 public interface IRepositoryManager {
     /**
      * 根据传入的Class创建对应的仓库
+     *
      * @param repository
      * @param <T>
      * @return
@@ -16,6 +17,7 @@ public interface IRepositoryManager {
 
     /**
      * 根据传入的Class创建对应的Retrift service
+     *
      * @param service
      * @param <T>
      * @return
@@ -24,9 +26,16 @@ public interface IRepositoryManager {
 
     /**
      * 根据传入的Class创建对应的RxCache service
+     *
      * @param cache
      * @param <T>
      * @return
      */
     <T> T createCacheService(Class<T> cache);
+
+    /**
+     * 清理所有缓存
+     */
+    void clearAllCache();
+
 }

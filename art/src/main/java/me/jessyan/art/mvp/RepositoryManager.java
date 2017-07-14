@@ -2,7 +2,7 @@ package me.jessyan.art.mvp;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -13,11 +13,10 @@ import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**
- *
  * 用来管理所有业务逻辑的仓库,网络请求层,以及数据缓存层,以后可以添加数据库请求层
  * 所有仓库不直接持有却通过RepositoryManager拿到需要的请求层做数据处理的好处是
  * 仓库可以直接和对应的请求层解耦,比如网路请求层,需要从Retrofit替换为其他网络请求库,这时就仓库就不会受到影响
- *
+ * <p>
  * Created by jess on 16/03/2017 14:25
  * Contact with jess.yan.effort@gmail.com
  */
@@ -26,9 +25,9 @@ import retrofit2.Retrofit;
 public class RepositoryManager implements IRepositoryManager {
     private Lazy<Retrofit> mRetrofit;
     private Lazy<RxCache> mRxCache;
-    private final Map<String, IModel> mRepositoryCache = new LinkedHashMap<>();
-    private final Map<String, Object> mRetrofitServiceCache = new LinkedHashMap<>();
-    private final Map<String, Object> mCacheServiceCache = new LinkedHashMap<>();
+    private final Map<String, IModel> mRepositoryCache = new HashMap<>();
+    private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
+    private final Map<String, Object> mCacheServiceCache = new HashMap<>();
 
     @Inject
     public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache) {
@@ -38,6 +37,7 @@ public class RepositoryManager implements IRepositoryManager {
 
     /**
      * 根据传入的Class创建对应的仓库
+     *
      * @param repository
      * @param <T>
      * @return
@@ -56,7 +56,7 @@ public class RepositoryManager implements IRepositoryManager {
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException("Unable to invoke " + constructor, e);
                 } catch (InvocationTargetException e) {
-                    throw new RuntimeException("create repository error",e);
+                    throw new RuntimeException("create repository error", e);
                 }
                 mRepositoryCache.put(repository.getName(), repositoryInstance);
             }
@@ -67,6 +67,7 @@ public class RepositoryManager implements IRepositoryManager {
 
     /**
      * 根据传入的Class创建对应的Retrift service
+     *
      * @param service
      * @param <T>
      * @return
@@ -87,6 +88,7 @@ public class RepositoryManager implements IRepositoryManager {
 
     /**
      * 根据传入的Class创建对应的RxCache service
+     *
      * @param cache
      * @param <T>
      * @return
@@ -102,6 +104,14 @@ public class RepositoryManager implements IRepositoryManager {
             }
         }
         return cacheService;
+    }
+
+    /**
+     * 清理所有缓存
+     */
+    @Override
+    public void clearAllCache() {
+        mRxCache.get().evictAll();
     }
 
 
