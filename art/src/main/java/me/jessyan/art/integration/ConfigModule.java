@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import java.util.List;
 
-import me.jessyan.art.base.delegate.AppDelegate;
+import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 
 /**
@@ -26,11 +26,11 @@ public interface ConfigModule {
     void applyOptions(Context context, GlobalConfigModule.Builder builder);
 
     /**
-     * 使用{@link AppDelegate.Lifecycle}在Application的生命周期中注入一些操作
+     * 使用{@link AppLifecycles}在Application的生命周期中注入一些操作
      *
      * @return
      */
-    void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles);
+    void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles);
 
 
     /**

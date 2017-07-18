@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import me.jessyan.art.base.App;
-import me.jessyan.art.base.delegate.AppDelegate;
+import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
@@ -49,7 +49,7 @@ import timber.log.Timber;
  * Created by jess on 12/04/2017 17:25
  * Contact with jess.yan.effort@gmail.com
  */
-public class GlobalConfiguration implements ConfigModule {
+public final class GlobalConfiguration implements ConfigModule {
 //    public static String sDomain = Api.APP_DOMAIN;
 
     @Override
@@ -146,9 +146,9 @@ public class GlobalConfiguration implements ConfigModule {
     }
 
     @Override
-    public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
-        // AppDelegate.Lifecycle 的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
-        lifecycles.add(new AppDelegate.Lifecycle() {
+    public void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles) {
+        // AppLifecycles 的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
+        lifecycles.add(new AppLifecycles() {
 
             @Override
             public void attachBaseContext(Context base) {

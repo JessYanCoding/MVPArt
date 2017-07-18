@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import me.jessyan.art.base.delegate.AppDelegate;
+import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.component.AppComponent;
 
 /**
@@ -16,7 +17,7 @@ import me.jessyan.art.di.component.AppComponent;
  * +butterknife组成
  */
 public class BaseApplication extends Application implements App {
-    private AppDelegate mAppDelegate;
+    private AppLifecycles mAppDelegate;
 
     /**
      * 这里会在 {@link BaseApplication#onCreate} 之前被调用,可以做一些较早的初始化
@@ -44,7 +45,7 @@ public class BaseApplication extends Application implements App {
     public void onTerminate() {
         super.onTerminate();
         if (mAppDelegate != null)
-            this.mAppDelegate.onTerminate();
+            this.mAppDelegate.onTerminate(this);
     }
 
 
@@ -55,7 +56,7 @@ public class BaseApplication extends Application implements App {
      */
     @Override
     public AppComponent getAppComponent() {
-        return mAppDelegate.getAppComponent();
+        return ((App) mAppDelegate).getAppComponent();
     }
 
 }
