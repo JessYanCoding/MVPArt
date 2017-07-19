@@ -36,7 +36,7 @@ public class AppDelegate implements App, AppLifecycles {
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
     private final List<ConfigModule> mModules;
-    private List<me.jessyan.art.base.delegate.AppLifecycles> mAppLifecycles = new ArrayList<>();
+    private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
 
@@ -50,7 +50,7 @@ public class AppDelegate implements App, AppLifecycles {
 
     @Override
     public void attachBaseContext(Context base) {
-        for (me.jessyan.art.base.delegate.AppLifecycles lifecycle : mAppLifecycles) {
+        for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.attachBaseContext(base);
         }
     }
@@ -74,7 +74,7 @@ public class AppDelegate implements App, AppLifecycles {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        for (me.jessyan.art.base.delegate.AppLifecycles lifecycle : mAppLifecycles) {
+        for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
 
@@ -98,7 +98,7 @@ public class AppDelegate implements App, AppLifecycles {
             }
         }
         if (mAppLifecycles != null && mAppLifecycles.size() > 0) {
-            for (me.jessyan.art.base.delegate.AppLifecycles lifecycle : mAppLifecycles) {
+            for (AppLifecycles lifecycle : mAppLifecycles) {
                 lifecycle.onTerminate(mApplication);
             }
         }
