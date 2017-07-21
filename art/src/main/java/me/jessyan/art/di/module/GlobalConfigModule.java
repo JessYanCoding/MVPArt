@@ -14,6 +14,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.jessyan.art.http.BaseUrl;
 import me.jessyan.art.http.GlobalHttpHandler;
+import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.art.widget.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.widget.imageloader.glide.GlideImageLoaderStrategy;
@@ -37,6 +38,7 @@ public class GlobalConfigModule {
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private AppModule.GsonConfiguration mGsonConfiguration;
+    private RequestInterceptor.Level mPrintHttpLogLevel;
 
     /**
      * @author: jess
@@ -55,6 +57,7 @@ public class GlobalConfigModule {
         this.mOkhttpConfiguration = builder.okhttpConfiguration;
         this.mRxCacheConfiguration = builder.rxCacheConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
+        this.mPrintHttpLogLevel = builder.printHttpLogLevel;
     }
 
     public static Builder builder() {
@@ -147,6 +150,14 @@ public class GlobalConfigModule {
         return mGsonConfiguration;
     }
 
+    @Singleton
+    @Provides
+    @Nullable
+    RequestInterceptor.Level providePrintHttpLogLevel() {
+        return mPrintHttpLogLevel;
+    }
+
+
     public static final class Builder {
         private HttpUrl apiUrl;
         private BaseUrl baseUrl;
@@ -159,7 +170,7 @@ public class GlobalConfigModule {
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private AppModule.GsonConfiguration gsonConfiguration;
-
+        private RequestInterceptor.Level printHttpLogLevel;
 
         private Builder() {
         }
@@ -230,6 +241,11 @@ public class GlobalConfigModule {
             return this;
         }
 
+        public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) { //是否让框架打印 Http 的请求和响应信息
+            if (printHttpLogLevel == null) throw new IllegalArgumentException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
+            this.printHttpLogLevel = printHttpLogLevel;
+            return this;
+        }
 
         public GlobalConfigModule build() {
             return new GlobalConfigModule(this);
