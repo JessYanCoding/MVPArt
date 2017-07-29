@@ -6,5 +6,5 @@ package me.jessyan.art.mvp;
  */
 
 public interface IModel {
-    void onDestory();
+    void onDestroy();
 }

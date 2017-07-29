@@ -86,7 +86,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                     }
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(() -> {
+                .doFinally(() -> {
                     if (pullToRefresh) {
                         msg.getTarget().hideLoading();//隐藏下拉刷新的进度条
                         //因为hideLoading,为默认方法,直接可以调用所以不需要发送消息给handleMessage()来处理,

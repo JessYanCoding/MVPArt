@@ -34,7 +34,7 @@ public class BasePresenter<M extends IModel> implements IPresenter {
             EventBus.getDefault().unregister(this);//解除注册eventbus
         unDispose();//解除订阅
         if (mModel != null)
-            mModel.onDestory();
+            mModel.onDestroy();
         this.mModel = null;
         this.mCompositeDisposable = null;
     }
@@ -44,19 +44,19 @@ public class BasePresenter<M extends IModel> implements IPresenter {
      *
      * @return
      */
-    protected boolean useEventBus() {
+    public boolean useEventBus() {
         return true;
     }
 
 
-    protected void addDispose(Disposable disposable) {
+    public void addDispose(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
         mCompositeDisposable.add(disposable);//将所有disposable放入,集中处理
     }
 
-    protected void unDispose() {
+    public void unDispose() {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();//保证activity结束时取消所有正在执行的订阅
         }

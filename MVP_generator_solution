@@ -101,7 +101,7 @@ public class ${NAME}Repository implements IModel {
 
 
     @Override
-    public void onDestory() {
+    public void onDestroy() {
 
     }
 }
