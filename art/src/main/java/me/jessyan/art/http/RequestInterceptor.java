@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import me.jessyan.art.utils.CharactorHandler;
+import me.jessyan.art.utils.CharacterHandler;
 import me.jessyan.art.utils.ZipHelper;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -127,8 +127,8 @@ public class RequestInterceptor implements Interceptor {
             }
             if (logResponse) {
                 Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ?
-                        CharactorHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
-                        CharactorHandler.xmlFormat(bodyString) : bodyString);
+                        CharacterHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
+                        CharacterHandler.xmlFormat(bodyString) : bodyString);
             }
 
         } else {
