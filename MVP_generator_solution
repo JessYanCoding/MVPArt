@@ -5,9 +5,7 @@ Name: ArtActivity
 
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
-import android.support.annotation.Nullable;
-
-import butterknife.BindView;
+import android.os.Bundle;
 import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.mvp.IView;
@@ -78,10 +76,10 @@ import me.jessyan.art.mvp.IModel;
 import me.jessyan.art.mvp.IRepositoryManager;
 
 /**
- * 必须实现IModel
- * 可以根据不同的业务逻辑划分多个Repository类,多个业务逻辑相近的页面可以使用同一个Repository类
- * 无需每个页面都创建一个独立的Repository
- * 通过{@link IRepositoryManager#createRepository(Class)}获得的Repository实例,为单例对象
+ * 必须实现 IModel
+ * 可以根据不同的业务逻辑划分多个 Repository 类,多个业务逻辑相近的页面可以使用同一个 Repository 类
+ * 无需每个页面都创建一个独立的 Repository
+ * 通过 {@link me.jessyan.art.mvp.IRepositoryManager#createRepository(java.lang.Class)} 获得的 Repository 实例,为单例对象
  */
 
 #parse("File Header.java")
@@ -120,11 +118,7 @@ Name: ArtPresenter
 
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.mvp.BasePresenter;
-import me.jessyan.art.mvp.Message;
-import me.jessyan.mvpart.demo.mvp.model.UserRepository;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 
 #parse("File Header.java")
@@ -149,24 +143,21 @@ public class ${NAME}Presenter extends BasePresenter<YoureRepository> {
 
 --------------------------------------------------------------------------------------
 
-Name: Fragment
+Name: ArtFragment
 --------------------------------------------------------------------------------------
 
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseFragment;
-
+import me.jessyan.art.mvp.IView;
+import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.UiUtils;
-
-import butterknife.Bind;
-
-import static me.jessyan.art.utils.Preconditions.checkNotNull;
 
 #parse("File Header.java")
 
@@ -222,8 +213,7 @@ public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements I
     }
 
     @Override
-    public void showMessage(@NonNull String message) {
-        checkNotNull(message);
+    public void showMessage(String message) {
         UiUtils.snackbarText(message);
     }
 
