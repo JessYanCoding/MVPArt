@@ -22,6 +22,8 @@
 >> **Complete** branch is a complete framework with a network layer, **Retrofit** as a network layer and use **Dagger2** to manage all objects, mature and powerful for new projects
 
 ## Notice
+* [Use Template to automatically generate MVP classes](https://github.com/JessYanCoding/MVPArmsTemplate)
+
 * This framework is a lightweight framework, more suitable for small and medium-sized projects, large-scale projects please use [MVPArms](https://github.com/JessYanCoding/MVPArms)
 
 * Traditional MVP corresponds to a **Presenter**, and most **Presenter** has only one or two methods, which leads to the existence of a large number of very few tags **Presenter**, this framework is designed to solve the reuse **Presenter** need to achieve too many redundant interface method, encourage developers to write similar logic in a **Presenter**, constantly reuse **Presenter**, reduce a large number of class files
