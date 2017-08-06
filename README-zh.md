@@ -22,7 +22,7 @@
 ## Notice
 * 使用之前,请参阅 [传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
 
-* [使用 Template 自动生成 MVP 相关类](https://github.com/JessYanCoding/MVPArmsTemplate)
+* [使用模版自动生成 MVP 相关类](https://github.com/JessYanCoding/MVPArmsTemplate)
 * 此框架是一个轻量级框架,比较适合中小型项目,大型项目请使用 [MVPArms](https://github.com/JessYanCoding/MVPArms)
 * 传统MVP每个页面对应一个 **Presenter** ,而大多数 **Presenter** 只有一两个方法,这样导致存在大量代码寥寥无几的 **Presenter** ,此框架旨在解决复用 **Presenter** 时需要实现过多多余接口方法的问题,鼓励开发者将相近的逻辑写在一个 **Presenter** 中,不断重用 **Presenter** ,减少大量类文件
 * 当然很多不同的逻辑都写在一个 **Presenter** 中,虽然可以少写很多类,但是后面的扩展性肯定不好,所以这个粒度需要自己控制,但是对于外包项目简直是福音
