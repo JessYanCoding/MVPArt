@@ -8,8 +8,8 @@ import butterknife.BindView;
 import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseHolder;
 import me.jessyan.art.di.component.AppComponent;
-import me.jessyan.art.widget.imageloader.ImageLoader;
-import me.jessyan.art.widget.imageloader.glide.ImageConfigImpl;
+import me.jessyan.art.http.imageloader.ImageLoader;
+import me.jessyan.art.http.imageloader.glide.ImageConfigImpl;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.model.entity.User;
 

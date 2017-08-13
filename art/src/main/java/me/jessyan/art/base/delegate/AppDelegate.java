@@ -19,7 +19,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.integration.ActivityLifecycle;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
-import me.jessyan.art.widget.imageloader.glide.ImageConfigImpl;
+import me.jessyan.art.http.imageloader.glide.ImageConfigImpl;
 
 /**
  * AppDelegate可以代理Application的生命周期,在对应的生命周期,执行对应的逻辑,因为Java只能单继承

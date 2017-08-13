@@ -1,4 +1,4 @@
-package me.jessyan.art.widget.imageloader;
+package me.jessyan.art.http.imageloader;
 
 import android.widget.ImageView;
 

@@ -38,7 +38,7 @@
 
         <!-- glide配置 -->
         <meta-data
-            android:name="me.jessyan.art.widget.imageloader.glide.GlideConfiguration"
+            android:name="me.jessyan.art.http.imageloader.glide.GlideConfiguration"
             android:value="GlideModule"/>
 
         <!-- art配置 -->

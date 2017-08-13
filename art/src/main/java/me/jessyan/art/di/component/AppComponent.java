@@ -16,7 +16,7 @@ import me.jessyan.art.di.module.ClientModule;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.mvp.IRepositoryManager;
-import me.jessyan.art.widget.imageloader.ImageLoader;
+import me.jessyan.art.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
 

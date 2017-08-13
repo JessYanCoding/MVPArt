@@ -1,4 +1,4 @@
-package me.jessyan.art.widget.imageloader.glide;
+package me.jessyan.art.http.imageloader.glide;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import me.jessyan.art.widget.imageloader.BaseImageLoaderStrategy;
+import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
 
 /**
  * Created by jess on 8/5/16 16:28
