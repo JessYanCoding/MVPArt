@@ -9,7 +9,7 @@ import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseHolder;
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.widget.imageloader.ImageLoader;
-import me.jessyan.art.widget.imageloader.glide.GlideImageConfig;
+import me.jessyan.art.widget.imageloader.glide.ImageConfigImpl;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.model.entity.User;
 
@@ -40,7 +40,7 @@ public class UserItemHolder extends BaseHolder<User> {
 
         mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
                         ? mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
-                GlideImageConfig
+                ImageConfigImpl
                         .builder()
                         .url(data.getAvatarUrl())
                         .imageView(mAvater)
@@ -50,7 +50,7 @@ public class UserItemHolder extends BaseHolder<User> {
 
     @Override
     protected void onRelease() {
-        mImageLoader.clear(mAppComponent.application(), GlideImageConfig.builder()
+        mImageLoader.clear(mAppComponent.application(), ImageConfigImpl.builder()
                 .imageViews(mAvater)
                 .build());
     }

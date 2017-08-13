@@ -19,7 +19,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.integration.ActivityLifecycle;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
-import me.jessyan.art.widget.imageloader.glide.GlideImageConfig;
+import me.jessyan.art.widget.imageloader.glide.ImageConfigImpl;
 
 /**
  * AppDelegate可以代理Application的生命周期,在对应的生命周期,执行对应的逻辑,因为Java只能单继承
@@ -163,7 +163,7 @@ public class AppDelegate implements App, AppLifecycles {
         @Override
         public void onLowMemory() {
             //内存不足时清理图片请求框架的内存缓存
-            mAppComponent.imageLoader().clear(mApplication, GlideImageConfig
+            mAppComponent.imageLoader().clear(mApplication, ImageConfigImpl
                     .builder()
                     .isClearMemory(true)
                     .build());
