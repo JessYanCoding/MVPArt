@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
@@ -17,6 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.http.imageloader.ImageConfig;
+import timber.log.Timber;
 
 /**
  * 此类只是简单的实现了 Glide 加载的策略,方便快速使用,但大部分情况会需要应对复杂的场景
@@ -26,7 +28,7 @@ import me.jessyan.art.http.imageloader.ImageConfig;
  * Created by jess on 8/5/16 16:28
  * contact with jess.yan.effort@gmail.com
  */
-public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageConfigImpl> {
+public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageConfigImpl>, GlideAppliesOptions {
 
     @Override
     public void loadImage(Context ctx, ImageConfigImpl config) {
@@ -113,5 +115,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
                     });
         }
 
+    }
+
+    @Override
+    public void applyGlideOptions(Context context, GlideBuilder builder) {
+        Timber.w("applyGlideOptions");
     }
 }
