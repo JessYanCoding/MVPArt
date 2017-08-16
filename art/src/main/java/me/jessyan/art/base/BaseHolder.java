@@ -16,7 +16,7 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
     public BaseHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);//点击事件
-        AutoUtils.autoSize(itemView);//适配
+        if (ThirdViewUtil.USE_AUTOLAYOUT == 1) AutoUtils.autoSize(itemView);//适配
         ThirdViewUtil.bindTarget(this, itemView);//绑定
     }
 
