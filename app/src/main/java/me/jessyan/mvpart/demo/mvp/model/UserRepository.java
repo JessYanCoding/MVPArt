@@ -8,7 +8,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictDynamicKey;
-import io.rx_cache2.Reply;
 import me.jessyan.art.mvp.IModel;
 import me.jessyan.art.mvp.IRepositoryManager;
 import me.jessyan.mvpart.demo.mvp.model.api.cache.CommonCache;
@@ -40,17 +39,18 @@ public class UserRepository implements IModel {
 
 
     public Observable<List<User>> getUsers(int lastIdQueried, boolean update) {
-        Observable<List<User>> users = mManager.createRetrofitService(UserService.class)
-                .getUsers(lastIdQueried, USERS_PER_PAGE);
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
-        return mManager.createCacheService(CommonCache.class)
-                .getUsers(users
-                        , new DynamicKey(lastIdQueried)
-                        , new EvictDynamicKey(update))
-                .flatMap(new Function<Reply<List<User>>, ObservableSource<List<User>>>() {
+        return Observable.just(mManager
+                .createRetrofitService(UserService.class)
+                .getUsers(lastIdQueried, USERS_PER_PAGE))
+                .flatMap(new Function<Observable<List<User>>, ObservableSource<List<User>>>() {
                     @Override
-                    public ObservableSource<List<User>> apply(@NonNull Reply<List<User>> listReply) throws Exception {
-                        return Observable.just(listReply.getData());
+                    public ObservableSource<List<User>> apply(@NonNull Observable<List<User>> listObservable) throws Exception {
+                        return mManager.createCacheService(CommonCache.class)
+                                .getUsers(listObservable
+                                        , new DynamicKey(lastIdQueried)
+                                        , new EvictDynamicKey(update))
+                                .map(listReply -> listReply.getData());
                     }
                 });
     }
