@@ -1,5 +1,7 @@
 package me.jessyan.art.mvp;
 
+import android.content.Context;
+
 /**
  * Created by jess on 17/03/2017 11:15
  * Contact with jess.yan.effort@gmail.com
@@ -37,5 +39,7 @@ public interface IRepositoryManager {
      * 清理所有缓存
      */
     void clearAllCache();
+
+    Context getContext();
 
 }

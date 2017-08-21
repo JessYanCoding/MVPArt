@@ -1,5 +1,8 @@
 package me.jessyan.art.mvp;
 
+import android.app.Application;
+import android.content.Context;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -25,14 +28,16 @@ import retrofit2.Retrofit;
 public class RepositoryManager implements IRepositoryManager {
     private Lazy<Retrofit> mRetrofit;
     private Lazy<RxCache> mRxCache;
+    private Application mApplication;
     private final Map<String, IModel> mRepositoryCache = new HashMap<>();
     private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
     private final Map<String, Object> mCacheServiceCache = new HashMap<>();
 
     @Inject
-    public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache) {
+    public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache, Application application) {
         this.mRetrofit = retrofit;
         this.mRxCache = rxCache;
+        this.mApplication = application;
     }
 
     /**
@@ -112,6 +117,11 @@ public class RepositoryManager implements IRepositoryManager {
     @Override
     public void clearAllCache() {
         mRxCache.get().evictAll();
+    }
+
+    @Override
+    public Context getContext() {
+        return mApplication;
     }
 
 
