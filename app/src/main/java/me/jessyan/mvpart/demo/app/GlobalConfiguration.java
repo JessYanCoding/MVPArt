@@ -27,6 +27,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.ButterKnife;
 import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
@@ -175,6 +176,7 @@ public final class GlobalConfiguration implements ConfigModule {
 //                            Logger.log(priority, tag, message, t);
 //                        }
 //                    });
+                    ButterKnife.setDebug(true);
                 }
                 //leakCanary内存泄露检查
                 UiUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
