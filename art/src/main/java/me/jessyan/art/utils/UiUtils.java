@@ -23,6 +23,9 @@ import org.simple.eventbus.EventBus;
 
 import java.security.MessageDigest;
 
+import me.jessyan.art.base.App;
+import me.jessyan.art.di.component.AppComponent;
+
 import static me.jessyan.art.integration.AppManager.APPMANAGER_MESSAGE;
 import static me.jessyan.art.integration.AppManager.APP_EXIT;
 import static me.jessyan.art.integration.AppManager.KILL_ALL;
@@ -402,6 +405,11 @@ public class UiUtils {
         Message message = new Message();
         message.what = APP_EXIT;
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+    }
+
+    public static AppComponent obtainAppComponentFromContext(Context context) {
+        Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
+        return ((App) context.getApplicationContext()).getAppComponent();
     }
 
 }

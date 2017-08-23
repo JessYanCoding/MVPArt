@@ -32,7 +32,7 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements I
 
     @Override
     public ${NAME}Presenter obtainPresenter() {
-        return new ${NAME}Presenter(((App) getApplication()).getAppComponent());
+        return new ${NAME}Presenter(UiUtils.obtainAppComponentFromContext(this));
     }
 
 
@@ -183,7 +183,7 @@ public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements I
 
     @Override
     public ${NAME}Presenter obtainPresenter() {
-        return new ${NAME}Presenter(((App) getActivity().getApplication()).getAppComponent());
+        return new ${NAME}Presenter(UiUtils.obtainAppComponentFromContext(getActivity()));
     }
 
     /**

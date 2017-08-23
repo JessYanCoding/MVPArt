@@ -27,7 +27,6 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import me.jessyan.art.base.App;
 import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
@@ -178,7 +177,7 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    });
                 }
                 //leakCanary内存泄露检查
-                ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                UiUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }
 
             @Override
@@ -267,9 +266,8 @@ public final class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                ((RefWatcher) ((App) f.getActivity()
-                        .getApplication())
-                        .getAppComponent()
+                ((RefWatcher) UiUtils
+                        .obtainAppComponentFromContext(f.getActivity())
                         .extras()
                         .get(RefWatcher.class.getName()))
                         .watch(f);

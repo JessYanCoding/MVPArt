@@ -9,7 +9,6 @@ import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
-import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.mvp.IView;
@@ -45,7 +44,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public UserPresenter obtainPresenter() {
-        return new UserPresenter(((App) getApplication()).getAppComponent());
+        return new UserPresenter(UiUtils.obtainAppComponentFromContext(this));
     }
 
 
