@@ -12,7 +12,7 @@ import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
-import me.jessyan.art.utils.UiUtils;
+import me.jessyan.art.utils.ArtUtils;
 
 #parse("File Header.java")
 
@@ -32,7 +32,7 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements I
 
     @Override
     public ${NAME}Presenter obtainPresenter() {
-        return new ${NAME}Presenter(UiUtils.obtainAppComponentFromContext(this));
+        return new ${NAME}Presenter(ArtUtils.obtainAppComponentFromContext(this));
     }
 
 
@@ -48,7 +48,7 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements I
 
     @Override
     public void showMessage(String message) {
-        UiUtils.snackbarText(message);
+        ArtUtils.snackbarText(message);
     }
 
     @Override
@@ -159,7 +159,7 @@ import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseFragment;
 import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
-import me.jessyan.art.utils.UiUtils;
+import me.jessyan.art.utils.ArtUtils;
 
 #parse("File Header.java")
 
@@ -183,7 +183,7 @@ public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements I
 
     @Override
     public ${NAME}Presenter obtainPresenter() {
-        return new ${NAME}Presenter(UiUtils.obtainAppComponentFromContext(getActivity()));
+        return new ${NAME}Presenter(ArtUtils.obtainAppComponentFromContext(getActivity()));
     }
 
     /**
@@ -216,7 +216,7 @@ public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements I
 
     @Override
     public void showMessage(String message) {
-        UiUtils.snackbarText(message);
+        ArtUtils.snackbarText(message);
     }
 
 
