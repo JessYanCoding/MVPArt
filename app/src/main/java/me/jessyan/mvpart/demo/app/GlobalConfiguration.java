@@ -33,7 +33,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
-import me.jessyan.art.utils.UiUtils;
+import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.BuildConfig;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.model.api.Api;
@@ -129,7 +129,7 @@ public final class GlobalConfiguration implements ConfigModule {
                     } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException || t instanceof JsonIOException) {
                         msg = "数据解析错误";
                     }
-                    UiUtils.snackbarText(msg);
+                    ArtUtils.snackbarText(msg);
                 })
                 .gsonConfiguration((context1, gsonBuilder) -> {//这里可以自己自定义配置Gson的参数
                     gsonBuilder
@@ -179,7 +179,7 @@ public final class GlobalConfiguration implements ConfigModule {
                     ButterKnife.setDebug(true);
                 }
                 //leakCanary内存泄露检查
-                UiUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                ArtUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }
 
             @Override
@@ -268,7 +268,7 @@ public final class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                ((RefWatcher) UiUtils
+                ((RefWatcher) ArtUtils
                         .obtainAppComponentFromContext(f.getActivity())
                         .extras()
                         .get(RefWatcher.class.getName()))

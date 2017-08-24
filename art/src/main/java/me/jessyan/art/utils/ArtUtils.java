@@ -25,6 +25,7 @@ import java.security.MessageDigest;
 
 import me.jessyan.art.base.App;
 import me.jessyan.art.di.component.AppComponent;
+import me.jessyan.art.integration.AppManager;
 
 import static me.jessyan.art.integration.AppManager.APPMANAGER_MESSAGE;
 import static me.jessyan.art.integration.AppManager.APP_EXIT;
@@ -35,10 +36,10 @@ import static me.jessyan.art.integration.AppManager.START_ACTIVITY;
 /**
  * Created by jess on 2015/11/23.
  */
-public class UiUtils {
+public class ArtUtils {
     static public Toast mToast;
 
-    private UiUtils() {
+    private ArtUtils() {
     }
 
     /**
@@ -237,19 +238,9 @@ public class UiUtils {
         return getResources(context).getDrawable(rID);
     }
 
-    /**
-     * 跳转界面
-     *
-     * @param activity
-     * @param homeActivityClass
-     */
-    public static void startActivity(Activity activity, Class homeActivityClass) {
-        Intent intent = new Intent(activity.getApplicationContext(), homeActivityClass);
-        activity.startActivity(intent);
-    }
 
     /**
-     * 跳转界面3
+     * 跳转界面 1 ,通过 {@link AppManager#startActivity(Class)}
      *
      * @param
      * @param homeActivityClass
@@ -262,7 +253,7 @@ public class UiUtils {
     }
 
     /**
-     * 跳转界面3
+     * 跳转界面 2 ,通过 {@link AppManager#startActivity(Intent)}
      *
      * @param
      */
@@ -273,8 +264,20 @@ public class UiUtils {
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
+
     /**
-     * 跳转界面4
+     * 跳转界面 3
+     *
+     * @param activity
+     * @param homeActivityClass
+     */
+    public static void startActivity(Activity activity, Class homeActivityClass) {
+        Intent intent = new Intent(activity.getApplicationContext(), homeActivityClass);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转界面 4
      *
      * @param
      */

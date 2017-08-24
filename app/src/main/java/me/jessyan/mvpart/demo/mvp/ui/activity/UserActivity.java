@@ -13,7 +13,7 @@ import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
-import me.jessyan.art.utils.UiUtils;
+import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.presenter.UserPresenter;
 
@@ -44,7 +44,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public UserPresenter obtainPresenter() {
-        return new UserPresenter(UiUtils.obtainAppComponentFromContext(this));
+        return new UserPresenter(ArtUtils.obtainAppComponentFromContext(this));
     }
 
 
@@ -60,7 +60,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public void showMessage(String message) {
-        UiUtils.snackbarText(message);
+        ArtUtils.snackbarText(message);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
      */
     private void initRecycleView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        UiUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
+        ArtUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
     }
 
 

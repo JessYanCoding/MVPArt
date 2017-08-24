@@ -21,7 +21,7 @@ import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.http.OkHttpUrlLoader;
 import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.utils.DataHelper;
-import me.jessyan.art.utils.UiUtils;
+import me.jessyan.art.utils.ArtUtils;
 
 /**
  * Created by jess on 16/4/15.
@@ -32,7 +32,7 @@ public class GlideConfiguration extends AppGlideModule {
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        AppComponent appComponent = UiUtils.obtainAppComponentFromContext(context);
+        AppComponent appComponent = ArtUtils.obtainAppComponentFromContext(context);
         builder.setDiskCache(new DiskCache.Factory() {
             @Override
             public DiskCache build() {
@@ -63,7 +63,7 @@ public class GlideConfiguration extends AppGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
         //Glide默认使用HttpURLConnection做网络请求,在这切换成okhttp请求
-        AppComponent appComponent = UiUtils.obtainAppComponentFromContext(context);
+        AppComponent appComponent = ArtUtils.obtainAppComponentFromContext(context);
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(appComponent.okHttpClient()));
     }
 
