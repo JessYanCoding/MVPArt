@@ -33,7 +33,7 @@ public class RxUtils {
                         })
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doAfterTerminate(new Action() {
+                        .doFinally(new Action() {
                             @Override
                             public void run() throws Exception {
                                 view.hideLoading();//隐藏进度条
