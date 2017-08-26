@@ -21,6 +21,7 @@ public class DataHelper {
     public static final String SP_NAME = "config";
 
     private DataHelper() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**

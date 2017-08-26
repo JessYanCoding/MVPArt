@@ -19,6 +19,7 @@ import java.util.zip.Inflater;
 public class ZipHelper {
 
     private ZipHelper() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**

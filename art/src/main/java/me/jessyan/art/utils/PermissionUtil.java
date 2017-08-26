@@ -19,8 +19,8 @@ import timber.log.Timber;
 public class PermissionUtil {
     public static final String TAG = "Permission";
 
-
     private PermissionUtil() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public interface RequestPermission {

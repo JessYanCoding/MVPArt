@@ -40,6 +40,7 @@ public class ArtUtils {
     static public Toast mToast;
 
     private ArtUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**

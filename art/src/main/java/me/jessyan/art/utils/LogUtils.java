@@ -11,6 +11,7 @@ public class LogUtils {
 
 
     private LogUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public static void debugInfo(String tag, String msg) {
