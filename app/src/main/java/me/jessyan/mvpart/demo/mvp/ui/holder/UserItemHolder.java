@@ -38,8 +38,8 @@ public class UserItemHolder extends BaseHolder<User> {
 
         mName.setText(data.getLogin());
 
-        mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
-                        ? mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
+        mImageLoader.loadImage(mAppComponent.appManager().getTopActivity() == null
+                        ? mAppComponent.application() : mAppComponent.appManager().getTopActivity(),
                 ImageConfigImpl
                         .builder()
                         .url(data.getAvatarUrl())
