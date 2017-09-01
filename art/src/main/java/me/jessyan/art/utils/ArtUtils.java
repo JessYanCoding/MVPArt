@@ -19,15 +19,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.simple.eventbus.EventBus;
-
 import java.security.MessageDigest;
 
 import me.jessyan.art.base.App;
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.integration.AppManager;
 
-import static me.jessyan.art.integration.AppManager.APPMANAGER_MESSAGE;
 import static me.jessyan.art.integration.AppManager.APP_EXIT;
 import static me.jessyan.art.integration.AppManager.KILL_ALL;
 import static me.jessyan.art.integration.AppManager.SHOW_SNACKBAR;
@@ -212,7 +209,7 @@ public class ArtUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 0;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
@@ -225,7 +222,7 @@ public class ArtUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 1;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 
@@ -250,7 +247,7 @@ public class ArtUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = homeActivityClass;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
@@ -262,7 +259,7 @@ public class ArtUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = content;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 
@@ -402,13 +399,13 @@ public class ArtUtils {
     public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     public static AppComponent obtainAppComponentFromContext(Context context) {

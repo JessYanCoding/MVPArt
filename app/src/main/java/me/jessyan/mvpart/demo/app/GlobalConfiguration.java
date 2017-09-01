@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
+import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.BuildConfig;
@@ -140,6 +142,7 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    retrofitBuilder.addConverterFactory(FastJsonConverterFactory.create());//比如使用fastjson替代gson
                 })
                 .okhttpConfiguration((context1, okhttpBuilder) -> {//这里可以自己自定义配置Okhttp的参数
+//                    okhttpBuilder.sslSocketFactory(); //支持 Https,详情请百度
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                     //使用一行代码监听 Retrofit／Okhttp 上传下载进度监听,以及 Glide 加载进度监听 详细使用方法查看 https://github.com/JessYanCoding/ProgressManager
                     ProgressManager.getInstance().with(okhttpBuilder);
@@ -180,6 +183,21 @@ public final class GlobalConfiguration implements ConfigModule {
                 }
                 //leakCanary内存泄露检查
                 ArtUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                //扩展 AppManager 的远程遥控功能
+                ArtUtils.obtainAppComponentFromContext(application).appManager().setHandleListener(new AppManager.HandleListener() {
+                    @Override
+                    public void handleMessage(AppManager appManager, Message message) {
+                        switch (message.what) {
+                            //case 0:
+                            //do something ...
+                            //   break;
+                        }
+                    }
+                });
+                //Usage:
+                //Message msg = new Message();
+                //msg.what = 0;
+                //AppManager.post(msg); like EventBus
             }
 
             @Override
