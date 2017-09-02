@@ -166,6 +166,7 @@ public final class AppManager {
     public void release() {
         EventBus.getDefault().unregister(this);
         mActivityList.clear();
+        mHandleListener = null;
         mActivityList = null;
         mCurrentActivity = null;
         mApplication = null;

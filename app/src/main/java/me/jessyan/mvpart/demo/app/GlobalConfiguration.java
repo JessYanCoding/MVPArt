@@ -6,7 +6,6 @@ import android.content.Context;
 import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +32,6 @@ import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
-import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.BuildConfig;
@@ -184,14 +182,11 @@ public final class GlobalConfiguration implements ConfigModule {
                 //leakCanary内存泄露检查
                 ArtUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
                 //扩展 AppManager 的远程遥控功能
-                ArtUtils.obtainAppComponentFromContext(application).appManager().setHandleListener(new AppManager.HandleListener() {
-                    @Override
-                    public void handleMessage(AppManager appManager, Message message) {
-                        switch (message.what) {
-                            //case 0:
-                            //do something ...
-                            //   break;
-                        }
+                ArtUtils.obtainAppComponentFromContext(application).appManager().setHandleListener((appManager, message) -> {
+                    switch (message.what) {
+                        //case 0:
+                        //do something ...
+                        //   break;
                     }
                 });
                 //Usage:
