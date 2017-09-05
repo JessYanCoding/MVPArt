@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -31,7 +32,13 @@ import static me.jessyan.art.integration.AppManager.SHOW_SNACKBAR;
 import static me.jessyan.art.integration.AppManager.START_ACTIVITY;
 
 /**
- * Created by jess on 2015/11/23.
+ * ================================================
+ * 一些框架常用的工具
+ * <p>
+ * Created by JessYan on 2015/11/23.
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class ArtUtils {
     static public Toast mToast;
@@ -95,25 +102,25 @@ public class ArtUtils {
 
 
     /**
-     * 从dimens中获得尺寸
+     * 从 dimens 中获得尺寸
      *
-     * @param homePicHeight
+     * @param context
+     * @param id
      * @return
      */
-
-    public static int getDimens(Context context, int homePicHeight) {
-        return (int) getResources(context).getDimension(homePicHeight);
+    public static int getDimens(Context context, int id) {
+        return (int) getResources(context).getDimension(id);
     }
 
     /**
-     * 从dimens中获得尺寸
+     * 从 dimens 中获得尺寸
      *
-     * @param
+     * @param context
+     * @param dimenName
      * @return
      */
-
-    public static float getDimens(Context context, String dimenNmae) {
-        return getResources(context).getDimension(getResources(context).getIdentifier(dimenNmae, "dimen", context.getPackageName()));
+    public static float getDimens(Context context, String dimenName) {
+        return getResources(context).getDimension(getResources(context).getIdentifier(dimenName, "dimen", context.getPackageName()));
     }
 
     /**
@@ -165,7 +172,7 @@ public class ArtUtils {
     }
 
     /**
-     * 根据lauout名字获得id
+     * 根据 layout 名字获得 id
      *
      * @param layoutName
      * @return
@@ -186,11 +193,10 @@ public class ArtUtils {
     }
 
     /**
-     * 单列toast
+     * 单例 toast
      *
      * @param string
      */
-
     public static void makeText(Context context, String string) {
         if (mToast == null) {
             mToast = Toast.makeText(context, string, Toast.LENGTH_SHORT);
@@ -200,7 +206,7 @@ public class ArtUtils {
     }
 
     /**
-     * 用snackbar显示
+     * 使用 {@link Snackbar} 显示文本消息
      *
      * @param text
      */
@@ -213,7 +219,7 @@ public class ArtUtils {
     }
 
     /**
-     * 用snackbar长时间显示
+     * 使用 {@link Snackbar} 长时间显示文本消息
      *
      * @param text
      */
@@ -240,13 +246,12 @@ public class ArtUtils {
     /**
      * 跳转界面 1 ,通过 {@link AppManager#startActivity(Class)}
      *
-     * @param
-     * @param homeActivityClass
+     * @param activityClass
      */
-    public static void startActivity(Class homeActivityClass) {
+    public static void startActivity(Class activityClass) {
         Message message = new Message();
         message.what = START_ACTIVITY;
-        message.obj = homeActivityClass;
+        message.obj = activityClass;
         AppManager.post(message);
     }
 
@@ -283,9 +288,6 @@ public class ArtUtils {
         activity.startActivity(intent);
     }
 
-    public static int getLayoutId(Context context, String layoutName) {
-        return getResources(context).getIdentifier(layoutName, "layout", context.getPackageName());
-    }
 
     /**
      * 获得屏幕的宽度
@@ -368,7 +370,7 @@ public class ArtUtils {
 
 
     /**
-     * 全屏，并且沉侵式状态栏
+     * 全屏,并且沉侵式状态栏
      *
      * @param activity
      */
@@ -382,7 +384,7 @@ public class ArtUtils {
 
 
     /**
-     * 配置recycleview
+     * 配置 recycleview
      *
      * @param recyclerView
      * @param layoutManager
@@ -395,13 +397,18 @@ public class ArtUtils {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-
+    /**
+     * 远程遥控 {@link AppManager#killAll()}
+     */
     public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
         AppManager.post(message);
     }
 
+    /**
+     * 远程遥控 {@link AppManager#appExit()}
+     */
     public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;
