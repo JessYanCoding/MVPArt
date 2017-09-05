@@ -10,9 +10,13 @@ import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 
 /**
+ * ================================================
  * 此接口可以给框架配置一些参数,需要实现类实现后,并在AndroidManifest中声明该实现类
- * Created by jess on 12/04/2017 11:37
+ * <p>
+ * Created by JessYan on 12/04/2017 11:37
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 
 public interface ConfigModule {
@@ -27,8 +31,6 @@ public interface ConfigModule {
 
     /**
      * 使用{@link AppLifecycles}在Application的生命周期中注入一些操作
-     *
-     * @return
      */
     void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles);
 

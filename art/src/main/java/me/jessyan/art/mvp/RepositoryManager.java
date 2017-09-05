@@ -16,12 +16,15 @@ import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**
+ * ================================================
  * 用来管理所有业务逻辑的仓库,网络请求层,以及数据缓存层,以后可以添加数据库请求层
- * 所有仓库不直接持有却通过RepositoryManager拿到需要的请求层做数据处理的好处是
- * 仓库可以直接和对应的请求层解耦,比如网路请求层,需要从Retrofit替换为其他网络请求库,这时就仓库就不会受到影响
+ * 所有仓库不直接持有却通过 RepositoryManager 拿到需要的请求层做数据处理的好处是
+ * 仓库可以直接和对应的请求层解耦,比如网路请求层,需要从 Retrofit 替换为其他网络请求库,这时仓库就不会受到影响
  * <p>
- * Created by jess on 16/03/2017 14:25
+ * Created by JessYan on 16/03/2017 14:25
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 
 @Singleton
@@ -41,7 +44,7 @@ public class RepositoryManager implements IRepositoryManager {
     }
 
     /**
-     * 根据传入的Class创建对应的仓库
+     * 根据传入的 Class 创建对应的仓库
      *
      * @param repository
      * @param <T>
@@ -71,7 +74,7 @@ public class RepositoryManager implements IRepositoryManager {
 
 
     /**
-     * 根据传入的Class创建对应的Retrift service
+     * 根据传入的 Class 创建对应的 Retrofit service
      *
      * @param service
      * @param <T>
@@ -92,7 +95,7 @@ public class RepositoryManager implements IRepositoryManager {
 
 
     /**
-     * 根据传入的Class创建对应的RxCache service
+     * 根据传入的 Class 创建对应的 RxCache service
      *
      * @param cache
      * @param <T>

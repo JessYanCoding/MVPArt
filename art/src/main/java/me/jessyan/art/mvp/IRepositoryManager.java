@@ -3,13 +3,16 @@ package me.jessyan.art.mvp;
 import android.content.Context;
 
 /**
- * Created by jess on 17/03/2017 11:15
+ * ================================================
+ * Created by JessYan on 17/03/2017 11:15
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 
 public interface IRepositoryManager {
     /**
-     * 根据传入的Class创建对应的仓库
+     * 根据传入的 Class 创建对应的仓库
      *
      * @param repository
      * @param <T>
@@ -18,7 +21,7 @@ public interface IRepositoryManager {
     <T extends IModel> T createRepository(Class<T> repository);
 
     /**
-     * 根据传入的Class创建对应的Retrift service
+     * 根据传入的 Class 创建对应的 Retrofit service
      *
      * @param service
      * @param <T>
@@ -27,7 +30,7 @@ public interface IRepositoryManager {
     <T> T createRetrofitService(Class<T> service);
 
     /**
-     * 根据传入的Class创建对应的RxCache service
+     * 根据传入的 Class 创建对应的 RxCache service
      *
      * @param cache
      * @param <T>
