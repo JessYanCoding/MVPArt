@@ -1,6 +1,7 @@
 package me.jessyan.art.di.component;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.google.gson.Gson;
 
@@ -17,11 +18,15 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.imageloader.ImageLoader;
 import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.mvp.IRepositoryManager;
+import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
 
 /**
  * ================================================
+ * 可通过 {@link ArtUtils#obtainAppComponentFromContext(Context)} 拿到此接口的实现类
+ * 拥有此接口的实现类即可调用对应的方法拿到 Dagger 提供的对应实例
+ * <p>
  * Created by JessYan on 8/4/2016
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding
