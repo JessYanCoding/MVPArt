@@ -1,3 +1,18 @@
+/*
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package me.jessyan.art.mvp;
 
 import android.os.Build;
@@ -10,26 +25,6 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 /**
- * Created by jess on 24/02/2017 10:15
- * Contact with jess.yan.effort@gmail.com
- */
-/*
- * Copyright (C) 2006 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
  * Defines a message containing a description and arbitrary data object that can be
  * sent to a {@link Handler}.  This object contains two extra int fields and an
  * extra object field that allow you to not do allocations in many cases.
@@ -38,6 +33,9 @@ import android.text.TextUtils;
  * one of these is to call {@link #obtain Message.obtain()} or one of the
  * {@link Handler#obtainMessage Handler.obtainMessage()} methods, which will pull
  * them from a pool of recycled objects.</p>
+ *
+ * Created by jess on 24/02/2017 10:15
+ * Contact with jess.yan.effort@gmail.com
  */
 public final class Message implements Parcelable {
     /**
