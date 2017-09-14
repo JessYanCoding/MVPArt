@@ -23,13 +23,13 @@ import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.component.AppComponent;
 
 /**
- * 本项目由
- * mvp
- * +dagger2
- * +retrofit
- * +rxjava
- * +androideventbus
- * +butterknife组成
+ * ================================================
+ * 本框架由 MVP + Dagger2 + Retrofit + Rxjava + Androideventbus + Butterknife 组成
+ * <p>
+ * Created by JessYan on 22/03/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class BaseApplication extends Application implements App {
     private AppLifecycles mAppDelegate;
@@ -65,7 +65,8 @@ public class BaseApplication extends Application implements App {
 
 
     /**
-     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例,在getAppComponent()拿到对象后都可以直接使用
+     * 将 {@link AppComponent} 返回出去,供其它地方使用,{@link AppComponent} 中声明的方法所返回的实例
+     * 在 {@link #getAppComponent()}拿到对象后都可以直接使用
      *
      * @return
      */

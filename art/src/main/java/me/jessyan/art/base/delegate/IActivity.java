@@ -15,26 +15,46 @@
   */
 package me.jessyan.art.base.delegate;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import org.simple.eventbus.EventBus;
+
+import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.mvp.IPresenter;
 
 /**
- * Created by jess on 26/04/2017 21:42
+ * ================================================
+ * 框架要求框架中的每个 {@link Activity} 都需要实现此类,以满足规范
+ *
+ * @see BaseActivity
+ * Created by JessYan on 26/04/2017 21:42
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public interface IActivity<P extends IPresenter> {
+
+    /**
+     * 是否使用 {@link EventBus}
+     *
+     * @return
+     */
     boolean useEventBus();
 
     /**
-     * 如果initView返回0,框架则不会调用{@link android.app.Activity#setContentView(int)}
+     * 初始化 View,如果initView返回0,框架则不会调用{@link android.app.Activity#setContentView(int)}
      *
-     * @return
      * @param savedInstanceState
+     * @return
      */
     int initView(Bundle savedInstanceState);
 
+    /**
+     * 初始化数据
+     *
+     * @param savedInstanceState
+     */
     void initData(Bundle savedInstanceState);
 
     P obtainPresenter();

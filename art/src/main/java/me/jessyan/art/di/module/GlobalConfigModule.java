@@ -19,6 +19,8 @@ import android.app.Application;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +32,22 @@ import dagger.Provides;
 import me.jessyan.art.http.BaseUrl;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.RequestInterceptor;
-import me.jessyan.art.utils.DataHelper;
 import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.http.imageloader.glide.GlideImageLoaderStrategy;
+import me.jessyan.art.utils.DataHelper;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
 /**
- * Created by jessyan on 2016/3/14.
+ * ================================================
+ * 框架独创的建造者模式 {@link Module},可向框架中注入外部配置的自定义参数
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.1">GlobalConfigModule Wiki 官方文档</a>
+ * Created by JessYan on 2016/3/14.
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @Module
 public class GlobalConfigModule {
@@ -55,11 +64,6 @@ public class GlobalConfigModule {
     private AppModule.GsonConfiguration mGsonConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
 
-    /**
-     * @author: jess
-     * @date 8/5/16 11:03 AM
-     * @description: 设置baseurl
-     */
     private GlobalConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
         this.mBaseUrl = builder.baseUrl;
@@ -88,6 +92,11 @@ public class GlobalConfigModule {
     }
 
 
+    /**
+     * 提供 BaseUrl,默认使用 <"https://api.github.com/">
+     *
+     * @return
+     */
     @Singleton
     @Provides
     HttpUrl provideBaseUrl() {
@@ -101,18 +110,28 @@ public class GlobalConfigModule {
     }
 
 
+    /**
+     * 提供图片加载框架,默认使用 {@link Glide}
+     *
+     * @return
+     */
     @Singleton
     @Provides
-    BaseImageLoaderStrategy provideImageLoaderStrategy() {//图片加载框架默认使用glide
+    BaseImageLoaderStrategy provideImageLoaderStrategy() {
         return mLoaderStrategy == null ? new GlideImageLoaderStrategy() : mLoaderStrategy;
     }
 
 
+    /**
+     * 提供处理 Http 请求和响应结果的处理类
+     *
+     * @return
+     */
     @Singleton
     @Provides
     @Nullable
     GlobalHttpHandler provideGlobalHttpHandler() {
-        return mHandler;//处理Http请求和响应结果
+        return mHandler;
     }
 
 
@@ -127,7 +146,7 @@ public class GlobalConfigModule {
 
 
     /**
-     * 提供处理Rxjava错误的管理器的回调
+     * 提供处理 Rxjava 错误的管理器的回调
      *
      * @return
      */
@@ -192,7 +211,7 @@ public class GlobalConfigModule {
 
         public Builder baseurl(String baseUrl) {//基础url
             if (TextUtils.isEmpty(baseUrl)) {
-                throw new IllegalArgumentException("BaseUrl can not be empty");
+                throw new NullPointerException("BaseUrl can not be empty");
             }
             this.apiUrl = HttpUrl.parse(baseUrl);
             return this;
@@ -200,7 +219,7 @@ public class GlobalConfigModule {
 
         public Builder baseurl(BaseUrl baseUrl) {
             if (baseUrl == null) {
-                throw new IllegalArgumentException("BaseUrl can not be null");
+                throw new NullPointerException("BaseUrl can not be null");
             }
             this.baseUrl = baseUrl;
             return this;
@@ -257,7 +276,8 @@ public class GlobalConfigModule {
         }
 
         public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) { //是否让框架打印 Http 的请求和响应信息
-            if (printHttpLogLevel == null) throw new IllegalArgumentException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
+            if (printHttpLogLevel == null)
+                throw new NullPointerException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
             this.printHttpLogLevel = printHttpLogLevel;
             return this;
         }

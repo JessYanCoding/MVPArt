@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.utils.CharacterHandler;
 import me.jessyan.art.utils.ZipHelper;
 import okhttp3.Interceptor;
@@ -40,8 +41,14 @@ import timber.log.Timber;
 
 
 /**
- * Created by jess on 7/1/16.
+ * ================================================
+ * 解析框架中的网络请求和响应结果,并以日志形式输出,调试神器
+ * 可使用 {@link GlobalConfigModule.Builder#printHttpLogLevel(Level)} 控制或关闭日志
+ * <p>
+ * Created by JessYan on 7/1/2016.
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @Singleton
 public class RequestInterceptor implements Interceptor {

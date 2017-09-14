@@ -30,10 +30,14 @@ import me.jessyan.art.mvp.IPresenter;
 import timber.log.Timber;
 
 /**
- * Created by jess on 03/05/2017 10:09
+ * ================================================
+ * {@link FragmentDelegate} 默认实现类
+ * <p>
+ * Created by JessYan on 29/04/2017 16:12
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public class FragmentDelegateImpl implements FragmentDelegate {
     private android.support.v4.app.FragmentManager mFragmentManager;
     private android.support.v4.app.Fragment mFragment;
