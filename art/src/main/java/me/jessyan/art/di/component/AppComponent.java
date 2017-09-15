@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,7 +41,8 @@ import okhttp3.OkHttpClient;
  * ================================================
  * 可通过 {@link ArtUtils#obtainAppComponentFromContext(Context)} 拿到此接口的实现类
  * 拥有此接口的实现类即可调用对应的方法拿到 Dagger 提供的对应实例
- * <p>
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.2">AppComponent wiki 官方文档</a>
  * Created by JessYan on 8/4/2016
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding
@@ -58,7 +59,7 @@ public interface AppComponent {
     //用于管理所有仓库,网络请求层,以及数据缓存层
     IRepositoryManager repositoryManager();
 
-    //Rxjava错误处理管理类
+    //RxJava错误处理管理类
     RxErrorHandler rxErrorHandler();
 
     //图片管理器,用于加载图片的管理类,默认使用 Glide ,使用策略模式,可在运行时替换框架

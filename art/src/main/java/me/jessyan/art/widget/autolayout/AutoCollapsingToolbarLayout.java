@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,22 @@ package me.jessyan.art.widget.autolayout;
 import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.zhy.autolayout.AutoLayoutInfo;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 /**
- * Created by jess on 16/4/14.
+ * ================================================
+ * 实现 AndroidAutoLayout 规范的 {@link CollapsingToolbarLayout}
+ * 可使用 MVP_generator_solution 中的 AutoView 模版生成各种符合 AndroidAutoLayout 规范的 {@link View}
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.6">AutoLayout wiki 官方文档</a>
+ * Created by JessYan on 4/14/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class AutoCollapsingToolbarLayout extends CollapsingToolbarLayout {
     private AutoLayoutHelper mHelper = new AutoLayoutHelper(this);

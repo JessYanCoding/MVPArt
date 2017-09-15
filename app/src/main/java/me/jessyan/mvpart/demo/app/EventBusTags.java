@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,17 @@
   */
 package me.jessyan.mvpart.demo.app;
 
+import org.simple.eventbus.EventBus;
+
 /**
- * Created by jess on 8/30/16 16:39
+ * ================================================
+ * 放置 {@link EventBus} 的 Tag ,便于检索
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.5">EventBusTags wiki 官方文档</a>
+ * Created by JessYan on 8/30/2016 16:39
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public interface EventBusTags {
 

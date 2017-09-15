@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,13 +30,16 @@ import me.jessyan.mvpart.demo.mvp.model.api.service.UserService;
 import me.jessyan.mvpart.demo.mvp.model.entity.User;
 
 /**
+ * ================================================
  * 必须实现 IModel
  * 可以根据不同的业务逻辑划分多个 Repository 类,多个业务逻辑相近的页面可以使用同一个 Repository 类
  * 无需每个页面都创建一个独立的 Repository
- * 通过 {@link IRepositoryManager#createRepository(java.lang.Class)} 获得的 Repository 实例,为单例对象
+ * 通过 {@link IRepositoryManager#createRepository(Class)} 获得的 Repository 实例,为单例对象
  * <p>
- * Created by jess on 9/4/16 10:56
+ * Created by JessYan on 9/4/16 10:56
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class UserRepository implements IModel {
 

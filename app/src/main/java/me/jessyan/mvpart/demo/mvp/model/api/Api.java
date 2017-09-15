@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +16,13 @@
 package me.jessyan.mvpart.demo.mvp.model.api;
 
 /**
- * Created by jess on 8/5/16 11:25
- * contact with jess.yan.effort@gmail.com
+ * ================================================
+ * 存放一些与 API 有关的东西,如请求地址,请求码等
+ * <p>
+ * Created by JessYan on 08/05/2016 11:25
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public interface Api {
     String APP_DOMAIN = "https://api.github.com";

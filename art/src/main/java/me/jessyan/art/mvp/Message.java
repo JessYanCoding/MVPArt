@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,8 +34,9 @@ import android.text.TextUtils;
  * {@link Handler#obtainMessage Handler.obtainMessage()} methods, which will pull
  * them from a pool of recycled objects.</p>
  *
- * Created by jess on 24/02/2017 10:15
+ * Created by JessYan on 24/02/2017 10:15
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
  */
 public final class Message implements Parcelable {
     /**

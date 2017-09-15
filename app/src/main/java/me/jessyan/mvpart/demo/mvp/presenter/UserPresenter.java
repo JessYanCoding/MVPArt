@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,8 +35,13 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 /**
- * Created by jess on 9/4/16 10:59
+ * ================================================
+ * 展示 Presenter 的用法
+ *
+ * Created by JessYan on 09/04/2016 10:59
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class UserPresenter extends BasePresenter<UserRepository> {
     private RxErrorHandler mErrorHandler;

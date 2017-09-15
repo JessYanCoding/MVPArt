@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -175,7 +175,7 @@ public class ClientModule {
     }
 
     /**
-     * 提供处理 Rxjava 错误的管理器
+     * 提供处理 RxJava 错误的管理器
      *
      * @return
      */

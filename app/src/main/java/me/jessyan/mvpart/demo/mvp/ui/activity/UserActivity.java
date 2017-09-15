@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +32,15 @@ import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.presenter.UserPresenter;
 
-
+/**
+ * ================================================
+ * 展示 View 的用法
+ *
+ * Created by JessYan on 09/04/2016 10:59
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
+ */
 public class UserActivity extends BaseActivity<UserPresenter> implements IView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recyclerView)

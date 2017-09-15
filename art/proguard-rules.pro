@@ -137,7 +137,7 @@
 
 
 
-################Rxjava and RxAndroid###############
+################RxJava and RxAndroid###############
 -dontwarn org.mockito.**
 -dontwarn org.junit.**
 -dontwarn org.robolectric.**

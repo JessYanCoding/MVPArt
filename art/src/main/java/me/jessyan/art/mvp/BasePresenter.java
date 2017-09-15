@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +15,21 @@
   */
 package me.jessyan.art.mvp;
 
+import android.app.Activity;
+
 import org.simple.eventbus.EventBus;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by jess on 16/4/28.
+ * ================================================
+ * 基类 Presenter
+ * <p>
+ * Created by JessYan on 4/28/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class BasePresenter<M extends IModel> implements IPresenter {
     protected final String TAG = this.getClass().getSimpleName();
@@ -39,14 +47,17 @@ public class BasePresenter<M extends IModel> implements IPresenter {
     }
 
     public void onStart() {
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(this);//注册eventbus
+        if (useEventBus())//如果要使用 Eventbus 请将此方法返回true
+            EventBus.getDefault().register(this);//注册 Eventbus
     }
 
+    /**
+     * 在框架中 {@link Activity#onDestroy()} 会默认调用{@link IPresenter#onDestroy()}
+     */
     @Override
     public void onDestroy() {
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(this);//解除注册eventbus
+        if (useEventBus())//如果要使用 Eventbus 请将此方法返回 true
+            EventBus.getDefault().unregister(this);//解除注册 Eventbus
         unDispose();//解除订阅
         if (mModel != null)
             mModel.onDestroy();
@@ -55,7 +66,7 @@ public class BasePresenter<M extends IModel> implements IPresenter {
     }
 
     /**
-     * 是否使用eventBus,默认为使用(true)，
+     * 是否使用 {@link EventBus},默认为使用(true)，
      *
      * @return
      */
@@ -64,16 +75,25 @@ public class BasePresenter<M extends IModel> implements IPresenter {
     }
 
 
+    /**
+     * 将 {@link Disposable} 添加到 {@link CompositeDisposable} 中统一管理
+     * 可在 {@link Activity#onDestroy()} 中使用 {@link #unDispose()} 停止正在执行的 RxJava 任务,避免内存泄漏(框架已自行处理)
+     *
+     * @param disposable
+     */
     public void addDispose(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
-        mCompositeDisposable.add(disposable);//将所有disposable放入,集中处理
+        mCompositeDisposable.add(disposable);//将所有 Disposable 放入集中处理
     }
 
+    /**
+     * 停止集合中正在执行的 RxJava 任务
+     */
     public void unDispose() {
         if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();//保证activity结束时取消所有正在执行的订阅
+            mCompositeDisposable.clear();//保证 Activity 结束时取消所有正在执行的订阅
         }
     }
 

@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,10 +26,14 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.art.mvp.IView;
 
 /**
- * Created by jess on 11/10/2016 16:39
+ * ================================================
+ * 放置便于使用 RxJava 的一些工具类
+ * <p>
+ * Created by JessYan on 11/10/2016 16:39
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public class RxUtils {
 
     private RxUtils() {

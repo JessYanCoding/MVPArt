@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,24 @@
   */
 package me.jessyan.art.mvp;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.view.View;
+
 /**
- * Created by jess on 25/02/2017 19:18
+ * ================================================
+ * 这里除了定义 {@link #handleMessage} 还可以定义一些比较常用,每个 {@link View} 都会用到的方法
+ * 因为 {@link View} 的实现类可能会是 {@link Activity}, {@link Fragment} 或者 {@link Dialog} 以及一些自定义 {@link View}
+ * 所以不能定义一些某个类特有的方法比如 {@link Activity#startActivity(Intent)} 就是 {@link Activity} 特有的
+ * 其他 {@link View} 实现类并不一定具备这个功能
+ * <p>
+ * Created by JessYan on 25/02/2017 19:18
  * Contact with jess.yan.effort@gmail.com
- * 这里除了定义handleMessage,可以定义一些比较常用,每个view都会用到的方法
- * 因为View的实现类可能会是Activity,Fragment或者Dialog以及一些自定义View,所以不能定义一些某个类特有的方法
- * 比如startActivity就是Activity特有的,其他view实现类并不一定具备这个功能
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public interface IView {
 
@@ -39,9 +51,9 @@ public interface IView {
      */
     void showMessage(String message);
 
-
     /**
-     * 处理消息,这里面和handler的原理一样,通过swith(what),做不同的操作
+     * 处理消息,这里面和 {@link Handler} 的原理一样,通过 swith(what),做不同的操作
+     *
      * @param message
      */
     void handleMessage(Message message);

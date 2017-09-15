@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,7 @@ import android.content.res.TypedArray;
 import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -29,7 +30,15 @@ import com.zhy.autolayout.utils.DimenUtils;
 import me.jessyan.art.R;
 
 /**
- * Created by jess on 16/4/14.
+ * ================================================
+ * 实现 AndroidAutoLayout 规范的 {@link TabLayout}
+ * 可使用 MVP_generator_solution 中的 AutoView 模版生成各种符合 AndroidAutoLayout 规范的 {@link View}
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.6">AutoLayout wiki 官方文档</a>
+ * Created by JessYan on 4/14/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class AutoTabLayout extends TabLayout
 {

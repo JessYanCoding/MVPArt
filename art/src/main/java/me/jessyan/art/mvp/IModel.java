@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +16,18 @@
 package me.jessyan.art.mvp;
 
 /**
- * Created by jess on 15/12/2016 10:45
+ * ================================================
+ * 框架要求框架中的每个 Model 都需要实现此类,以满足规范
+ * <p>
+ * Created by JessYan on 15/12/2016 10:45
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public interface IModel {
+
+    /**
+     * 在框架中 {@link BasePresenter#onDestroy()} 会默认调用{@link IModel#onDestroy()}
+     */
     void onDestroy();
 }

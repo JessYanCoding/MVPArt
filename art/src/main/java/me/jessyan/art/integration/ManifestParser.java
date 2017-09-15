@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,7 @@ import java.util.List;
  * ================================================
  * 用于解析 AndroidManifest 中的 Meta 属性
  * 配合 {@link ConfigModule} 使用
- *
+ * <p>
  * Created by JessYan on 12/04/2017 14:41
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding

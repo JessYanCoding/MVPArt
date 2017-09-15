@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +16,13 @@
 package me.jessyan.mvpart.demo.mvp.model.api.service;
 
 /**
- * 存放通用的一些API
- * Created by jess on 8/5/16 12:05
- * contact with jess.yan.effort@gmail.com
+ * ================================================
+ * 存放通用的一些 API
+ * <p>
+ * Created by JessYan on 08/05/2016 12:05
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public interface CommonService {
 

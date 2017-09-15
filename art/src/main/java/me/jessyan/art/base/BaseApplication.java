@@ -1,4 +1,4 @@
-/*
+/**
   * Copyright 2017 JessYan
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ import me.jessyan.art.di.component.AppComponent;
 
 /**
  * ================================================
- * 本框架由 MVP + Dagger2 + Retrofit + Rxjava + Androideventbus + Butterknife 组成
+ * 本框架由 MVP + Dagger2 + Retrofit + RxJava + Androideventbus + Butterknife 组成
  * <p>
  * Created by JessYan on 22/03/2016
  * Contact with jess.yan.effort@gmail.com
