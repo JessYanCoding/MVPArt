@@ -29,7 +29,6 @@ import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.PermissionUtil;
 import me.jessyan.mvpart.demo.mvp.model.UserRepository;
 import me.jessyan.mvpart.demo.mvp.model.entity.User;
-import me.jessyan.mvpart.demo.mvp.ui.adapter.UserAdapter;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
@@ -52,21 +51,15 @@ public class UserPresenter extends BasePresenter<UserRepository> {
     private int preEndIndex;
 
 
-    public UserPresenter(AppComponent appComponent) {
+    public UserPresenter(AppComponent appComponent, DefaultAdapter adapter) {
         super(appComponent.repositoryManager().createRepository(UserRepository.class));
+        this.mAdapter = adapter;
+        this.mUsers = adapter.getInfos();
         this.mErrorHandler = appComponent.rxErrorHandler();
     }
 
     public void requestUsers(final Message msg) {
         final boolean pullToRefresh = (boolean) msg.objs[0];
-        if (mAdapter == null) {
-            mAdapter = new UserAdapter(mUsers);
-            msg.what = 0;
-            msg.obj = mAdapter;
-            msg.handleMessageToTargetUnrecycle();
-        }
-
-
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
             @Override
@@ -101,7 +94,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                         msg.getTarget().showLoading();//显示下拉刷新的进度条
                     else {
                         //显示上拉加载更多的进度条
-                        msg.what = 1;
+                        msg.what = 0;
                         msg.handleMessageToTargetUnrecycle();
                     }
                 }).subscribeOn(AndroidSchedulers.mainThread())
@@ -115,7 +108,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
                         msg.recycle();
                     } else {
                         //隐藏上拉加载更多的进度条
-                        msg.what = 2;
+                        msg.what = 1;
                         msg.handleMessageToTarget();//方法最后必须调HandleMessageToTarget,将消息所有引用清空后回收进消息池
                     }
                 })

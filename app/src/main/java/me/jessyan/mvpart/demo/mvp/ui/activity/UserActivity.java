@@ -1,18 +1,18 @@
 /**
-  * Copyright 2017 JessYan
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  *      http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package me.jessyan.mvpart.demo.mvp.ui.activity;
 
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import android.support.v7.widget.RecyclerView;
 import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import me.jessyan.art.base.BaseActivity;
 import me.jessyan.art.base.DefaultAdapter;
@@ -31,11 +33,12 @@ import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.presenter.UserPresenter;
+import me.jessyan.mvpart.demo.mvp.ui.adapter.UserAdapter;
 
 /**
  * ================================================
  * 展示 View 的用法
- *
+ * <p>
  * Created by JessYan on 09/04/2016 10:59
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding
@@ -51,6 +54,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
     private Paginate mPaginate;
     private boolean isLoadingMore;
     private RxPermissions mRxPermissions;
+    private UserAdapter mAdapter;
 
 
     @Override
@@ -62,12 +66,15 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
     public void initData(Bundle savedInstanceState) {
         this.mRxPermissions = new RxPermissions(this);
         initRecycleView();
+        mRecyclerView.setAdapter(mAdapter);
+        initPaginate();
         mPresenter.requestUsers(Message.obtain(this, new Object[]{true, mRxPermissions}));//打开app时自动加载列表
     }
 
     @Override
     public UserPresenter obtainPresenter() {
-        return new UserPresenter(ArtUtils.obtainAppComponentFromContext(this));
+        this.mAdapter = new UserAdapter(new ArrayList<>());
+        return new UserPresenter(ArtUtils.obtainAppComponentFromContext(this), mAdapter);
     }
 
 
@@ -90,13 +97,9 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
     public void handleMessage(Message message) {
         switch (message.what) {
             case 0:
-                mRecyclerView.setAdapter((RecyclerView.Adapter) message.obj);
-                initPaginate();
-                break;
-            case 1:
                 isLoadingMore = true;//开始加载更多
                 break;
-            case 2:
+            case 1:
                 isLoadingMore = false;//结束加载更多
                 break;
         }
