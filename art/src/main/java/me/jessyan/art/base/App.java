@@ -24,8 +24,8 @@ import me.jessyan.art.di.component.AppComponent;
  *
  * @see BaseApplication
  * Created by JessYan on 25/04/2017 14:54
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface App {

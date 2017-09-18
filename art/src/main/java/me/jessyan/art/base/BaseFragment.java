@@ -31,8 +31,8 @@ import me.jessyan.art.mvp.IPresenter;
  * 继承于这个特定的 @{@link Fragment},然后再按照 {@link BaseFragment} 的格式,将代码复制过去,记住一定要实现{@link IFragment}
  * <p>
  * Created by JessYan on 22/03/2016
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment<P> {

@@ -30,8 +30,8 @@ import android.view.View;
  * 其他 {@link View} 实现类并不一定具备这个功能
  * <p>
  * Created by JessYan on 25/02/2017 19:18
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface IView {

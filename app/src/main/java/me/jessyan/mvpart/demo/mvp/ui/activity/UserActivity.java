@@ -40,8 +40,8 @@ import me.jessyan.mvpart.demo.mvp.ui.adapter.UserAdapter;
  * 展示 View 的用法
  * <p>
  * Created by JessYan on 09/04/2016 10:59
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class UserActivity extends BaseActivity<UserPresenter> implements IView, SwipeRefreshLayout.OnRefreshListener {

@@ -27,8 +27,8 @@ import io.reactivex.disposables.Disposable;
  * 基类 Presenter
  * <p>
  * Created by JessYan on 4/28/2016
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class BasePresenter<M extends IModel> implements IPresenter {

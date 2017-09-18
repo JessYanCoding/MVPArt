@@ -35,8 +35,8 @@ import android.text.TextUtils;
  * them from a pool of recycled objects.</p>
  *
  * Created by JessYan on 24/02/2017 10:15
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  */
 public final class Message implements Parcelable {
     /**

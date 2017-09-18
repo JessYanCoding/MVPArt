@@ -29,8 +29,8 @@ import me.jessyan.art.mvp.IPresenter;
  *
  * @see BaseActivity
  * Created by JessYan on 26/04/2017 21:42
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface IActivity<P extends IPresenter> {

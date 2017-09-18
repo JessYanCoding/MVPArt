@@ -37,8 +37,8 @@ import me.jessyan.mvpart.demo.mvp.model.entity.User;
  * 通过 {@link IRepositoryManager#createRepository(Class)} 获得的 Repository 实例,为单例对象
  * <p>
  * Created by JessYan on 9/4/16 10:56
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class UserRepository implements IModel {
