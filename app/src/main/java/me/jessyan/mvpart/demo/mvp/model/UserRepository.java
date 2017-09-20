@@ -75,6 +75,6 @@ public class UserRepository implements IModel {
 
     @Override
     public void onDestroy() {
-        this.mManager = null;
+
     }
 }
