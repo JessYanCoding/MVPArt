@@ -37,8 +37,7 @@ public class ImageConfigImpl extends ImageConfig {
     private int fallback; //请求 url 为空,则使用此图片作为占位符
     private BitmapTransformation transformation;//glide用它来改变图形的形状
     private ImageView[] imageViews;
-    private boolean isClearMemory;//清理内存缓存
-    private boolean isClearDiskCache;//清理本地缓存
+
 
     private ImageConfigImpl(Builder builder) {
         this.url = builder.url;
@@ -63,14 +62,6 @@ public class ImageConfigImpl extends ImageConfig {
 
     public ImageView[] getImageViews() {
         return imageViews;
-    }
-
-    public boolean isClearMemory() {
-        return isClearMemory;
-    }
-
-    public boolean isClearDiskCache() {
-        return isClearDiskCache;
     }
 
     public int getFallback() {

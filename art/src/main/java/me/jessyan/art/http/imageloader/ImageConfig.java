@@ -32,6 +32,8 @@ public class ImageConfig {
     protected ImageView imageView;
     protected int placeholder;//占位符
     protected int errorPic;//错误占位符
+    protected boolean isClearMemory;//清理内存缓存
+    protected boolean isClearDiskCache;//清理本地缓存
 
 
     public String getUrl() {
@@ -48,5 +50,13 @@ public class ImageConfig {
 
     public int getErrorPic() {
         return errorPic;
+    }
+
+    public boolean isClearMemory() {
+        return isClearMemory;
+    }
+
+    public boolean isClearDiskCache() {
+        return isClearDiskCache;
     }
 }
