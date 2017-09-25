@@ -177,9 +177,9 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     private ActivityDelegate fetchActivityDelegate(Activity activity) {
         ActivityDelegate activityDelegate = null;
         if (activity instanceof IActivity && activity.getIntent() != null) {
+            activity.getIntent().setExtrasClassLoader(getClass().getClassLoader());
             activityDelegate = activity.getIntent().getParcelableExtra(ActivityDelegate.ACTIVITY_DELEGATE);
         }
         return activityDelegate;
     }
-
 }
