@@ -28,6 +28,7 @@ import dagger.Lazy;
 import io.rx_cache2.internal.RxCache;
 import me.jessyan.art.integration.cache.Cache;
 import me.jessyan.art.integration.cache.CacheType;
+import me.jessyan.art.utils.Preconditions;
 import retrofit2.Retrofit;
 
 /**
@@ -72,6 +73,7 @@ public class RepositoryManager implements IRepositoryManager {
     public <T extends IModel> T createRepository(Class<T> repository) {
         if (mRepositoryCache == null)
             mRepositoryCache = mCachefactory.build(CacheType.REPOSITORY_CACHE_TYPE);
+        Preconditions.checkNotNull(mRepositoryCache,"Cannot return null from a Cache.Factory#build(int) method");
         T repositoryInstance;
         synchronized (mRepositoryCache) {
             repositoryInstance = (T) mRepositoryCache.get(repository.getName());
@@ -104,6 +106,7 @@ public class RepositoryManager implements IRepositoryManager {
     public <T> T createRetrofitService(Class<T> service) {
         if (mRetrofitServiceCache == null)
             mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE_TYPE);
+        Preconditions.checkNotNull(mRetrofitServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
             retrofitService = (T) mRetrofitServiceCache.get(service.getName());
@@ -127,6 +130,7 @@ public class RepositoryManager implements IRepositoryManager {
     public <T> T createCacheService(Class<T> cache) {
         if (mCacheServiceCache == null)
             mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE_TYPE);
+        Preconditions.checkNotNull(mCacheServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
         T cacheService;
         synchronized (mCacheServiceCache) {
             cacheService = (T) mCacheServiceCache.get(cache.getName());
