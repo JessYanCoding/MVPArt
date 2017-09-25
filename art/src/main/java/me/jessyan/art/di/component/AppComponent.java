@@ -21,7 +21,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -32,6 +31,7 @@ import me.jessyan.art.di.module.ClientModule;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.imageloader.ImageLoader;
 import me.jessyan.art.integration.AppManager;
+import me.jessyan.art.integration.cache.Cache;
 import me.jessyan.art.mvp.IRepositoryManager;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -74,7 +74,7 @@ public interface AppComponent {
     File cacheFile();
 
     //用来存取一些整个App公用的数据,切勿大量存放大容量数据
-    Map<String, Object> extras();
+    Cache<String, Object> extras();
 
     void inject(AppDelegate delegate);
 }

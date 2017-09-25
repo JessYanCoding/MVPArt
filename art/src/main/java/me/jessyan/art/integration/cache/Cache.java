@@ -1,12 +1,12 @@
 /**
  * Copyright 2017 JessYan
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,10 +18,13 @@ package me.jessyan.art.integration.cache;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import me.jessyan.art.di.module.GlobalConfigModule;
+
 /**
  * ================================================
- * 用于缓存框架所必需的某些部件
+ * 用户缓存框架中所必需的组件,开发者可通过 {@link GlobalConfigModule.Builder#cacheFactory(Factory)} 扩展框架的缓存策略
  *
+ * @see GlobalConfigModule#provideCacheFactory()
  * Created by JessYan on 25/09/2017 16:36
  * Contact with <mailto:jess.yan.effort@gmail.com>
  * Follow me on <https://github.com/JessYanCoding>
@@ -34,9 +37,12 @@ public interface Cache<K, V> {
 
         /**
          * Returns a new cache
+         *
+         * @param type 框架中需要用到缓存的模块类型 Id
+         * @return
          */
         @NonNull
-        Cache build();
+        Cache build(int type);
     }
 
     /**
@@ -44,7 +50,7 @@ public interface Cache<K, V> {
      *
      * @return
      */
-    int getSize();
+    int size();
 
     /**
      * 获取可缓存的最大容积
@@ -87,7 +93,7 @@ public interface Cache<K, V> {
      * @param key
      * @return
      */
-    boolean contains(K key);
+    boolean containsKey(K key);
 
     /**
      * 清除全部缓存

@@ -23,7 +23,6 @@ import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,6 +32,7 @@ import me.jessyan.art.base.delegate.ActivityDelegate;
 import me.jessyan.art.base.delegate.ActivityDelegateImpl;
 import me.jessyan.art.base.delegate.FragmentDelegate;
 import me.jessyan.art.base.delegate.IActivity;
+import me.jessyan.art.integration.cache.Cache;
 
 /**
  * ================================================
@@ -50,12 +50,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     private AppManager mAppManager;
     private Application mApplication;
-    private Map<String, Object> mExtras;
+    private Cache<String, Object> mExtras;
     private FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle;
     private List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycles;
 
     @Inject
-    public ActivityLifecycle(AppManager appManager, Application application, Map<String, Object> extras) {
+    public ActivityLifecycle(AppManager appManager, Application application, Cache<String, Object> extras) {
         this.mAppManager = appManager;
         this.mApplication = application;
         this.mExtras = extras;
@@ -165,7 +165,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
                 }
-                mExtras.put(ConfigModule.class.getName(), null);
+                mExtras.remove(ConfigModule.class.getName());
             }
 
             for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {

@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * ================================================
  * LRU 即 Least Recently Used,最近最少使用,也就是说,当缓存满了,会优先淘汰那些最近最不常访问的数据
+ * 此种缓存策略为框架默认提供,可自行实现其他缓存策略,如磁盘缓存,为框架或使用者提供缓存的功能
  * <p>
  * Created by JessYan on 25/09/2017 16:57
  * Contact with <mailto:jess.yan.effort@gmail.com>
@@ -94,7 +95,7 @@ public class LruCache<K, V> implements Cache<K, V> {
      * Returns the sum of the sizes of all items in the cache.
      */
     @Override
-    public synchronized int getSize() {
+    public synchronized int size() {
         return currentSize;
     }
 
@@ -104,7 +105,7 @@ public class LruCache<K, V> implements Cache<K, V> {
      * @param key The key to check.
      */
     @Override
-    public synchronized boolean contains(K key) {
+    public synchronized boolean containsKey(K key) {
         return cache.containsKey(key);
     }
 
