@@ -86,7 +86,7 @@ public class RepositoryManager implements IRepositoryManager {
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException("Unable to invoke " + constructor, e);
                 } catch (InvocationTargetException e) {
-                    throw new RuntimeException("create repository error", e);
+                    throw new RuntimeException("Create repository error", e);
                 }
                 mRepositoryCache.put(repository.getName(), repositoryInstance);
             }
@@ -171,6 +171,4 @@ public class RepositoryManager implements IRepositoryManager {
 
         return bindingCtor;
     }
-
-
 }

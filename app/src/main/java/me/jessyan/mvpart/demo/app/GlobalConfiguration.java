@@ -69,15 +69,15 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    }
 //                })
 
-                //可为框架某些部件提供自定义自定义的缓存策略,具有强大的扩展性
+                //可根据当前项目的情况以及环境为框架某些部件提供自定义的缓存策略,具有强大的扩展性
 //                .cacheFactory(new Cache.Factory() {
 //                    @NonNull
 //                    @Override
 //                    public Cache build(int type) {
 //                        switch (type){
-//                            case 0:
+//                            case EXTRAS_CACHE_TYPE:
 //                                return new LruCache(1000);
-//                            case 1:
+//                            case REPOSITORY_CACHE_TYPE:
 //                                return new Cache();//自定义 Cache
 //                            default:
 //                                return new LruCache(DEFAULT_CACHE_SIZE);
