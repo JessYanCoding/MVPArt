@@ -44,8 +44,8 @@ import me.jessyan.art.utils.ArtUtils;
  * 用于配置缓存文件夹,切换图片请求框架等操作
  * <p>
  * Created by JessYan on 16/4/15.
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @GlideModule(glideName = "GlideArt")

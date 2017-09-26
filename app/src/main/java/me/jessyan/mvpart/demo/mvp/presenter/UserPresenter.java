@@ -38,8 +38,8 @@ import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
  * 展示 Presenter 的用法
  *
  * Created by JessYan on 09/04/2016 10:59
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class UserPresenter extends BasePresenter<UserRepository> {

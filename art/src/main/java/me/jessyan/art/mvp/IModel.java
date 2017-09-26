@@ -20,8 +20,8 @@ package me.jessyan.art.mvp;
  * 框架要求框架中的每个 Model 都需要实现此类,以满足规范
  * <p>
  * Created by JessYan on 15/12/2016 10:45
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public interface IModel {

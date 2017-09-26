@@ -30,8 +30,8 @@ import me.jessyan.art.di.module.GlobalConfigModule;
  * @see GlobalConfigModule#provideCacheFactory()
  * @see Cache
  * Created by JessYan on 25/09/2017 16:57
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class LruCache<K, V> implements Cache<K, V> {

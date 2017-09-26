@@ -28,8 +28,8 @@ import me.jessyan.art.http.imageloader.ImageConfig;
  * 其他操作同理
  * <p>
  * Created by JessYan on 8/5/16 15:19
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class ImageConfigImpl extends ImageConfig {
