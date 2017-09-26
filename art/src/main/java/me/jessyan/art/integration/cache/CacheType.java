@@ -18,7 +18,7 @@ package me.jessyan.art.integration.cache;
 /**
  * ================================================
  * 构建 {@link Cache} 时,使用 {@link CacheType} 中声明的类型,来区分不同的模块
- * 从而为不同的模块使用不同的策略
+ * 从而为不同的模块构建不同的缓存策略
  *
  * @see Cache.Factory#build(int)
  * Created by JessYan on 25/09/2017 18:05

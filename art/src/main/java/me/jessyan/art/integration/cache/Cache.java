@@ -22,9 +22,11 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 
 /**
  * ================================================
- * 用户缓存框架中所必需的组件,开发者可通过 {@link GlobalConfigModule.Builder#cacheFactory(Factory)} 扩展框架的缓存策略
+ * 用于缓存框架中所必需的组件,开发者可通过 {@link GlobalConfigModule.Builder#cacheFactory(Factory)} 为框架提供缓存策略
+ * 开发者也可以用于自己日常中的使用
  *
  * @see GlobalConfigModule#provideCacheFactory()
+ * @see LruCache
  * Created by JessYan on 25/09/2017 16:36
  * Contact with <mailto:jess.yan.effort@gmail.com>
  * Follow me on <https://github.com/JessYanCoding>
@@ -38,7 +40,7 @@ public interface Cache<K, V> {
         /**
          * Returns a new cache
          *
-         * @param type 框架中需要用到缓存的模块类型 Id
+         * @param type 框架中模块类型的 Id
          * @return
          */
         @NonNull
@@ -46,21 +48,21 @@ public interface Cache<K, V> {
     }
 
     /**
-     * 获得当前缓存的大小
+     * 返回当前缓存已占用的总 size
      *
      * @return
      */
     int size();
 
     /**
-     * 获取可缓存的最大容积
+     * 返回当前缓存所能允许的最大 size
      *
      * @return
      */
     int getMaxSize();
 
     /**
-     * 根据 key 取出对应的缓存
+     * 返回这个 {@code key} 在缓存中对应的 {@code value}, 如果返回 {@code null} 说明这个 {@code key} 没有对应的 {@code value}
      *
      * @param key
      * @return
@@ -69,17 +71,19 @@ public interface Cache<K, V> {
     V get(K key);
 
     /**
-     * 放置缓存
+     * 将 {@code key} 和 {@code value} 以条目的形式加入缓存,如果这个 {@code key} 在缓存中已经有对应的 {@code value}
+     * 则此 {@code value} 被新的 {@code value} 替换并返回,如果为 {@code null} 说明是一个新条目
      *
      * @param key
-     * @param item
+     * @param value
      * @return
      */
     @Nullable
-    V put(K key, V item);
+    V put(K key, V value);
 
     /**
-     * 根据 key 移除对应的缓存
+     * 移除缓存中这个 {@code key} 所对应的条目,并返回所移除条目的 value
+     * 如果返回为 {@code null} 则有可能时因为这个 {@code key} 对应的 value 为 {@code null} 或条目不存在
      *
      * @param key
      * @return
@@ -88,7 +92,7 @@ public interface Cache<K, V> {
     V remove(K key);
 
     /**
-     * key 对应的缓存是否存在
+     * 如果这个 {@code key} 在缓存中有对应的 value 并且不为 {@code null}, 则返回 {@code true}
      *
      * @param key
      * @return
@@ -96,7 +100,7 @@ public interface Cache<K, V> {
     boolean containsKey(K key);
 
     /**
-     * 清除全部缓存
+     * 清除缓存中所有的内容
      */
     void clear();
 }
