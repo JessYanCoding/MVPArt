@@ -16,6 +16,8 @@
 package me.jessyan.art.base;
 
 
+import android.support.annotation.NonNull;
+
 import me.jessyan.art.di.component.AppComponent;
 
 /**
@@ -29,5 +31,6 @@ import me.jessyan.art.di.component.AppComponent;
  * ================================================
  */
 public interface App {
+    @NonNull
     AppComponent getAppComponent();
 }

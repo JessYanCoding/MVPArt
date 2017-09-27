@@ -19,6 +19,7 @@ import android.app.Application;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ import me.jessyan.art.http.imageloader.glide.ImageConfigImpl;
 import me.jessyan.art.integration.ActivityLifecycle;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
+import me.jessyan.art.utils.Preconditions;
 
 /**
  * ================================================
@@ -158,8 +160,12 @@ public class AppDelegate implements App, AppLifecycles {
      *
      * @return
      */
+    @NonNull
     @Override
     public AppComponent getAppComponent() {
+        Preconditions.checkNotNull(mAppComponent,
+                "%s cannot be null,first call %s#onCreate(Application) in %s#onCreate()",
+                AppComponent.class.getName(), getClass().getName(), Application.class.getName());
         return mAppComponent;
     }
 

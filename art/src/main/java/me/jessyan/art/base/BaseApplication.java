@@ -1,26 +1,28 @@
 /**
-  * Copyright 2017 JessYan
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  *      http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package me.jessyan.art.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import me.jessyan.art.base.delegate.AppDelegate;
 import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.component.AppComponent;
+import me.jessyan.art.utils.Preconditions;
 
 /**
  * ================================================
@@ -43,14 +45,16 @@ public class BaseApplication extends Application implements App {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        this.mAppDelegate = new AppDelegate(base);
+        if (mAppDelegate == null)
+            this.mAppDelegate = new AppDelegate(base);
         this.mAppDelegate.attachBaseContext(base);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        this.mAppDelegate.onCreate(this);
+        if (mAppDelegate != null)
+            this.mAppDelegate.onCreate(this);
     }
 
     /**
@@ -70,8 +74,11 @@ public class BaseApplication extends Application implements App {
      *
      * @return
      */
+    @NonNull
     @Override
     public AppComponent getAppComponent() {
+        Preconditions.checkNotNull(mAppDelegate, "%s cannot be null", AppDelegate.class.getName());
+        Preconditions.checkState(mAppDelegate instanceof App, "%s must be implements %s", AppDelegate.class.getName(), App.class.getName());
         return ((App) mAppDelegate).getAppComponent();
     }
 

@@ -145,7 +145,6 @@ public class LruCache<K, V> implements Cache<K, V> {
             currentSize += getItemSize(value);
         }
         if (result != null) {
-            // TODO: should we call onItemEvicted here?
             currentSize -= getItemSize(result);
         }
         evict();
