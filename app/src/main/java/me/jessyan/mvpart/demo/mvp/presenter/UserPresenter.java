@@ -68,8 +68,13 @@ public class UserPresenter extends BasePresenter<UserRepository> {
             }
 
             @Override
-            public void onRequestPermissionFailure() {
+            public void onRequestPermissionFailure(List<String> permissions) {
                 msg.getTarget().showMessage("Request permissions failure");
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                msg.getTarget().showMessage("Need to go to the settings");
             }
         }, (RxPermissions) msg.objs[1], mErrorHandler);
 

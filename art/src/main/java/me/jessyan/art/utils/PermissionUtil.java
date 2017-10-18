@@ -17,11 +17,14 @@ package me.jessyan.art.utils;
 
 import android.Manifest;
 
+import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import timber.log.Timber;
@@ -44,9 +47,24 @@ public class PermissionUtil {
     }
 
     public interface RequestPermission {
+        /**
+         * 权限请求成功
+         */
         void onRequestPermissionSuccess();
 
-        void onRequestPermissionFailure();
+        /**
+         * 用户拒绝了权限请求, 权限请求失败, 但还可以继续请求该权限
+         *
+         * @param permissions 请求失败的权限名
+         */
+        void onRequestPermissionFailure(List<String> permissions);
+
+        /**
+         * 用户拒绝了权限请求并且用户选择了以后不再询问, 权限请求失败, 这时将不能继续请求该权限, 需要提示用户进入设置页面打开该权限
+         *
+         * @param permissions
+         */
+        void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions);
     }
 
 
@@ -60,21 +78,30 @@ public class PermissionUtil {
             }
         }
 
-        if (needRequest.size() == 0) {//全部权限都已经申请过，直接执行操作
+        if (needRequest.isEmpty()) {//全部权限都已经申请过，直接执行操作
             requestPermission.onRequestPermissionSuccess();
         } else {//没有申请过,则开始申请
             rxPermissions
-                    .request(needRequest.toArray(new String[needRequest.size()]))
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
+                    .requestEach(needRequest.toArray(new String[needRequest.size()]))
+                    .buffer(permissions.length)
+                    .subscribe(new ErrorHandleSubscriber<List<Permission>>(errorHandler) {
                         @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("Request permissions success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                Timber.tag(TAG).d("Request permissions failure");
-                                requestPermission.onRequestPermissionFailure();
+                        public void onNext(@NonNull List<Permission> permissions) {
+                            for (Permission p : permissions) {
+                                if (!p.granted) {
+                                    if (p.shouldShowRequestPermissionRationale) {
+                                        Timber.tag(TAG).d("Request permissions failure");
+                                        requestPermission.onRequestPermissionFailure(Arrays.asList(p.name));
+                                        return;
+                                    } else {
+                                        Timber.tag(TAG).d("Request permissions failure with ask never again");
+                                        requestPermission.onRequestPermissionFailureWithAskNeverAgain(Arrays.asList(p.name));
+                                        return;
+                                    }
+                                }
                             }
+                            Timber.tag(TAG).d("Request permissions success");
+                            requestPermission.onRequestPermissionSuccess();
                         }
                     });
         }
