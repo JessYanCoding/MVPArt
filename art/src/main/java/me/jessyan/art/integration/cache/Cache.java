@@ -15,6 +15,7 @@
  */
 package me.jessyan.art.integration.cache;
 
+import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -25,7 +26,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
  * 用于缓存框架中所必需的组件,开发者可通过 {@link GlobalConfigModule.Builder#cacheFactory(Factory)} 为框架提供缓存策略
  * 开发者也可以用于自己日常中的使用
  *
- * @see GlobalConfigModule#provideCacheFactory()
+ * @see GlobalConfigModule#provideCacheFactory(Application)
  * @see LruCache
  * Created by JessYan on 25/09/2017 16:36
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
@@ -35,16 +36,14 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 public interface Cache<K, V> {
     interface Factory {
 
-        int DEFAULT_CACHE_SIZE = 100;
-
         /**
          * Returns a new cache
          *
-         * @param type 框架中模块类型的 Id
+         * @param type 框架中需要缓存的模块类型
          * @return
          */
         @NonNull
-        Cache build(int type);
+        Cache build(CacheType type);
     }
 
     /**

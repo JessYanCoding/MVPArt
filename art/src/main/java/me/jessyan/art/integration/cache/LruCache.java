@@ -15,6 +15,7 @@
  */
 package me.jessyan.art.integration.cache;
 
+import android.app.Application;
 import android.support.annotation.Nullable;
 
 import java.util.LinkedHashMap;
@@ -27,7 +28,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
  * LRU 即 Least Recently Used,最近最少使用,也就是说,当缓存满了,会优先淘汰那些最近最不常访问的数据
  * 此种缓存策略为框架默认提供,可自行实现其他缓存策略,如磁盘缓存,为框架或开发者提供缓存的功能
  *
- * @see GlobalConfigModule#provideCacheFactory()
+ * @see GlobalConfigModule#provideCacheFactory(Application)
  * @see Cache
  * Created by JessYan on 25/09/2017 16:57
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>

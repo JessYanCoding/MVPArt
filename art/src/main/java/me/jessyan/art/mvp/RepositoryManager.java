@@ -72,7 +72,7 @@ public class RepositoryManager implements IRepositoryManager {
     @Override
     public <T extends IModel> T createRepository(Class<T> repository) {
         if (mRepositoryCache == null)
-            mRepositoryCache = mCachefactory.build(CacheType.REPOSITORY_CACHE_TYPE);
+            mRepositoryCache = mCachefactory.build(CacheType.REPOSITORY_CACHE);
         Preconditions.checkNotNull(mRepositoryCache,"Cannot return null from a Cache.Factory#build(int) method");
         T repositoryInstance;
         synchronized (mRepositoryCache) {
@@ -105,7 +105,7 @@ public class RepositoryManager implements IRepositoryManager {
     @Override
     public <T> T createRetrofitService(Class<T> service) {
         if (mRetrofitServiceCache == null)
-            mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE_TYPE);
+            mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
         Preconditions.checkNotNull(mRetrofitServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
@@ -129,7 +129,7 @@ public class RepositoryManager implements IRepositoryManager {
     @Override
     public <T> T createCacheService(Class<T> cache) {
         if (mCacheServiceCache == null)
-            mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE_TYPE);
+            mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
         Preconditions.checkNotNull(mCacheServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
         T cacheService;
         synchronized (mCacheServiceCache) {

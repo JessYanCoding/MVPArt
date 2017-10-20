@@ -62,7 +62,7 @@ public class PermissionUtil {
         /**
          * 用户拒绝了权限请求并且用户选择了以后不再询问, 权限请求失败, 这时将不能继续请求该权限, 需要提示用户进入设置页面打开该权限
          *
-         * @param permissions
+         * @param permissions 请求失败的权限名
          */
         void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions);
     }
