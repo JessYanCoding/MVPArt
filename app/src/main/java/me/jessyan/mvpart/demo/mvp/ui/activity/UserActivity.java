@@ -64,17 +64,17 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        this.mRxPermissions = new RxPermissions(this);
         initRecycleView();
         mRecyclerView.setAdapter(mAdapter);
         initPaginate();
-        mPresenter.requestUsers(Message.obtain(this, new Object[]{true, mRxPermissions}));//打开app时自动加载列表
+        mPresenter.requestUsers(Message.obtain(this, new Object[]{true}));//打开app时自动加载列表
     }
 
     @Override
     public UserPresenter obtainPresenter() {
+        this.mRxPermissions = new RxPermissions(this);
         this.mAdapter = new UserAdapter(new ArrayList<>());
-        return new UserPresenter(ArtUtils.obtainAppComponentFromContext(this), mAdapter);
+        return new UserPresenter(ArtUtils.obtainAppComponentFromContext(this), mAdapter, mRxPermissions);
     }
 
 
@@ -108,7 +108,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public void onRefresh() {
-        mPresenter.requestUsers(Message.obtain(this, new Object[]{true, mRxPermissions}));
+        mPresenter.requestUsers(Message.obtain(this, new Object[]{true}));
     }
 
     /**
@@ -128,7 +128,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
             Paginate.Callbacks callbacks = new Paginate.Callbacks() {
                 @Override
                 public void onLoadMore() {
-                    mPresenter.requestUsers(Message.obtain(UserActivity.this, new Object[]{false, mRxPermissions}));
+                    mPresenter.requestUsers(Message.obtain(UserActivity.this, new Object[]{false}));
                 }
 
                 @Override

@@ -16,6 +16,8 @@
 package me.jessyan.art.base.delegate;
 
 import android.app.Activity;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
 import android.os.Bundle;
 import android.os.Parcel;
 
@@ -49,6 +51,11 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             EventBus.getDefault().register(mActivity);//注册到事件主线
         this.iPresenter = iActivity.obtainPresenter();
         iActivity.setPresenter(iPresenter);
+        //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
+        if (mActivity != null && mActivity instanceof LifecycleOwner
+                && iPresenter != null && iPresenter instanceof LifecycleObserver){
+            ((LifecycleOwner) mActivity).getLifecycle().addObserver((LifecycleObserver) iPresenter);
+        }
     }
 
     @Override

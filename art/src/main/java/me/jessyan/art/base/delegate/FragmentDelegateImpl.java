@@ -15,6 +15,7 @@
   */
 package me.jessyan.art.base.delegate;
 
+import android.arch.lifecycle.LifecycleObserver;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -62,6 +63,10 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             EventBus.getDefault().register(mFragment);//注册到事件主线
         this.iPresenter = iFragment.obtainPresenter();
         iFragment.setPresenter(iPresenter);
+        //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
+        if (mFragment != null && iPresenter != null && iPresenter instanceof LifecycleObserver){
+            mFragment.getLifecycle().addObserver((LifecycleObserver) iPresenter);
+        }
     }
 
     @Override

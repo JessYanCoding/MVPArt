@@ -16,11 +16,20 @@
 package me.jessyan.art.mvp;
 
 import android.app.Activity;
+import android.app.Service;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.SupportActivity;
+import android.view.View;
 
 import org.simple.eventbus.EventBus;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import me.jessyan.art.utils.Preconditions;
 
 /**
  * ================================================
@@ -31,7 +40,7 @@ import io.reactivex.disposables.Disposable;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public class BasePresenter<M extends IModel> implements IPresenter {
+public class BasePresenter<M extends IModel> implements IPresenter, LifecycleObserver {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeDisposable mCompositeDisposable;
     protected M mModel;
@@ -42,17 +51,19 @@ public class BasePresenter<M extends IModel> implements IPresenter {
     }
 
     public BasePresenter(M model) {
+        Preconditions.checkNotNull(model, "%s cannot be null", IModel.class.getName());
         this.mModel = model;
         onStart();
     }
 
+    @Override
     public void onStart() {
         if (useEventBus())//如果要使用 Eventbus 请将此方法返回true
             EventBus.getDefault().register(this);//注册 Eventbus
     }
 
     /**
-     * 在框架中 {@link Activity#onDestroy()} 会默认调用{@link IPresenter#onDestroy()}
+     * 在框架中 {@link Activity#onDestroy()} 时会默认调用 {@link IPresenter#onDestroy()}
      */
     @Override
     public void onDestroy() {
@@ -63,6 +74,23 @@ public class BasePresenter<M extends IModel> implements IPresenter {
             mModel.onDestroy();
         this.mModel = null;
         this.mCompositeDisposable = null;
+    }
+
+    /**
+     * 只有当 {@code view} 实现了 {@link LifecycleOwner} 时, 此方法才会被调用
+     * 所以当您想在 {@link Service} 以及一些自定义 {@link View} 或自定义类中使用 {@code Presenter} 时
+     * 您也将不能继续使用 {@link OnLifecycleEvent} 绑定生命周期
+     *
+     * @param owner link {@link SupportActivity} and {@link Fragment}
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    void onDestroy(LifecycleOwner owner) {
+        /**
+         * 注意, 如果在这里调用了 {@link #onDestroy()} 方法, 会出现某些地方引用 {@code mModel} 为 null 的情况
+         * 比如如果你声明了多个 @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY) 时在其他 @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+         * 中引用了 {@code mModel} 也可能会出现此情况
+         */
+        owner.getLifecycle().removeObserver(this);
     }
 
     /**

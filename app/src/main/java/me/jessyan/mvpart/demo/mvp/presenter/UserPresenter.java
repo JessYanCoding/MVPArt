@@ -15,6 +15,11 @@
   */
 package me.jessyan.mvpart.demo.mvp.presenter;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.SupportActivity;
+
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -32,6 +37,7 @@ import me.jessyan.mvpart.demo.mvp.model.entity.User;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import timber.log.Timber;
 
 /**
  * ================================================
@@ -44,6 +50,7 @@ import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
  */
 public class UserPresenter extends BasePresenter<UserRepository> {
     private RxErrorHandler mErrorHandler;
+    private RxPermissions mRxPermissions;
     private List<User> mUsers = new ArrayList<>();
     private DefaultAdapter mAdapter;
     private int lastUserId = 1;
@@ -51,11 +58,21 @@ public class UserPresenter extends BasePresenter<UserRepository> {
     private int preEndIndex;
 
 
-    public UserPresenter(AppComponent appComponent, DefaultAdapter adapter) {
+    public UserPresenter(AppComponent appComponent, DefaultAdapter adapter, RxPermissions rxPermissions) {
         super(appComponent.repositoryManager().createRepository(UserRepository.class));
         this.mAdapter = adapter;
         this.mUsers = adapter.getInfos();
         this.mErrorHandler = appComponent.rxErrorHandler();
+        this.mRxPermissions = rxPermissions;
+    }
+
+    /**
+     * 使用 2017 Google IO 发布的 Architecture Components 中的 Lifecycles 的新特性 (此特性已被加入 Support library)
+     * 使 {@code Presenter} 可以与 {@link SupportActivity} 和 {@link Fragment} 的部分生命周期绑定
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    void onCreate() {
+        Timber.d("onCreate");
     }
 
     public void requestUsers(final Message msg) {
@@ -76,7 +93,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
             public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
                 msg.getTarget().showMessage("Need to go to the settings");
             }
-        }, (RxPermissions) msg.objs[1], mErrorHandler);
+        }, mRxPermissions, mErrorHandler);
 
 
         if (pullToRefresh) lastUserId = 1;//下拉刷新默认只请求第一页

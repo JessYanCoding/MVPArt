@@ -52,7 +52,7 @@ public interface IView {
     void showMessage(String message);
 
     /**
-     * 处理消息,这里面和 {@link Handler} 的原理一样,通过 swith(what),做不同的操作
+     * 处理消息,这里面和 {@link Handler} 的原理一样,通过 switch(what),做不同的操作
      *
      * @param message
      */

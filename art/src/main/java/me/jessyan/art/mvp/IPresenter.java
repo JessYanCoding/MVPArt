@@ -35,7 +35,7 @@ public interface IPresenter {
     void onStart();
 
     /**
-     * 在框架中 {@link Activity#onDestroy()} 会默认调用{@link IPresenter#onDestroy()}
+     * 在框架中 {@link Activity#onDestroy()} 时会默认调用 {@link IPresenter#onDestroy()}
      */
     void onDestroy();
 }
