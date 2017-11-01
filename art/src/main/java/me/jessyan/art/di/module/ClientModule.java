@@ -201,6 +201,14 @@ public class ClientModule {
     }
 
     public interface RxCacheConfiguration {
+        /**
+         * 若想自定义 RxCache 的缓存文件夹或者解析方式, 如改成 fastjson
+         * 请 {@code return rxCacheBuilder.persistence(cacheDirectory, new FastJsonSpeaker());}, 否则请 {@code return null;}
+         *
+         * @param context
+         * @param builder
+         * @return
+         */
         RxCache configRxCache(Context context, RxCache.Builder builder);
     }
 }
