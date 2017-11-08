@@ -116,7 +116,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
      */
     private void initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        ArtUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
+        ArtUtils.configRecyclerView(mRecyclerView, new GridLayoutManager(this, 2));
     }
 
 
