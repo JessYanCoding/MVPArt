@@ -64,7 +64,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        initRecycleView();
+        initRecyclerView();
         mRecyclerView.setAdapter(mAdapter);
         initPaginate();
         mPresenter.requestUsers(Message.obtain(this, new Object[]{true}));//打开app时自动加载列表
@@ -112,9 +112,9 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
     }
 
     /**
-     * 初始化RecycleView
+     * 初始化RecyclerView
      */
-    private void initRecycleView() {
+    private void initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         ArtUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
     }
