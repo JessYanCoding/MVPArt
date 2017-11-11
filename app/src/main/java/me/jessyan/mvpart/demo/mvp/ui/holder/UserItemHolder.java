@@ -40,7 +40,7 @@ import me.jessyan.mvpart.demo.mvp.model.entity.User;
 public class UserItemHolder extends BaseHolder<User> {
 
     @BindView(R.id.iv_avatar)
-    ImageView mAvater;
+    ImageView mAvatar;
     @BindView(R.id.tv_name)
     TextView mName;
     private AppComponent mAppComponent;
@@ -63,7 +63,7 @@ public class UserItemHolder extends BaseHolder<User> {
                 ImageConfigImpl
                         .builder()
                         .url(data.getAvatarUrl())
-                        .imageView(mAvater)
+                        .imageView(mAvatar)
                         .build());
     }
 
@@ -71,7 +71,7 @@ public class UserItemHolder extends BaseHolder<User> {
     @Override
     protected void onRelease() {
         mImageLoader.clear(mAppComponent.application(), ImageConfigImpl.builder()
-                .imageViews(mAvater)
+                .imageViews(mAvatar)
                 .build());
     }
 }
