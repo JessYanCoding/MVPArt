@@ -1,9 +1,22 @@
-# MVPArt
-[ ![Bintray](https://img.shields.io/badge/bintray-v2.3.1-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArt/2.3.1/link)
-[ ![Build Status](https://travis-ci.org/JessYanCoding/MVPArt.svg?branch=complete) ](https://travis-ci.org/JessYanCoding/MVPArt)
-[ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
-[ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
-[ ![QQGroup](https://img.shields.io/badge/QQ群-301733278-ff69b4.svg) ](https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917)
+<h1 align="center">MVPArt</h1>
+
+<p align="center">
+   <a href="https://bintray.com/jessyancoding/maven/MVPArt/2.3.1/link">
+    <img src="https://img.shields.io/badge/bintray-v2.3.1-brightgreen.svg" alt="Latest Stable Version" />
+  </a>
+  <a href="https://travis-ci.org/JessYanCoding/MVPArt">
+    <img src="https://travis-ci.org/JessYanCoding/MVPArt.svg?branch=complete" alt="Build Status" />
+  </a>
+  <a href="https://developer.android.com/about/versions/android-4.0.3.html">
+    <img src="https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square" alt="Min Sdk Version" />
+  </a>
+  <a href="http://www.apache.org/licenses/LICENSE-2.0">
+    <img src="http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square" alt="License" />
+  </a>
+  <a href="https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917">
+    <img src="https://img.shields.io/badge/QQ群-301733278-ff69b4.svg" alt="QQ Group" />
+  </a>
+</p>
 
 ## A New Android MVP Architecture
 **此框架旨在解决传统 **MVP** 类和接口太多,并且 **Presenter** 和 **View** 通过接口通信过于繁琐,重用 **Presenter** 代价太大等问题**
