@@ -16,6 +16,7 @@
 package me.jessyan.art.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,7 +24,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import me.jessyan.art.base.delegate.IFragment;
+import me.jessyan.art.integration.cache.Cache;
+import me.jessyan.art.integration.cache.CacheType;
 import me.jessyan.art.mvp.IPresenter;
+import me.jessyan.art.utils.ArtUtils;
 
 /**
  * ================================================
@@ -37,12 +41,16 @@ import me.jessyan.art.mvp.IPresenter;
  */
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment<P> {
     protected final String TAG = this.getClass().getSimpleName();
+    private Cache<String, Object> mCache;
     protected P mPresenter;
 
-
-    public BaseFragment() {
-        //必须确保在Fragment实例化时setArguments()
-        setArguments(new Bundle());
+    @NonNull
+    @Override
+    public synchronized Cache<String, Object> provideCache() {
+        if (mCache == null) {
+            mCache = ArtUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
+        }
+        return mCache;
     }
 
     @Nullable

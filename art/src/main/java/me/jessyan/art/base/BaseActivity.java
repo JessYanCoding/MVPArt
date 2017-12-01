@@ -18,6 +18,7 @@ package me.jessyan.art.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
@@ -26,7 +27,10 @@ import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.jessyan.art.base.delegate.IActivity;
+import me.jessyan.art.integration.cache.Cache;
+import me.jessyan.art.integration.cache.CacheType;
 import me.jessyan.art.mvp.IPresenter;
+import me.jessyan.art.utils.ArtUtils;
 
 import static me.jessyan.art.utils.ThirdViewUtil.convertAutoView;
 
@@ -42,8 +46,18 @@ import static me.jessyan.art.utils.ThirdViewUtil.convertAutoView;
  */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity<P> {
     protected final String TAG = this.getClass().getSimpleName();
+    private Cache<String, Object> mCache;
     private Unbinder mUnbinder;
     protected P mPresenter;
+
+    @NonNull
+    @Override
+    public synchronized Cache<String, Object> provideCache() {
+        if (mCache == null) {
+            mCache = ArtUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+        }
+        return mCache;
+    }
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
