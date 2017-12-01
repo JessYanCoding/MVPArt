@@ -19,6 +19,8 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.Set;
+
 import me.jessyan.art.di.module.GlobalConfigModule;
 
 /**
@@ -97,6 +99,13 @@ public interface Cache<K, V> {
      * @return
      */
     boolean containsKey(K key);
+
+    /**
+     * 返回当前缓存中含有的所有 {@code key}
+     *
+     * @return
+     */
+    Set<K> keySet();
 
     /**
      * 清除缓存中所有的内容

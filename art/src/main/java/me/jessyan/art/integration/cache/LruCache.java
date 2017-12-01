@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import me.jessyan.art.di.module.GlobalConfigModule;
 
@@ -109,6 +110,16 @@ public class LruCache<K, V> implements Cache<K, V> {
     @Override
     public synchronized boolean containsKey(K key) {
         return cache.containsKey(key);
+    }
+
+    /**
+     * 返回当前缓存中含有的所有 {@code key}
+     *
+     * @return
+     */
+    @Override
+    public Set<K> keySet() {
+        return cache.keySet();
     }
 
     /**
