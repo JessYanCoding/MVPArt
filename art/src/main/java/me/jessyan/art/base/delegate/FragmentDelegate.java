@@ -17,7 +17,6 @@ package me.jessyan.art.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
