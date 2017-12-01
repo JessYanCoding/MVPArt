@@ -1,12 +1,12 @@
 /**
  * Copyright 2017 JessYan
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,6 +19,9 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+
+import me.jessyan.art.di.component.AppComponent;
+import me.jessyan.art.mvp.RepositoryManager;
 
 /**
  * ================================================
@@ -40,7 +43,7 @@ public interface CacheType {
     int FRAGMENT_CACHE_TYPE_ID = 5;
 
     /**
-     * RepositoryManager 中存储 Repository 的容器
+     * {@link RepositoryManager} 中存储 Repository 的容器
      */
     CacheType REPOSITORY_CACHE = new CacheType() {
         private static final int MAX_SIZE = 150;
@@ -55,7 +58,7 @@ public interface CacheType {
         public int calculateCacheSize(Context context) {
             ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             int targetMemoryCacheSize = (int) (activityManager.getMemoryClass() * MAX_SIZE_MULTIPLIER * 1024);
-            if (targetMemoryCacheSize >= MAX_SIZE){
+            if (targetMemoryCacheSize >= MAX_SIZE) {
                 return MAX_SIZE;
             }
             return targetMemoryCacheSize;
@@ -63,7 +66,7 @@ public interface CacheType {
     };
 
     /**
-     * RepositoryManager 中存储 Retrofit Service 的容器
+     * {@link RepositoryManager} 中存储 Retrofit Service 的容器
      */
     CacheType RETROFIT_SERVICE_CACHE = new CacheType() {
         private static final int MAX_SIZE = 150;
@@ -78,7 +81,7 @@ public interface CacheType {
         public int calculateCacheSize(Context context) {
             ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             int targetMemoryCacheSize = (int) (activityManager.getMemoryClass() * MAX_SIZE_MULTIPLIER * 1024);
-            if (targetMemoryCacheSize >= MAX_SIZE){
+            if (targetMemoryCacheSize >= MAX_SIZE) {
                 return MAX_SIZE;
             }
             return targetMemoryCacheSize;
@@ -86,7 +89,7 @@ public interface CacheType {
     };
 
     /**
-     * RepositoryManager 中储存 Cache Service 的容器
+     * {@link RepositoryManager} 中储存 Cache Service 的容器
      */
     CacheType CACHE_SERVICE_CACHE = new CacheType() {
         private static final int MAX_SIZE = 150;
@@ -101,7 +104,7 @@ public interface CacheType {
         public int calculateCacheSize(Context context) {
             ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             int targetMemoryCacheSize = (int) (activityManager.getMemoryClass() * MAX_SIZE_MULTIPLIER * 1024);
-            if (targetMemoryCacheSize >= MAX_SIZE){
+            if (targetMemoryCacheSize >= MAX_SIZE) {
                 return MAX_SIZE;
             }
             return targetMemoryCacheSize;
@@ -109,7 +112,7 @@ public interface CacheType {
     };
 
     /**
-     * AppComponent 中的 extras
+     * {@link AppComponent} 中的 extras
      */
     CacheType EXTRAS = new CacheType() {
         private static final int MAX_SIZE = 500;
@@ -124,7 +127,7 @@ public interface CacheType {
         public int calculateCacheSize(Context context) {
             ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             int targetMemoryCacheSize = (int) (activityManager.getMemoryClass() * MAX_SIZE_MULTIPLIER * 1024);
-            if (targetMemoryCacheSize >= MAX_SIZE){
+            if (targetMemoryCacheSize >= MAX_SIZE) {
                 return MAX_SIZE;
             }
             return targetMemoryCacheSize;
