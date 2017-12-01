@@ -32,7 +32,7 @@ import android.view.View;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public interface FragmentDelegate extends Parcelable{
+public interface FragmentDelegate {
 
     String FRAGMENT_DELEGATE = "fragment_delegate";
 
