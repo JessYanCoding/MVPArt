@@ -33,7 +33,6 @@ import me.jessyan.art.di.component.DaggerAppComponent;
 import me.jessyan.art.di.module.AppModule;
 import me.jessyan.art.di.module.ClientModule;
 import me.jessyan.art.di.module.GlobalConfigModule;
-import me.jessyan.art.http.imageloader.glide.ImageConfigImpl;
 import me.jessyan.art.integration.ActivityLifecycle;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
@@ -191,11 +190,7 @@ public class AppDelegate implements App, AppLifecycles {
 
         @Override
         public void onLowMemory() {
-            //内存不足时清理图片请求框架的内存缓存
-            mAppComponent.imageLoader().clear(mApplication, ImageConfigImpl
-                    .builder()
-                    .isClearMemory(true)
-                    .build());
+            //内存不足时清理不必要的资源
         }
     }
 
