@@ -30,6 +30,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.mvp.BasePresenter;
+import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.PermissionUtil;
 import me.jessyan.mvpart.demo.mvp.model.UserRepository;
@@ -77,6 +78,7 @@ public class UserPresenter extends BasePresenter<UserRepository> {
 
     public void requestUsers(final Message msg) {
         final boolean pullToRefresh = (boolean) msg.objs[0];
+        IView view = msg.getTarget();
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
             @Override
@@ -86,12 +88,12 @@ public class UserPresenter extends BasePresenter<UserRepository> {
 
             @Override
             public void onRequestPermissionFailure(List<String> permissions) {
-                msg.getTarget().showMessage("Request permissions failure");
+                view.showMessage("Request permissions failure");
             }
 
             @Override
             public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
-                msg.getTarget().showMessage("Need to go to the settings");
+                view.showMessage("Need to go to the settings");
             }
         }, mRxPermissions, mErrorHandler);
 
