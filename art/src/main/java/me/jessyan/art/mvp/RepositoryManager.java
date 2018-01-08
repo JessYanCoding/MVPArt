@@ -70,26 +70,23 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T extends IModel> T createRepository(Class<T> repository) {
+    public synchronized <T extends IModel> T createRepository(Class<T> repository) {
         if (mRepositoryCache == null)
             mRepositoryCache = mCachefactory.build(CacheType.REPOSITORY_CACHE);
-        Preconditions.checkNotNull(mRepositoryCache,"Cannot return null from a Cache.Factory#build(int) method");
-        T repositoryInstance;
-        synchronized (mRepositoryCache) {
-            repositoryInstance = (T) mRepositoryCache.get(repository.getCanonicalName());
-            if (repositoryInstance == null) {
-                Constructor<? extends IModel> constructor = findConstructorForClass(repository);
-                try {
-                    repositoryInstance = (T) constructor.newInstance(this);
-                } catch (InstantiationException e) {
-                    throw new RuntimeException("Unable to invoke " + constructor, e);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException("Unable to invoke " + constructor, e);
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException("Create repository error", e);
-                }
-                mRepositoryCache.put(repository.getCanonicalName(), repositoryInstance);
+        Preconditions.checkNotNull(mRepositoryCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T repositoryInstance = (T) mRepositoryCache.get(repository.getCanonicalName());
+        if (repositoryInstance == null) {
+            Constructor<? extends IModel> constructor = findConstructorForClass(repository);
+            try {
+                repositoryInstance = (T) constructor.newInstance(this);
+            } catch (InstantiationException e) {
+                throw new RuntimeException("Unable to invoke " + constructor, e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Unable to invoke " + constructor, e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException("Create repository error", e);
             }
+            mRepositoryCache.put(repository.getCanonicalName(), repositoryInstance);
         }
         return repositoryInstance;
     }
@@ -103,17 +100,14 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T> T createRetrofitService(Class<T> service) {
+    public synchronized <T> T createRetrofitService(Class<T> service) {
         if (mRetrofitServiceCache == null)
             mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
-        Preconditions.checkNotNull(mRetrofitServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
-        T retrofitService;
-        synchronized (mRetrofitServiceCache) {
-            retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
-            if (retrofitService == null) {
-                retrofitService = mRetrofit.get().create(service);
-                mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
-            }
+        Preconditions.checkNotNull(mRetrofitServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
+        if (retrofitService == null) {
+            retrofitService = mRetrofit.get().create(service);
+            mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
         }
         return retrofitService;
     }
@@ -127,17 +121,14 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T> T createCacheService(Class<T> cache) {
+    public synchronized <T> T createCacheService(Class<T> cache) {
         if (mCacheServiceCache == null)
             mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
-        Preconditions.checkNotNull(mCacheServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
-        T cacheService;
-        synchronized (mCacheServiceCache) {
-            cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
-            if (cacheService == null) {
-                cacheService = mRxCache.get().using(cache);
-                mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
-            }
+        Preconditions.checkNotNull(mCacheServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
+        if (cacheService == null) {
+            cacheService = mRxCache.get().using(cache);
+            mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
         }
         return cacheService;
     }
