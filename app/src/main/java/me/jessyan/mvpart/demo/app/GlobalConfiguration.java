@@ -26,10 +26,12 @@ import com.squareup.leakcanary.RefWatcher;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.jessyan.art.base.delegate.AppDelegate;
 import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
+import me.jessyan.art.integration.ManifestParser;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.BuildConfig;
 import me.jessyan.mvpart.demo.mvp.model.api.Api;
@@ -38,8 +40,12 @@ import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 /**
  * ================================================
- * app 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
- * <p>
+ * App 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
+ * ConfigModule 的实现类可以有无数多个, 在 Application 中只是注册回调, 并不会影响性能 (多个 ConfigModule 在多 Module 环境下尤为受用)
+ * 不过要注意 ConfigModule 接口的实现类对象是通过反射生成的, 这里会有些性能损耗
+ *
+ * @see AppDelegate
+ * @see ManifestParser
  * Created by JessYan on 12/04/2017 17:25
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
