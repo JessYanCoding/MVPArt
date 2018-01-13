@@ -1,8 +1,8 @@
 <h1 align="center">MVPArt</h1>
 
 <p align="center">
-   <a href="https://bintray.com/jessyancoding/maven/MVPArt/2.3.1/link">
-    <img src="https://img.shields.io/badge/bintray-v2.3.1-brightgreen.svg" alt="Latest Stable Version" />
+   <a href="https://bintray.com/jessyancoding/maven/MVPArt/2.3.5/link">
+    <img src="https://img.shields.io/badge/bintray-v2.3.5-brightgreen.svg" alt="Latest Stable Version" />
   </a>
   <a href="https://travis-ci.org/JessYanCoding/MVPArt">
     <img src="https://travis-ci.org/JessYanCoding/MVPArt.svg?branch=complete" alt="Build Status" />
@@ -43,7 +43,7 @@
 
 ## Download
 ``` gradle
- compile 'me.jessyan:art:2.3.1'  //rxjava2
+ compile 'me.jessyan:art:2.3.5'  //rxjava2
 
  compile 'me.jessyan:art:1.4.3' //rxjava1(不再维护)
 ```
