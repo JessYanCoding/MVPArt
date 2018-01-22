@@ -46,8 +46,11 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(mActivity);//注册到事件主线
+        //如果要使用 EventBus 请将此方法返回 true
+        if (iActivity.useEventBus()) {
+            //注册到事件主线
+            EventBus.getDefault().register(mActivity);
+        }
         this.iPresenter = iActivity.obtainPresenter();
         iActivity.setPresenter(iPresenter);
         //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
@@ -84,9 +87,11 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onDestroy() {
-        if (iActivity != null && iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
+        //如果要使用 EventBus 请将此方法返回 true
+        if (iActivity != null && iActivity.useEventBus())
             EventBus.getDefault().unregister(mActivity);
-        if (iPresenter != null) iPresenter.onDestroy(); //释放资源
+        //释放资源
+        if (iPresenter != null) iPresenter.onDestroy();
         this.iActivity = null;
         this.mActivity = null;
         this.iPresenter = null;

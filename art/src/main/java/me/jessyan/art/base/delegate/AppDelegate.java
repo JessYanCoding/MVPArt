@@ -15,11 +15,15 @@
   */
 package me.jessyan.art.base.delegate;
 
+import android.app.Activity;
 import android.app.Application;
+import android.app.Service;
 import android.content.ComponentCallbacks2;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.integration.ActivityLifecycle;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
+import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.art.utils.Preconditions;
 
 /**
@@ -70,10 +75,10 @@ public class AppDelegate implements App, AppLifecycles {
         //遍历之前获得的集合, 执行每一个 ConfigModule 实现类的某些方法
         for (ConfigModule module : mModules) {
 
-            //将个人实现的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
+            //将框架外部, 开发者实现的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
             module.injectAppLifecycle(context, mAppLifecycles);
 
-            //将个人实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLifecycles 集合 (此时还未注册回调)
+            //将框架外部, 开发者实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLifecycles 集合 (此时还未注册回调)
             module.injectActivityLifecycle(context, mActivityLifecycles);
         }
     }
@@ -81,7 +86,7 @@ public class AppDelegate implements App, AppLifecycles {
     @Override
     public void attachBaseContext(Context base) {
 
-        //遍历 mAppLifecycles, 回调所有已注册的 AppLifecycles 的 attachBaseContext() 方法
+        //遍历 mAppLifecycles, 执行所有已注册的 AppLifecycles 的 attachBaseContext() 方法 (框架外部, 开发者扩展的逻辑)
         for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.attachBaseContext(base);
         }
@@ -104,10 +109,11 @@ public class AppDelegate implements App, AppLifecycles {
 
         this.mModules = null;
 
-        //该注册是为了给每个 Activity 增加 Arms 框架中统一的全局逻辑
+        //注册框架内部已实现的 Activity 生命周期逻辑
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
-        //遍历 mActivityLifecycles, 注册所有 Activity 的生命周期回调, 每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
+        //注册框架外部, 开发者扩展的 Activity 生命周期逻辑
+        //每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
         //也可以有 N 个 ConfigModule 的实现类 (完美支持组件化项目 各个 Module 的各种独特需求)
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
@@ -115,9 +121,10 @@ public class AppDelegate implements App, AppLifecycles {
 
         mComponentCallback = new AppComponentCallbacks(mApplication, mAppComponent);
 
+        //注册回掉: 内存紧张时释放部分内存
         mApplication.registerComponentCallbacks(mComponentCallback);
 
-        //遍历 mAppLifecycles, 回调所有已注册的 AppLifecycles 的 onCreate() 方法
+        //执行框架外部, 开发者扩展的 App onCreate 逻辑
         for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
@@ -152,10 +159,10 @@ public class AppDelegate implements App, AppLifecycles {
 
 
     /**
-     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
-     * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
+     * 将 App 的全局配置信息封装进 Module(使用 Dagger 注入到需要配置信息的地方)
+     * 需要在 AndroidManifest 中声明 {@link ConfigModule} 的实现类,和 Glide 的配置方式相似
      *
-     * @return
+     * @return GlobalConfigModule
      */
     private GlobalConfigModule getGlobalConfigModule(Context context, List<ConfigModule> modules) {
 
@@ -172,9 +179,10 @@ public class AppDelegate implements App, AppLifecycles {
 
 
     /**
-     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例,在getAppComponent()拿到对象后都可以直接使用
+     * 将 {@link AppComponent} 返回出去, 供其它地方使用, {@link AppComponent} 接口中声明的方法返回的实例, 在 {@link #getAppComponent()} 拿到对象后都可以直接使用
      *
-     * @return
+     * @see ArtUtils#obtainAppComponentFromContext(Context) 可直接获取 {@link AppComponent}
+     * @return AppComponent
      */
     @NonNull
     @Override
@@ -186,6 +194,13 @@ public class AppDelegate implements App, AppLifecycles {
     }
 
 
+    /**
+     * {@link ComponentCallbacks2} 是一个细粒度的内存回收管理回调
+     * {@link Application}、{@link Activity}、{@link Service}、{@link ContentProvider}、{@link Fragment} 实现了 {@link ComponentCallbacks2} 接口
+     * 开发者应该实现 {@link ComponentCallbacks2#onTrimMemory(int)} 方法, 细粒度 release 内存, 参数的值不同可以体现出不同程度的内存可用情况
+     * 响应 {@link ComponentCallbacks2#onTrimMemory(int)} 回调, 开发者的 App 会存活的更持久, 有利于用户体验
+     * 不响应 {@link ComponentCallbacks2#onTrimMemory(int)} 回调, 系统 kill 掉进程的几率更大
+     */
     private static class AppComponentCallbacks implements ComponentCallbacks2 {
         private Application mApplication;
         private AppComponent mAppComponent;
@@ -195,9 +210,47 @@ public class AppDelegate implements App, AppLifecycles {
             this.mAppComponent = appComponent;
         }
 
+        /**
+         * 在你的 App 生命周期的任何阶段, {@link ComponentCallbacks2#onTrimMemory(int)} 发生的回调都预示着你设备的内存资源已经开始紧张
+         * 你应该根据 {@link ComponentCallbacks2#onTrimMemory(int)} 发生回调时的内存级别来进一步决定释放哪些资源
+         * {@link ComponentCallbacks2#onTrimMemory(int)} 的回调可以发生在 {@link Application}、{@link Activity}、{@link Service}、{@link ContentProvider}、{@link Fragment}
+         *
+         * @see <a href="https://developer.android.com/reference/android/content/ComponentCallbacks2.html#TRIM_MEMORY_RUNNING_MODERATE">level 官方文档</a>
+         * @param level 内存级别
+         */
         @Override
         public void onTrimMemory(int level) {
+            //状态1. 当开发者的 App 正在运行
+            //设备开始运行缓慢, 不会被 kill, 也不会被列为可杀死的, 但是设备此时正运行于低内存状态下, 系统开始触发杀死 LRU 列表中的进程的机制
+//                case TRIM_MEMORY_RUNNING_MODERATE:
 
+
+            //设备运行更缓慢了, 不会被 kill, 但请你回收 unused 资源, 以便提升系统的性能, 你应该释放不用的资源用来提升系统性能 (但是这也会直接影响到你的 App 的性能)
+//                case TRIM_MEMORY_RUNNING_LOW:
+
+
+            //设备运行特别慢, 当前 App 还不会被杀死, 但是系统已经把 LRU 列表中的大多数进程都已经杀死, 因此你应该立即释放所有非必须的资源
+            //如果系统不能回收到足够的 RAM 数量, 系统将会清除所有的 LRU 列表中的进程, 并且开始杀死那些之前被认为不应该杀死的进程, 例如那个包含了一个运行态 Service 的进程
+//                case TRIM_MEMORY_RUNNING_CRITICAL:
+
+
+            //状态2. 当前 App UI 不再可见, 这是一个回收大个资源的好时机
+//                case TRIM_MEMORY_UI_HIDDEN:
+
+
+            //状态3. 当前的 App 进程被置于 Background LRU 列表中
+            //进程位于 LRU 列表的上端, 尽管你的 App 进程并不是处于被杀掉的高危险状态, 但系统可能已经开始杀掉 LRU 列表中的其他进程了
+            //你应该释放那些容易恢复的资源, 以便于你的进程可以保留下来, 这样当用户回退到你的 App 的时候才能够迅速恢复
+//                case TRIM_MEMORY_BACKGROUND:
+
+
+            //系统正运行于低内存状态并且你的进程已经已经接近 LRU 列表的中部位置, 如果系统的内存开始变得更加紧张, 你的进程是有可能被杀死的
+//                case TRIM_MEMORY_MODERATE:
+
+
+            //系统正运行与低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
+            //低于 API 14 的 App 可以使用 onLowMemory 回调
+//                case TRIM_MEMORY_COMPLETE:
         }
 
         @Override
@@ -205,9 +258,15 @@ public class AppDelegate implements App, AppLifecycles {
 
         }
 
+        /**
+         * 当系统开始清除 LRU 列表中的进程时, 尽管它会首先按照 LRU 的顺序来清除, 但是它同样会考虑进程的内存使用量, 因此消耗越少的进程则越容易被留下来
+         * {@link ComponentCallbacks2#onTrimMemory(int)} 的回调是在 API 14 才被加进来的, 对于老的版本, 你可以使用 {@link ComponentCallbacks2#onLowMemory} 方法来进行兼容
+         * {@link ComponentCallbacks2#onLowMemory} 相当于 {@code onTrimMemory(TRIM_MEMORY_COMPLETE)}
+         * @see #TRIM_MEMORY_COMPLETE
+         */
         @Override
         public void onLowMemory() {
-            //内存不足时清理不必要的资源
+            //系统正运行与低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
         }
     }
 
