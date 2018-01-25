@@ -207,7 +207,7 @@ public class RequestInterceptor implements Interceptor {
                 if (contentType != null) {
                     charset = contentType.charset(charset);
                 }
-                return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
+                return CharacterHandler.jsonFormat(URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset)));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -223,26 +223,39 @@ public class RequestInterceptor implements Interceptor {
      * @return
      */
     public static boolean isParseable(MediaType mediaType) {
-        if (mediaType == null) return false;
-        return mediaType.toString().toLowerCase().contains("text")
+        return isText(mediaType) || isPlain(mediaType)
                 || isJson(mediaType) || isForm(mediaType)
                 || isHtml(mediaType) || isXml(mediaType);
     }
 
+    public static boolean isText(MediaType mediaType) {
+        if (mediaType == null || mediaType.type() == null) return false;
+        return mediaType.type().equals("text");
+    }
+
+    public static boolean isPlain(MediaType mediaType) {
+        if (mediaType == null || mediaType.subtype() == null) return false;
+        return mediaType.subtype().toLowerCase().contains("plain");
+    }
+
     public static boolean isJson(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("json");
+        if (mediaType == null || mediaType.subtype() == null) return false;
+        return mediaType.subtype().toLowerCase().contains("json");
     }
 
     public static boolean isXml(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("xml");
+        if (mediaType == null || mediaType.subtype() == null) return false;
+        return mediaType.subtype().toLowerCase().contains("xml");
     }
 
     public static boolean isHtml(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("html");
+        if (mediaType == null || mediaType.subtype() == null) return false;
+        return mediaType.subtype().toLowerCase().contains("html");
     }
 
     public static boolean isForm(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("x-www-form-urlencoded");
+        if (mediaType == null || mediaType.subtype() == null) return false;
+        return mediaType.subtype().toLowerCase().contains("x-www-form-urlencoded");
     }
 
     public static String convertCharset(Charset charset) {
