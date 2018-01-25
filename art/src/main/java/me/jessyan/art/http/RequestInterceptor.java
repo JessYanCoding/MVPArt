@@ -79,10 +79,11 @@ public class RequestInterceptor implements Interceptor {
 
         if (logRequest) {
             //打印请求信息
-            Timber.tag(getTag(request, "Request_Info")).w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
-                    , parseParams(request)
-                    , chain.connection()
-                    , request.headers());
+            if (request.body() != null && isParseable(request.body().contentType())) {
+                FormatPrinter.printJsonRequest(request, parseParams(request));
+            } else {
+                FormatPrinter.printFileRequest(request);
+            }
         }
 
         boolean logResponse = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.RESPONSE);
@@ -199,25 +200,21 @@ public class RequestInterceptor implements Interceptor {
      * @throws UnsupportedEncodingException
      */
     public static String parseParams(Request request) throws UnsupportedEncodingException {
-        if (request.body() == null) return "null";
-        RequestBody body = request.newBuilder().build().body();
-        if (isParseable(body.contentType())) {
-            try {
-                Buffer requestbuffer = new Buffer();
-                body.writeTo(requestbuffer);
-                Charset charset = Charset.forName("UTF-8");
-                MediaType contentType = body.contentType();
-                if (contentType != null) {
-                    charset = contentType.charset(charset);
-                }
-                return CharacterHandler.jsonFormat(URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset)));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "{\"error\": \"" + e.getMessage() + "\"}";
+        try {
+            RequestBody body = request.newBuilder().build().body();
+            if (body == null) return "";
+            Buffer requestbuffer = new Buffer();
+            body.writeTo(requestbuffer);
+            Charset charset = Charset.forName("UTF-8");
+            MediaType contentType = body.contentType();
+            if (contentType != null) {
+                charset = contentType.charset(charset);
             }
+            return CharacterHandler.jsonFormat(URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset)));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{\"error\": \"" + e.getMessage() + "\"}";
         }
-        return "Omitted request body";
     }
 
     /**
