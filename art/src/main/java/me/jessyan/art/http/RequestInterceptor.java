@@ -78,10 +78,9 @@ public class RequestInterceptor implements Interceptor {
         boolean logRequest = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.REQUEST);
 
         if (logRequest) {
-            boolean hasRequestBody = request.body() != null;
             //打印请求信息
             Timber.tag(getTag(request, "Request_Info")).w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
-                    , hasRequestBody ? parseParams(request.newBuilder().build().body()) : "Null"
+                    , parseParams(request)
                     , chain.connection()
                     , request.headers());
         }
@@ -146,6 +145,8 @@ public class RequestInterceptor implements Interceptor {
                 bodyString = parseContent(responseBody, encoding, clone);
             } catch (IOException e) {
                 e.printStackTrace();
+                Timber.tag(getTag(request, "Response_Result")).w("{\"error\": \"" + e.getMessage() + "\"}");
+                return null;
             }
             if (logResponse) {
                 Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ?
@@ -155,7 +156,7 @@ public class RequestInterceptor implements Interceptor {
 
         } else {
             if (logResponse) {
-                Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
+                Timber.tag(getTag(request, "Response_Result")).w("Omitted response body");
             }
         }
         return bodyString;
@@ -193,11 +194,13 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 解析请求服务器的请求参数
      *
-     * @param body
+     * @param request
      * @return
      * @throws UnsupportedEncodingException
      */
-    public static String parseParams(RequestBody body) throws UnsupportedEncodingException {
+    public static String parseParams(Request request) throws UnsupportedEncodingException {
+        if (request.body() == null) return "null";
+        RequestBody body = request.newBuilder().build().body();
         if (isParseable(body.contentType())) {
             try {
                 Buffer requestbuffer = new Buffer();
@@ -211,9 +214,10 @@ public class RequestInterceptor implements Interceptor {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                return "{\"error\": \"" + e.getMessage() + "\"}";
             }
         }
-        return "This params isn't parsed";
+        return "Omitted request body";
     }
 
     /**
