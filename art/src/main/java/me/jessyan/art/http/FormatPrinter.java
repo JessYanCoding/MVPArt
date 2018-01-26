@@ -18,6 +18,8 @@ package me.jessyan.art.http;
 
 import android.text.TextUtils;
 
+import java.util.List;
+
 import okhttp3.Request;
 import timber.log.Timber;
 
@@ -68,8 +70,9 @@ public class FormatPrinter {
      * @param bodyString
      */
     static void printJsonRequest(Request request, String bodyString) {
-        String requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
-        String tag = getTag(true);
+        final String requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
+        final String tag = getTag(true);
+
         Timber.tag(tag).i(REQUEST_UP_LINE);
         logLines(tag, new String[]{URL_TAG + request.url()}, false);
         logLines(tag, getRequest(request), true);
@@ -83,11 +86,38 @@ public class FormatPrinter {
      * @param request
      */
     static void printFileRequest(Request request) {
-        String tag = getTag(true);
+        final String tag = getTag(true);
+
         Timber.tag(tag).i(REQUEST_UP_LINE);
         logLines(tag, new String[]{URL_TAG + request.url()}, false);
         logLines(tag, getRequest(request), true);
         logLines(tag, OMITTED_REQUEST, true);
+        Timber.tag(tag).i(END_LINE);
+    }
+
+    static void printJsonResponse(long chainMs, boolean isSuccessful,
+                                  int code, String headers, String bodyString, List<String> segments, String message, final String responseUrl) {
+
+        final String responseBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
+        final String tag = getTag(false);
+        final String[] urlLine = {URL_TAG + responseUrl, N};
+
+        Timber.tag(tag).i(RESPONSE_UP_LINE);
+        logLines(tag, urlLine, true);
+        logLines(tag, getResponse(headers, chainMs, code, isSuccessful, segments, message), true);
+        logLines(tag, responseBody.split(LINE_SEPARATOR), true);
+        Timber.tag(tag).i(END_LINE);
+    }
+
+    static void printFileResponse(long chainMs, boolean isSuccessful,
+                                  int code, String headers, List<String> segments, String message, final String responseUrl) {
+        final String tag = getTag(false);
+        final String[] urlLine = {URL_TAG + responseUrl, N};
+
+        Timber.tag(tag).i(RESPONSE_UP_LINE);
+        logLines(tag, urlLine, true);
+        logLines(tag, getResponse(headers, chainMs, code, isSuccessful, segments, message), true);
+        logLines(tag, OMITTED_RESPONSE, true);
         Timber.tag(tag).i(END_LINE);
     }
 
@@ -112,6 +142,25 @@ public class FormatPrinter {
         log = METHOD_TAG + request.method() + DOUBLE_SEPARATOR +
                 (isEmpty(header) ? "" : HEADERS_TAG + LINE_SEPARATOR + dotHeaders(header));
         return log.split(LINE_SEPARATOR);
+    }
+
+    private static String[] getResponse(String header, long tookMs, int code, boolean isSuccessful,
+                                        List<String> segments, String message) {
+        String log;
+        String segmentString = slashSegments(segments);
+        log = ((!TextUtils.isEmpty(segmentString) ? segmentString + " - " : "") + "is success : "
+                + isSuccessful + " - " + RECEIVED_TAG + tookMs + "ms" + DOUBLE_SEPARATOR + STATUS_CODE_TAG +
+                code + " / " + message + DOUBLE_SEPARATOR + (isEmpty(header) ? "" : HEADERS_TAG + LINE_SEPARATOR +
+                dotHeaders(header)));
+        return log.split(LINE_SEPARATOR);
+    }
+
+    private static String slashSegments(List<String> segments) {
+        StringBuilder segmentString = new StringBuilder();
+        for (String segment : segments) {
+            segmentString.append("/").append(segment);
+        }
+        return segmentString.toString();
     }
 
     private static String dotHeaders(String header) {
