@@ -25,6 +25,8 @@ import timber.log.Timber;
 
 /**
  * ================================================
+ * 对 OkHttp 的请求和响应信息进行更规范和清晰的打印
+ * <p>
  * Created by JessYan on 25/01/2018 14:51
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
@@ -123,6 +125,7 @@ public class FormatPrinter {
 
     /**
      * 打印网络响应信息, 当网络响应时 {{@link okhttp3.ResponseBody}} 为 {@code null} 或不可解析的情况
+     *
      * @param chainMs
      * @param isSuccessful
      * @param code
@@ -144,6 +147,13 @@ public class FormatPrinter {
     }
 
 
+    /**
+     * 对 {@code lines} 中的信息进行逐行打印
+     *
+     * @param tag
+     * @param lines
+     * @param withLineSize 为 {@code true} 时, 每行的信息长度不会超过110, 超过则自动换行
+     */
     private static void logLines(String tag, String[] lines, boolean withLineSize) {
         for (String line : lines) {
             int lineLength = line.length();
@@ -185,6 +195,12 @@ public class FormatPrinter {
         return segmentString.toString();
     }
 
+    /**
+     * 对 {@code header} 按规定的格式进行处理
+     *
+     * @param header
+     * @return
+     */
     private static String dotHeaders(String header) {
         String[] headers = header.split(LINE_SEPARATOR);
         StringBuilder builder = new StringBuilder();
