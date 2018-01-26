@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -98,15 +99,34 @@ public class RequestInterceptor implements Interceptor {
         }
         long t2 = logResponse ? System.nanoTime() : 0;
 
-        if (logResponse) {
-            String bodySize = originalResponse.body().contentLength() != -1 ? originalResponse.body().contentLength() + "-byte" : "unknown-length";
-            //打印响应时间以及响应头
-            Timber.tag(getTag(request, "Response_Info")).w("Received response in [ %d-ms ] , [ %s ]%n%s"
-                    , TimeUnit.NANOSECONDS.toMillis(t2 - t1), bodySize, originalResponse.headers());
-        }
+        ResponseBody responseBody = originalResponse.body();
 
         //打印响应结果
-        String bodyString = printResult(request, originalResponse.newBuilder().build(), logResponse);
+        String bodyString = null;
+        if (responseBody != null && isParseable(responseBody.contentType())) {
+            bodyString = printResult(request, originalResponse, logResponse);
+        }
+
+        if (logResponse) {
+            final List<String> segmentList = request.url().encodedPathSegments();
+            final String header = originalResponse.headers().toString();
+            final int code = originalResponse.code();
+            final boolean isSuccessful = originalResponse.isSuccessful();
+            final String message = originalResponse.message();
+            final String url = originalResponse.request().url().toString();
+
+            if (responseBody != null && isParseable(responseBody.contentType())) {
+                FormatPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
+                        isSuccessful, code, header,
+                        isJson(responseBody.contentType()) ?
+                                CharacterHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
+                                CharacterHandler.xmlFormat(bodyString) : bodyString, segmentList, message, url);
+            } else {
+                FormatPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
+                        isSuccessful, code, header, segmentList, message, url);
+            }
+
+        }
 
         if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
             return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
@@ -125,48 +145,28 @@ public class RequestInterceptor implements Interceptor {
      */
     @Nullable
     private String printResult(Request request, Response response, boolean logResponse) throws IOException {
-        //读取服务器返回的结果
-        ResponseBody responseBody = response.body();
-        String bodyString = null;
-        if (isParseable(responseBody.contentType())) {
-            try {
-                BufferedSource source = responseBody.source();
-                source.request(Long.MAX_VALUE); // Buffer the entire body.
-                Buffer buffer = source.buffer();
+        try {
+            //读取服务器返回的结果
+            ResponseBody responseBody = response.newBuilder().build().body();
+            BufferedSource source = responseBody.source();
+            source.request(Long.MAX_VALUE); // Buffer the entire body.
+            Buffer buffer = source.buffer();
 
-                //获取content的压缩类型
-                String encoding = response
-                        .headers()
-                        .get("Content-Encoding");
+            //获取content的压缩类型
+            String encoding = response
+                    .headers()
+                    .get("Content-Encoding");
 
-                Buffer clone = buffer.clone();
+            Buffer clone = buffer.clone();
 
-
-                //解析response content
-                bodyString = parseContent(responseBody, encoding, clone);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Timber.tag(getTag(request, "Response_Result")).w("{\"error\": \"" + e.getMessage() + "\"}");
-                return null;
-            }
-            if (logResponse) {
-                Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ?
-                        CharacterHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
-                        CharacterHandler.xmlFormat(bodyString) : bodyString);
-            }
-
-        } else {
-            if (logResponse) {
-                Timber.tag(getTag(request, "Response_Result")).w("Omitted response body");
-            }
+            //解析response content
+            return parseContent(responseBody, encoding, clone);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{\"error\": \"" + e.getMessage() + "\"}";
         }
-        return bodyString;
     }
 
-
-    private String getTag(Request request, String tag) {
-        return String.format(" [%s] 「 %s 」>>> %s", request.method(), request.url().toString(), tag);
-    }
 
 
     /**

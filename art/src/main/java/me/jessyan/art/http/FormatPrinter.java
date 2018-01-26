@@ -95,6 +95,18 @@ public class FormatPrinter {
         Timber.tag(tag).i(END_LINE);
     }
 
+    /**
+     * 打印网络响应信息, 当网络响应时 {{@link okhttp3.ResponseBody}} 可以解析的情况
+     *
+     * @param chainMs
+     * @param isSuccessful
+     * @param code
+     * @param headers
+     * @param bodyString
+     * @param segments
+     * @param message
+     * @param responseUrl
+     */
     static void printJsonResponse(long chainMs, boolean isSuccessful,
                                   int code, String headers, String bodyString, List<String> segments, String message, final String responseUrl) {
 
@@ -109,6 +121,16 @@ public class FormatPrinter {
         Timber.tag(tag).i(END_LINE);
     }
 
+    /**
+     * 打印网络响应信息, 当网络响应时 {{@link okhttp3.ResponseBody}} 为 {@code null} 或不可解析的情况
+     * @param chainMs
+     * @param isSuccessful
+     * @param code
+     * @param headers
+     * @param segments
+     * @param message
+     * @param responseUrl
+     */
     static void printFileResponse(long chainMs, boolean isSuccessful,
                                   int code, String headers, List<String> segments, String message, final String responseUrl) {
         final String tag = getTag(false);
