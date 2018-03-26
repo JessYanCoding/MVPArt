@@ -24,7 +24,9 @@
   </a>
 </p>  
 
-## A New Android MVP Architecture
+<h2 align="center">A New Android MVP Architecture</h2>  
+
+
 **This framework is designed to solve the traditional **MVP** class and interface too much, and **Presenter** and **View** communicate too complicated through the interface, reuse **Presenter** too much cost**
 
 
