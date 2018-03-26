@@ -32,6 +32,10 @@
 > [**Complete** 分支](https://github.com/JessYanCoding/MVPArt/tree/complete)
 >> **Complete** 分支是一个含有网络层的完整框架,将 **Retrofit** 作为网络层并使用 **Dagger2** 管理所有对象,成熟强大适合新建的项目
 
+## Wiki
+[详细使用方法及扩展功能,请参照 Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki)
+> Tips: **MVPArt** 和 **MVPArms** 的主要区别在于 **MVP** 中的 **V** 和 **P** 的交互方式 (**Master** 分支中详细描述), 其他核心功能基本一致, 所以文档中大部分内容都两者都可以共用
+
 ## Notice
 * 使用之前,请参阅 [传统MVP用在项目中是真的方便还是累赘?](https://gold.xitu.io/post/58b25e588d6d810057ed3659)
 
