@@ -60,7 +60,7 @@
     public static ** valueOf(java.lang.String);
 }
 
--keep class * implements me.jessyan.mvpart.demo.mvp.IModel {
+-keep class * implements me.jessyan.art.mvp.IModel {
     <methods>;
     <fields>;
 }
