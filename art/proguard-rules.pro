@@ -60,6 +60,10 @@
     public static ** valueOf(java.lang.String);
 }
 
+-keep class * implements me.jessyan.mvpart.demo.mvp.IModel {
+    <methods>;
+    <fields>;
+}
 
 ################support###############
 -keep class android.support.** { *; }
