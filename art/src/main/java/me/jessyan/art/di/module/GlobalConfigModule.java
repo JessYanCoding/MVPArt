@@ -32,7 +32,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.jessyan.art.http.BaseUrl;
 import me.jessyan.art.http.GlobalHttpHandler;
-import me.jessyan.art.http.RequestInterceptor;
+import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.http.imageloader.glide.GlideImageLoaderStrategy;
 import me.jessyan.art.integration.cache.Cache;

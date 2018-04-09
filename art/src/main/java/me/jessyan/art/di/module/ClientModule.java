@@ -34,7 +34,7 @@ import dagger.Provides;
 import io.rx_cache2.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
 import me.jessyan.art.http.GlobalHttpHandler;
-import me.jessyan.art.http.RequestInterceptor;
+import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;

@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 import me.jessyan.art.base.delegate.AppDelegate;
 import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
-import me.jessyan.art.http.RequestInterceptor;
+import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
 import me.jessyan.art.utils.ArtUtils;

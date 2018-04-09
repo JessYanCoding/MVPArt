@@ -23,7 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import me.jessyan.art.http.GlobalHttpHandler;
-import me.jessyan.art.http.RequestInterceptor;
+import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.mvp.model.entity.User;
 import okhttp3.Interceptor;

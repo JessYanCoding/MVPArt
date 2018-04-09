@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.jessyan.art.http;
+package me.jessyan.art.http.log;
 
 import android.text.TextUtils;
 

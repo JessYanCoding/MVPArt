@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.jessyan.art.http;
+package me.jessyan.art.http.log;
 
 import android.support.annotation.Nullable;
 
@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import me.jessyan.art.di.module.GlobalConfigModule;
+import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.utils.CharacterHandler;
 import me.jessyan.art.utils.ZipHelper;
 import okhttp3.Interceptor;
