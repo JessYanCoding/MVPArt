@@ -32,13 +32,16 @@ import dagger.Module;
 import dagger.Provides;
 import me.jessyan.art.http.BaseUrl;
 import me.jessyan.art.http.GlobalHttpHandler;
-import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.http.imageloader.glide.GlideImageLoaderStrategy;
+import me.jessyan.art.http.log.DefaultFormatPrinter;
+import me.jessyan.art.http.log.FormatPrinter;
+import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.integration.cache.Cache;
 import me.jessyan.art.integration.cache.CacheType;
 import me.jessyan.art.integration.cache.LruCache;
 import me.jessyan.art.utils.DataHelper;
+import me.jessyan.art.utils.Preconditions;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -67,6 +70,7 @@ public class GlobalConfigModule {
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private AppModule.GsonConfiguration mGsonConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
+    private FormatPrinter mFormatPrinter;
     private Cache.Factory mCacheFactory;
 
     private GlobalConfigModule(Builder builder) {
@@ -82,6 +86,7 @@ public class GlobalConfigModule {
         this.mRxCacheConfiguration = builder.rxCacheConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
         this.mPrintHttpLogLevel = builder.printHttpLogLevel;
+        this.mFormatPrinter = builder.formatPrinter;
         this.mCacheFactory = builder.cacheFactory;
     }
 
@@ -192,9 +197,14 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
-    @Nullable
     RequestInterceptor.Level providePrintHttpLogLevel() {
-        return mPrintHttpLogLevel;
+        return mPrintHttpLogLevel == null ? RequestInterceptor.Level.ALL : mPrintHttpLogLevel;
+    }
+
+    @Singleton
+    @Provides
+    FormatPrinter provideFormatPrinter(){
+        return mFormatPrinter == null ? new DefaultFormatPrinter() : mFormatPrinter;
     }
 
     @Singleton
@@ -225,6 +235,7 @@ public class GlobalConfigModule {
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private AppModule.GsonConfiguration gsonConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
+        private FormatPrinter formatPrinter;
         private Cache.Factory cacheFactory;
 
         private Builder() {
@@ -300,6 +311,11 @@ public class GlobalConfigModule {
             if (printHttpLogLevel == null)
                 throw new NullPointerException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
             this.printHttpLogLevel = printHttpLogLevel;
+            return this;
+        }
+
+        public Builder formatPrinter(FormatPrinter formatPrinter){
+            this.formatPrinter = Preconditions.checkNotNull(formatPrinter, FormatPrinter.class.getCanonicalName() + "can not be null.");
             return this;
         }
 

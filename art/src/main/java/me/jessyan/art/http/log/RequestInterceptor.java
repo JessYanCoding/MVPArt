@@ -1,12 +1,12 @@
-/**
+/*
  * Copyright 2017 JessYan
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,7 +41,6 @@ import okio.Buffer;
 import okio.BufferedSource;
 import timber.log.Timber;
 
-
 /**
  * ================================================
  * 解析框架中的网络请求和响应结果,并以日志形式输出,调试神器
@@ -54,8 +53,13 @@ import timber.log.Timber;
  */
 @Singleton
 public class RequestInterceptor implements Interceptor {
-    private GlobalHttpHandler mHandler;
-    private final Level printLevel;
+    @Inject
+    @Nullable
+    GlobalHttpHandler mHandler;
+    @Inject
+    FormatPrinter mPrinter;
+    @Inject
+    Level printLevel;
 
     public enum Level {
         NONE,       //不打印log
@@ -65,12 +69,7 @@ public class RequestInterceptor implements Interceptor {
     }
 
     @Inject
-    public RequestInterceptor(@Nullable GlobalHttpHandler handler, @Nullable Level level) {
-        this.mHandler = handler;
-        if (level == null)
-            printLevel = Level.ALL;
-        else
-            printLevel = level;
+    public RequestInterceptor() {
     }
 
     @Override
@@ -82,9 +81,9 @@ public class RequestInterceptor implements Interceptor {
         if (logRequest) {
             //打印请求信息
             if (request.body() != null && isParseable(request.body().contentType())) {
-                FormatPrinter.printJsonRequest(request, parseParams(request));
+                mPrinter.printJsonRequest(request, parseParams(request));
             } else {
-                FormatPrinter.printFileRequest(request);
+                mPrinter.printFileRequest(request);
             }
         }
 
@@ -117,13 +116,10 @@ public class RequestInterceptor implements Interceptor {
             final String url = originalResponse.request().url().toString();
 
             if (responseBody != null && isParseable(responseBody.contentType())) {
-                FormatPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
-                        isSuccessful, code, header,
-                        isJson(responseBody.contentType()) ?
-                                CharacterHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
-                                CharacterHandler.xmlFormat(bodyString) : bodyString, segmentList, message, url);
+                mPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1), isSuccessful,
+                        code, header, responseBody.contentType(), bodyString, segmentList, message, url);
             } else {
-                FormatPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
+                mPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
                         isSuccessful, code, header, segmentList, message, url);
             }
 
@@ -167,7 +163,6 @@ public class RequestInterceptor implements Interceptor {
             return "{\"error\": \"" + e.getMessage() + "\"}";
         }
     }
-
 
 
     /**
