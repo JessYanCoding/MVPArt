@@ -34,10 +34,7 @@ import me.jessyan.art.base.App;
 import me.jessyan.art.base.BaseApplication;
 import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.di.component.DaggerAppComponent;
-import me.jessyan.art.di.module.AppModule;
-import me.jessyan.art.di.module.ClientModule;
 import me.jessyan.art.di.module.GlobalConfigModule;
-import me.jessyan.art.integration.ActivityLifecycle;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
 import me.jessyan.art.utils.ArtUtils;
@@ -61,7 +58,7 @@ public class AppDelegate implements App, AppLifecycles {
     private Application mApplication;
     private AppComponent mAppComponent;
     @Inject
-    protected ActivityLifecycle mActivityLifecycle;
+    protected Application.ActivityLifecycleCallbacks mActivityLifecycle;
     private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
@@ -97,8 +94,7 @@ public class AppDelegate implements App, AppLifecycles {
         this.mApplication = application;
         mAppComponent = DaggerAppComponent
                 .builder()
-                .appModule(new AppModule(mApplication))//提供application
-                .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
+                .application(mApplication)//提供application
                 .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
                 .build();
         mAppComponent.inject(this);
