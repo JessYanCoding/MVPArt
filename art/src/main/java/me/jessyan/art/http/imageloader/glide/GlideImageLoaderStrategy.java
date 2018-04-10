@@ -80,6 +80,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
             case 4:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
                 break;
+            default:
+                glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
+                break;
         }
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
             glideRequest.transform(config.getTransformation());
