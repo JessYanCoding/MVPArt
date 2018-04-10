@@ -108,7 +108,7 @@ dependencies {
 
     //test
     api rootProject.ext.dependencies["timber"]
-    testApi rootProject.ext.dependencies["junit"]
+    testImplementation rootProject.ext.dependencies["junit"]
 }
 
 
