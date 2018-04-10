@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -48,14 +49,16 @@ public interface IView {
 
     /**
      * 显示信息
+     *
+     * @param message 消息内容, 不能为 {@code null}
      */
-    void showMessage(String message);
+    void showMessage(@NonNull String message);
 
     /**
-     * 处理消息,这里面和 {@link Handler} 的原理一样,通过 switch(what),做不同的操作
+     * 处理消息, 这里面和 {@link Handler} 的原理一样, 通过 {@code switch(what)}, 做不同的操作
      *
-     * @param message
+     * @param message {@link Message} 对象, 不能为 {@code null}
      */
-    void handleMessage(Message message);
+    void handleMessage(@NonNull Message message);
 
 }
