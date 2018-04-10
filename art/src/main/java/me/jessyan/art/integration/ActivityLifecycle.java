@@ -22,12 +22,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dagger.Lazy;
 import me.jessyan.art.base.BaseFragment;
 import me.jessyan.art.base.delegate.ActivityDelegate;
 import me.jessyan.art.base.delegate.ActivityDelegateImpl;
@@ -49,18 +49,19 @@ import me.jessyan.art.utils.Preconditions;
  */
 @Singleton
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
-
-    private AppManager mAppManager;
-    private Application mApplication;
-    private Cache<String, Object> mExtras;
-    private FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle;
-    private List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycles;
+    @Inject
+    AppManager mAppManager;
+    @Inject
+    Application mApplication;
+    @Inject
+    Cache<String, Object> mExtras;
+    @Inject
+    Lazy<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycle;
+    @Inject
+    Lazy<List<FragmentManager.FragmentLifecycleCallbacks>> mFragmentLifecycles;
 
     @Inject
-    public ActivityLifecycle(AppManager appManager, Application application, Cache<String, Object> extras) {
-        this.mAppManager = appManager;
-        this.mApplication = application;
-        this.mExtras = extras;
+    public ActivityLifecycle() {
     }
 
     @Override
@@ -147,7 +148,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     /**
      * 给每个 Activity 的所有 Fragment 设置监听其生命周期, Activity 可以通过 {@link IActivity#useFragment()}
-     * 设置是否使用监听,如果这个 Activity 返回 false 的话,这个 Activity 下面的所有 Fragment 将不能使用 {@link FragmentDelegate}
+     * 设置是否使用监听,如果这个 Activity 返回 false 的话, 这个 Activity 下面的所有 Fragment 将不能使用 {@link FragmentDelegate}
      * 意味着 {@link BaseFragment} 也不能使用
      *
      * @param activity
@@ -156,25 +157,20 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         boolean useFragment = activity instanceof IActivity ? ((IActivity) activity).useFragment() : true;
         if (activity instanceof FragmentActivity && useFragment) {
 
-            if (mFragmentLifecycle == null) {
-                //Fragment 生命周期实现类, 用于框架内部对每个 Fragment 的必要操作, 如给每个 Fragment 配置 FragmentDelegate
-                mFragmentLifecycle = new FragmentLifecycle();
-            }
-
+            //mFragmentLifecycle 为 Fragment 生命周期实现类, 用于框架内部对每个 Fragment 的必要操作, 如给每个 Fragment 配置 FragmentDelegate
             //注册框架内部已实现的 Fragment 生命周期逻辑
-            ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle, true);
+            ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle.get(), true);
 
-            if (mFragmentLifecycles == null && mExtras.containsKey(ConfigModule.class.getName())) {
-                mFragmentLifecycles = new ArrayList<>();
+            if (mExtras.containsKey(ConfigModule.class.getName())) {
                 List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(ConfigModule.class.getName());
                 for (ConfigModule module : modules) {
-                    module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
+                    module.injectFragmentLifecycle(mApplication, mFragmentLifecycles.get());
                 }
                 mExtras.remove(ConfigModule.class.getName());
             }
 
             //注册框架外部, 开发者扩展的 Fragment 生命周期逻辑
-            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {
+            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles.get()) {
                 ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
             }
         }

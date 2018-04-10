@@ -22,6 +22,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import me.jessyan.art.base.delegate.FragmentDelegate;
 import me.jessyan.art.base.delegate.FragmentDelegateImpl;
 import me.jessyan.art.base.delegate.IFragment;
@@ -39,7 +42,12 @@ import timber.log.Timber;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
+@Singleton
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
+
+    @Inject
+    public FragmentLifecycle() {
+    }
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
