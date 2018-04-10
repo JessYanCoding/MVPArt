@@ -214,7 +214,7 @@ public class GlobalConfigModule {
             @NonNull
             @Override
             public Cache build(CacheType type) {
-                //若想自定义 LruCache 的 size,或者不想使用 LruCache ,想使用自己自定义的策略
+                //若想自定义 LruCache 的 size,或者不想使用 LruCache, 想使用自己自定义的策略
                 //请使用 GlobalConfigModule.Builder#cacheFactory() 扩展
                 return new LruCache(type.calculateCacheSize(application));
             }
@@ -250,10 +250,7 @@ public class GlobalConfigModule {
         }
 
         public Builder baseurl(BaseUrl baseUrl) {
-            if (baseUrl == null) {
-                throw new NullPointerException("BaseUrl can not be null");
-            }
-            this.baseUrl = baseUrl;
+            this.baseUrl = Preconditions.checkNotNull(baseUrl, BaseUrl.class.getCanonicalName() + "can not be null.");
             return this;
         }
 
@@ -308,9 +305,7 @@ public class GlobalConfigModule {
         }
 
         public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) { //是否让框架打印 Http 的请求和响应信息
-            if (printHttpLogLevel == null)
-                throw new NullPointerException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
-            this.printHttpLogLevel = printHttpLogLevel;
+            this.printHttpLogLevel = Preconditions.checkNotNull(printHttpLogLevel, "The printHttpLogLevel can not be null, use RequestInterceptor.Level.NONE instead.");
             return this;
         }
 
