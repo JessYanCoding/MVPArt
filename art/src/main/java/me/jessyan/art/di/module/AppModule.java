@@ -18,14 +18,21 @@ package me.jessyan.art.di.module;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import me.jessyan.art.integration.ActivityLifecycle;
+import me.jessyan.art.integration.FragmentLifecycle;
 import me.jessyan.art.integration.cache.Cache;
 import me.jessyan.art.integration.cache.CacheType;
 import me.jessyan.art.mvp.IRepositoryManager;
@@ -41,40 +48,36 @@ import me.jessyan.art.mvp.RepositoryManager;
  * ================================================
  */
 @Module
-public class AppModule {
-    private Application mApplication;
-
-    public AppModule(Application application) {
-        this.mApplication = application;
-    }
-
+public abstract class AppModule {
     @Singleton
     @Provides
-    public Application provideApplication() {
-        return mApplication;
-    }
-
-    @Singleton
-    @Provides
-    public Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
+    static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
         if (configuration != null)
             configuration.configGson(application, builder);
         return builder.create();
     }
 
-    @Singleton
-    @Provides
-    public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
-        return repositoryManager;
-    }
+    @Binds
+    abstract IRepositoryManager bindRepositoryManager(RepositoryManager repositoryManager);
 
     @Singleton
     @Provides
-    public Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+    static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
         return cacheFactory.build(CacheType.EXTRAS);
     }
 
+    @Binds
+    abstract Application.ActivityLifecycleCallbacks bindActivityLifecycle(ActivityLifecycle activityLifecycle);
+
+    @Binds
+    abstract FragmentManager.FragmentLifecycleCallbacks bindFragmentLifecycle(FragmentLifecycle fragmentLifecycle);
+
+    @Singleton
+    @Provides
+    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles(){
+        return new ArrayList<>();
+    }
 
     public interface GsonConfiguration {
         void configGson(Context context, GsonBuilder builder);
