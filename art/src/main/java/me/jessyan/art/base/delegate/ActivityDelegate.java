@@ -17,6 +17,7 @@ package me.jessyan.art.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 /**
  * ================================================
@@ -35,7 +36,7 @@ public interface ActivityDelegate {
     String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     String ACTIVITY_DELEGATE = "activity_delegate";
 
-    void onCreate(Bundle savedInstanceState);
+    void onCreate(@Nullable Bundle savedInstanceState);
 
     void onStart();
 
