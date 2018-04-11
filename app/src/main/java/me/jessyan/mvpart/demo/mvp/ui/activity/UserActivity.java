@@ -16,6 +16,8 @@
 package me.jessyan.mvpart.demo.mvp.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.ArtUtils;
+import me.jessyan.art.utils.Preconditions;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.presenter.UserPresenter;
 import me.jessyan.mvpart.demo.mvp.ui.adapter.UserAdapter;
@@ -58,12 +61,12 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
 
     @Override
-    public int initView(Bundle savedInstanceState) {
+    public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_user;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData(@Nullable Bundle savedInstanceState) {
         initRecyclerView();
         mRecyclerView.setAdapter(mAdapter);
         initPaginate();
@@ -71,6 +74,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
     }
 
     @Override
+    @Nullable
     public UserPresenter obtainPresenter() {
         this.mRxPermissions = new RxPermissions(this);
         this.mAdapter = new UserAdapter(new ArrayList<>());
@@ -89,12 +93,14 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showMessage(@NonNull String message) {
+        Preconditions.checkNotNull(message);
         ArtUtils.snackbarText(message);
     }
 
     @Override
-    public void handleMessage(Message message) {
+    public void handleMessage(@NonNull Message message) {
+        Preconditions.checkNotNull(message);
         switch (message.what) {
             case 0:
                 isLoadingMore = true;//开始加载更多
