@@ -55,12 +55,12 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return initView(inflater, container, savedInstanceState);
     }
 
     @Override
-    public void setPresenter(P presenter) {
+    public void setPresenter(@Nullable P presenter) {
         this.mPresenter = presenter;
     }
 
