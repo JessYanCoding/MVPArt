@@ -83,7 +83,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     }
 
     @Override
-    public void setPresenter(P presenter) {
+    public void setPresenter(@Nullable P presenter) {
         this.mPresenter = presenter;
     }
 
