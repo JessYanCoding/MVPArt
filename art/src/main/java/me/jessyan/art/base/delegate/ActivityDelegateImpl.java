@@ -19,6 +19,8 @@ import android.app.Activity;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.simple.eventbus.EventBus;
 
@@ -39,13 +41,13 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     private IPresenter iPresenter;
 
 
-    public ActivityDelegateImpl(Activity activity) {
+    public ActivityDelegateImpl(@NonNull Activity activity) {
         this.mActivity = activity;
         this.iActivity = (IActivity) activity;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         //如果要使用 EventBus 请将此方法返回 true
         if (iActivity.useEventBus()) {
             //注册到事件主线
