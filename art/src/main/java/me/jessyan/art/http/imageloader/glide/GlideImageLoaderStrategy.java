@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import io.reactivex.Observable;
@@ -33,6 +34,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
 import me.jessyan.art.http.imageloader.ImageConfig;
+import me.jessyan.art.utils.Preconditions;
 import timber.log.Timber;
 
 /**
@@ -50,19 +52,17 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
 
     @Override
     public void loadImage(Context ctx, ImageConfigImpl config) {
-        if (ctx == null) throw new NullPointerException("Context is required");
-        if (config == null) throw new NullPointerException("ImageConfigImpl is required");
+        Preconditions.checkNotNull(ctx, "Context is required");
+        Preconditions.checkNotNull(config, "ImageConfigImpl is required");
         if (TextUtils.isEmpty(config.getUrl())) throw new NullPointerException("Url is required");
-        if (config.getImageView() == null) throw new NullPointerException("Imageview is required");
+        Preconditions.checkNotNull(config.getImageView(), "ImageView is required");
 
 
         GlideRequests requests;
 
         requests = GlideArt.with(ctx);//如果context是activity则自动使用Activity的生命周期
 
-        GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .centerCrop();
+        GlideRequest<Drawable> glideRequest = requests.load(config.getUrl());
 
         switch (config.getCacheStrategy()) {//缓存策略
             case 0:
@@ -84,10 +84,30 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
                 break;
         }
+
+        if (config.isCrossFade()) {
+            glideRequest.transition(DrawableTransitionOptions.withCrossFade());
+        }
+
+        if (config.isCenterCrop()) {
+            glideRequest.centerCrop();
+        }
+
+        if (config.isCircle()) {
+            glideRequest.circleCrop();
+        }
+
+        if (config.isImageRadius()) {
+            glideRequest.transform(new RoundedCorners(config.getImageRadius()));
+        }
+
+        if (config.isBlurImage()) {
+            glideRequest.transform(new BlurTransformation(config.getBlurValue()));
+        }
+
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
             glideRequest.transform(config.getTransformation());
         }
-
 
         if (config.getPlaceholder() != 0)//设置占位符
             glideRequest.placeholder(config.getPlaceholder());
@@ -105,8 +125,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
 
     @Override
     public void clear(final Context ctx, ImageConfigImpl config) {
-        if (ctx == null) throw new NullPointerException("Context is required");
-        if (config == null) throw new NullPointerException("ImageConfigImpl is required");
+        Preconditions.checkNotNull(ctx, "Context is required");
+        Preconditions.checkNotNull(config, "ImageConfigImpl is required");
 
         if (config.getImageViews() != null && config.getImageViews().length > 0) {//取消在执行的任务并且释放资源
             for (ImageView imageView : config.getImageViews()) {
