@@ -32,6 +32,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
+import me.jessyan.art.integration.cache.IntelligentCache;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.mvpart.demo.BuildConfig;
 import me.jessyan.mvpart.demo.mvp.model.api.Api;
@@ -84,7 +85,7 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    public Cache build(CacheType type) {
 //                        switch (type.getCacheTypeId()){
 //                            case CacheType.EXTRAS_TYPE_ID:
-//                                return new LruCache(1000);
+//                                return new IntelligentCache(500);
 //                            case CacheType.REPOSITORY_CACHE_TYPE_ID:
 //                                return new Cache(type.calculateCacheSize(context));//自定义 Cache
 //                            default:
@@ -180,7 +181,7 @@ public final class GlobalConfiguration implements ConfigModule {
                 ((RefWatcher) ArtUtils
                         .obtainAppComponentFromContext(f.getActivity())
                         .extras()
-                        .get(RefWatcher.class.getName()))
+                        .get(IntelligentCache.KEY_KEEP + RefWatcher.class.getName()))
                         .watch(f);
             }
         });

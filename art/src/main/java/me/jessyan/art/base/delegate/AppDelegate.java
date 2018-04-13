@@ -37,6 +37,7 @@ import me.jessyan.art.di.component.DaggerAppComponent;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
+import me.jessyan.art.integration.cache.IntelligentCache;
 import me.jessyan.art.utils.ArtUtils;
 import me.jessyan.art.utils.Preconditions;
 
@@ -98,8 +99,10 @@ public class AppDelegate implements App, AppLifecycles {
         mAppComponent.inject(this);
 
         //将 ConfigModule 的实现类的集合存放到缓存 Cache, 可以随时获取
-        //大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目
-        mAppComponent.extras().put(ConfigModule.class.getName(), mModules);
+        //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
+        //否则存储在 LRU 算法的存储空间中 (大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目)
+        //前提是 extras 使用的是 IntelligentCache (框架默认使用)
+        mAppComponent.extras().put(IntelligentCache.KEY_KEEP + ConfigModule.class.getName(), mModules);
 
         this.mModules = null;
 
@@ -175,8 +178,8 @@ public class AppDelegate implements App, AppLifecycles {
     /**
      * 将 {@link AppComponent} 返回出去, 供其它地方使用, {@link AppComponent} 接口中声明的方法返回的实例, 在 {@link #getAppComponent()} 拿到对象后都可以直接使用
      *
-     * @see ArtUtils#obtainAppComponentFromContext(Context) 可直接获取 {@link AppComponent}
      * @return AppComponent
+     * @see ArtUtils#obtainAppComponentFromContext(Context) 可直接获取 {@link AppComponent}
      */
     @NonNull
     @Override
@@ -209,8 +212,8 @@ public class AppDelegate implements App, AppLifecycles {
          * 你应该根据 {@link ComponentCallbacks2#onTrimMemory(int)} 发生回调时的内存级别来进一步决定释放哪些资源
          * {@link ComponentCallbacks2#onTrimMemory(int)} 的回调可以发生在 {@link Application}、{@link Activity}、{@link Service}、{@link ContentProvider}、{@link Fragment}
          *
-         * @see <a href="https://developer.android.com/reference/android/content/ComponentCallbacks2.html#TRIM_MEMORY_RUNNING_MODERATE">level 官方文档</a>
          * @param level 内存级别
+         * @see <a href="https://developer.android.com/reference/android/content/ComponentCallbacks2.html#TRIM_MEMORY_RUNNING_MODERATE">level 官方文档</a>
          */
         @Override
         public void onTrimMemory(int level) {
@@ -256,6 +259,7 @@ public class AppDelegate implements App, AppLifecycles {
          * 当系统开始清除 LRU 列表中的进程时, 尽管它会首先按照 LRU 的顺序来清除, 但是它同样会考虑进程的内存使用量, 因此消耗越少的进程则越容易被留下来
          * {@link ComponentCallbacks2#onTrimMemory(int)} 的回调是在 API 14 才被加进来的, 对于老的版本, 你可以使用 {@link ComponentCallbacks2#onLowMemory} 方法来进行兼容
          * {@link ComponentCallbacks2#onLowMemory} 相当于 {@code onTrimMemory(TRIM_MEMORY_COMPLETE)}
+         *
          * @see #TRIM_MEMORY_COMPLETE
          */
         @Override
