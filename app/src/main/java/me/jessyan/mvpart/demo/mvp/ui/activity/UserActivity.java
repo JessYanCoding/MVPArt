@@ -33,10 +33,11 @@ import me.jessyan.art.base.DefaultAdapter;
 import me.jessyan.art.mvp.IView;
 import me.jessyan.art.mvp.Message;
 import me.jessyan.art.utils.ArtUtils;
-import me.jessyan.art.utils.Preconditions;
 import me.jessyan.mvpart.demo.R;
 import me.jessyan.mvpart.demo.mvp.presenter.UserPresenter;
 import me.jessyan.mvpart.demo.mvp.ui.adapter.UserAdapter;
+
+import static me.jessyan.art.utils.Preconditions.checkNotNull;
 
 /**
  * ================================================
@@ -94,13 +95,13 @@ public class UserActivity extends BaseActivity<UserPresenter> implements IView, 
 
     @Override
     public void showMessage(@NonNull String message) {
-        Preconditions.checkNotNull(message);
+        checkNotNull(message);
         ArtUtils.snackbarText(message);
     }
 
     @Override
     public void handleMessage(@NonNull Message message) {
-        Preconditions.checkNotNull(message);
+        checkNotNull(message);
         switch (message.what) {
             case 0:
                 isLoadingMore = true;//开始加载更多
