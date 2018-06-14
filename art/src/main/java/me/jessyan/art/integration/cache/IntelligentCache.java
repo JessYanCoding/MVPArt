@@ -38,7 +38,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
      * @return 相加后的 {@code size}
      */
     @Override
-    public int size() {
+    public synchronized int size() {
         return mMap.size() + mCache.size();
     }
 
@@ -48,7 +48,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
      * @return 相加后的 {@code maxSize}
      */
     @Override
-    public int getMaxSize() {
+    public synchronized int getMaxSize() {
         return mMap.size() + mCache.getMaxSize();
     }
 
@@ -60,7 +60,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
      */
     @Nullable
     @Override
-    public V get(String key) {
+    public synchronized V get(String key) {
         if (key.startsWith(KEY_KEEP)) {
             return mMap.get(key);
         }
@@ -76,7 +76,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
      */
     @Nullable
     @Override
-    public V put(String key, V value) {
+    public synchronized V put(String key, V value) {
         if (key.startsWith(KEY_KEEP)) {
             return mMap.put(key, value);
         }
@@ -91,7 +91,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
      */
     @Nullable
     @Override
-    public V remove(String key) {
+    public synchronized V remove(String key) {
         if (key.startsWith(KEY_KEEP)) {
             return mMap.remove(key);
         }
@@ -105,7 +105,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
      * @return {@code true} 为在容器中含有这个 {@code key}, 否则为 {@code false}
      */
     @Override
-    public boolean containsKey(String key) {
+    public synchronized boolean containsKey(String key) {
         if (key.startsWith(KEY_KEEP)) {
             return mMap.containsKey(key);
         }
@@ -118,7 +118,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
      * @return 合并后的 {@code keySet}
      */
     @Override
-    public Set<String> keySet() {
+    public synchronized Set<String> keySet() {
         Set<String> set = mCache.keySet();
         set.addAll(mMap.keySet());
         return set;
