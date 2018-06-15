@@ -54,9 +54,9 @@
 
 ## Download
 ``` gradle
- compile 'me.jessyan:art:2.4.1'  //rxjava2
+ implementation 'me.jessyan:art:2.4.1'  //rxjava2
 
- compile 'me.jessyan:art:1.4.3' //rxjava1(Not maintained)
+ implementation 'me.jessyan:art:1.4.3' //rxjava1(Not maintained)
 ```
 
 ## Donate
