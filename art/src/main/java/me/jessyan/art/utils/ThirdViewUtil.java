@@ -49,7 +49,7 @@ public class ThirdViewUtil {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
-    public static boolean getUseAutolayout() {
+    public static boolean isUseAutolayout() {
         return USE_AUTOLAYOUT == 1;
     }
 
