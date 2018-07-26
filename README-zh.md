@@ -23,7 +23,7 @@
 
 <h2 align="center">A New Android MVP Architecture</h2>  
 
-**此框架旨在解决传统 **MVP** 类和接口太多,并且 **Presenter** 和 **View** 通过接口通信过于繁琐,重用 **Presenter** 代价太大等问题**
+**此框架旨在解决传统 **MVP** 类和接口太多, 并且 **Presenter** 和 **View** 通过接口通信过于繁琐, 重用 **Presenter** 代价太大等问题**
 
 
 ## Architectural
