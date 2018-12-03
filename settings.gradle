@@ -1,1 +1,1 @@
-include ':demo', ':art', ':art-autolayout'
+include ':demo', ':art', ':art-autolayout', 'art-imageloader-glide'
