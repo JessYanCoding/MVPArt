@@ -33,7 +33,6 @@ import dagger.Provides;
 import me.jessyan.art.http.BaseUrl;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.http.imageloader.BaseImageLoaderStrategy;
-import me.jessyan.art.http.imageloader.glide.GlideImageLoaderStrategy;
 import me.jessyan.art.http.log.DefaultFormatPrinter;
 import me.jessyan.art.http.log.FormatPrinter;
 import me.jessyan.art.http.log.RequestInterceptor;
@@ -129,8 +128,9 @@ public class GlobalConfigModule {
      */
     @Singleton
     @Provides
+    @Nullable
     BaseImageLoaderStrategy provideImageLoaderStrategy() {
-        return mLoaderStrategy == null ? new GlideImageLoaderStrategy() : mLoaderStrategy;
+        return mLoaderStrategy;
     }
 
 
