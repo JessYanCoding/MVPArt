@@ -27,7 +27,6 @@ import android.widget.TextView;
 import com.zhy.autolayout.utils.AutoUtils;
 import com.zhy.autolayout.utils.DimenUtils;
 
-import me.jessyan.art.widget.R;
 
 /**
  * ================================================

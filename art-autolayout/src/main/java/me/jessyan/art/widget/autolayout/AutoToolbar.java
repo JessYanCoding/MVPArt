@@ -31,7 +31,6 @@ import com.zhy.autolayout.utils.DimenUtils;
 
 import java.lang.reflect.Field;
 
-import me.jessyan.art.widget.R;
 
 /**
  * ================================================
