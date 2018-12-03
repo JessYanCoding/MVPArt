@@ -22,6 +22,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
@@ -232,8 +233,9 @@ public final class AppManager {
      *
      * @return
      */
+    @Nullable
     public Activity getCurrentActivity() {
-        return mCurrentActivity != null ? mCurrentActivity : null;
+        return mCurrentActivity;
     }
 
     /**
@@ -246,6 +248,7 @@ public final class AppManager {
      *
      * @return
      */
+    @Nullable
     public Activity getTopActivity() {
         if (mActivityList == null) {
             Timber.tag(TAG).w("mActivityList == null when getTopActivity()");
