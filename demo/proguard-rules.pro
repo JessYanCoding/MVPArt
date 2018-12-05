@@ -16,4 +16,4 @@
 #   public *;
 #}
 
-# 混淆规则在 art moudule下的proguard-rules.pro中,混淆前先参阅https://github.com/JessYanCoding/MVPArms/wiki#1.5
+# 混淆规则在 art moudule 下的 proguard-rules.pro 中, 混淆前先参阅 https://github.com/JessYanCoding/MVPArms/wiki#1.5

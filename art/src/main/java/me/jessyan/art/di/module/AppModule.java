@@ -31,7 +31,9 @@ import javax.inject.Singleton;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import me.jessyan.art.di.component.AppComponent;
 import me.jessyan.art.integration.ActivityLifecycle;
+import me.jessyan.art.integration.AppManager;
 import me.jessyan.art.integration.FragmentLifecycle;
 import me.jessyan.art.integration.cache.Cache;
 import me.jessyan.art.integration.cache.CacheType;
@@ -58,6 +60,20 @@ public abstract class AppModule {
         return builder.create();
     }
 
+    /**
+     * 之前 {@link AppManager} 使用 Dagger 保证单例, 只能使用 {@link AppComponent#appManager()} 访问
+     * 现在直接将 AppManager 独立为单例类, 可以直接通过静态方法 {@link AppManager#getAppManager()} 访问, 更加方便
+     * 但为了不影响之前使用 {@link AppComponent#appManager()} 获取 {@link AppManager} 的项目, 所以暂时保留这种访问方式
+     *
+     * @param application {@link Application}
+     * @return {@link AppManager}
+     */
+    @Singleton
+    @Provides
+    static AppManager provideAppManager(Application application){
+        return AppManager.getAppManager().init(application);
+    }
+
     @Binds
     abstract IRepositoryManager bindRepositoryManager(RepositoryManager repositoryManager);
 
@@ -82,5 +98,4 @@ public abstract class AppModule {
     public interface GsonConfiguration {
         void configGson(Context context, GsonBuilder builder);
     }
-
 }

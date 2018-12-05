@@ -34,7 +34,7 @@ public class LogUtils {
     }
 
     private final static boolean isLog = true;
-    public static final String DEFAULT_TAG = "MVPArms";
+    public static final String DEFAULT_TAG = "MVPArt";
 
     public static void debugInfo(String tag, String msg) {
         if (!isLog || TextUtils.isEmpty(msg)) return;
