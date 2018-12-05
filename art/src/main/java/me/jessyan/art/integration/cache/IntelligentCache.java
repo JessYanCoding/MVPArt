@@ -1,10 +1,13 @@
 package me.jessyan.art.integration.cache;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import me.jessyan.art.utils.Preconditions;
 
 /**
  * ================================================
@@ -131,5 +134,17 @@ public class IntelligentCache<V> implements Cache<String, V> {
     public void clear() {
         mCache.clear();
         mMap.clear();
+    }
+
+    /**
+     * 使用此方法返回的值作为 key, 可以将数据永久存储至内存中
+     *
+     * @param key {@code key}
+     * @return Keep= + {@code key}
+     */
+    @NonNull
+    public static String getKeyOfKeep(@NonNull String key) {
+        Preconditions.checkNotNull(key, "key == null");
+        return IntelligentCache.KEY_KEEP + key;
     }
 }
