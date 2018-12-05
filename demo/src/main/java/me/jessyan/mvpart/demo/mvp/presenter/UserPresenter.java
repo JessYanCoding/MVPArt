@@ -84,20 +84,24 @@ public class UserPresenter extends BasePresenter<UserRepository> {
             @Override
             public void onRequestPermissionSuccess() {
                 //request permission success, do something.
+                requestFromModel(msg, pullToRefresh);
             }
 
             @Override
             public void onRequestPermissionFailure(List<String> permissions) {
                 view.showMessage("Request permissions failure");
+                view.hideLoading();//隐藏下拉刷新的进度条
             }
 
             @Override
             public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
                 view.showMessage("Need to go to the settings");
+                view.hideLoading();//隐藏下拉刷新的进度条
             }
         }, mRxPermissions, mErrorHandler);
+    }
 
-
+    private void requestFromModel(Message msg, boolean pullToRefresh) {
         if (pullToRefresh) lastUserId = 1;//下拉刷新默认只请求第一页
 
         //关于RxCache缓存库的使用请参考 http://www.jianshu.com/p/b58ef6b0624b
