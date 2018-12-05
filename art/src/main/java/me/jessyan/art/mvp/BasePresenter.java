@@ -25,10 +25,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.view.View;
 
-import org.simple.eventbus.EventBus;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import me.jessyan.art.integration.EventBusManager;
 import me.jessyan.art.utils.Preconditions;
 
 /**
@@ -58,8 +57,8 @@ public class BasePresenter<M extends IModel> implements IPresenter, LifecycleObs
 
     @Override
     public void onStart() {
-        if (useEventBus())//如果要使用 Eventbus 请将此方法返回true
-            EventBus.getDefault().register(this);//注册 Eventbus
+        if (useEventBus())//如果要使用 EventBus 请将此方法返回 true
+            EventBusManager.getInstance().register(this);//注册 EventBus
     }
 
     /**
@@ -67,8 +66,8 @@ public class BasePresenter<M extends IModel> implements IPresenter, LifecycleObs
      */
     @Override
     public void onDestroy() {
-        if (useEventBus())//如果要使用 Eventbus 请将此方法返回 true
-            EventBus.getDefault().unregister(this);//解除注册 Eventbus
+        if (useEventBus())//如果要使用 EventBus 请将此方法返回 true
+            EventBusManager.getInstance().unregister(this);//注销 EventBus
         unDispose();//解除订阅
         if (mModel != null)
             mModel.onDestroy();

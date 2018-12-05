@@ -22,10 +22,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import org.simple.eventbus.EventBus;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.jessyan.art.integration.EventBusManager;
 import me.jessyan.art.mvp.IPresenter;
 import timber.log.Timber;
 
@@ -59,7 +58,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(mFragment);//注册到事件主线
+            EventBusManager.getInstance().register(mFragment);//注册到事件主线
         this.iPresenter = iFragment.obtainPresenter();
         iFragment.setPresenter(iPresenter);
         //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
@@ -121,7 +120,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     @Override
     public void onDestroy() {
         if (iFragment != null && iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(mFragment);//注册到事件主线
+            EventBusManager.getInstance().unregister(mFragment);//注册到事件主线
         if (iPresenter != null) iPresenter.onDestroy(); //释放资源
         this.mUnbinder = null;
         this.mFragmentManager = null;

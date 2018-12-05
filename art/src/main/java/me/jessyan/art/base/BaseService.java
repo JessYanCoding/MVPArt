@@ -77,12 +77,12 @@ public abstract class BaseService extends Service {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
-        mCompositeDisposable.add(disposable);//将所有subscription放入,集中处理
+        mCompositeDisposable.add(disposable);//将所有 Disposable 放入容器, 集中处理
     }
 
     protected void unDispose() {
         if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();//保证activity结束时取消所有正在执行的订阅
+            mCompositeDisposable.clear();//保证 Activity 结束时取消所有正在执行的订阅
         }
     }
 
