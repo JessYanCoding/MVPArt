@@ -106,7 +106,6 @@ public class BasePresenter<M extends IModel> implements IPresenter, LifecycleObs
         return true;
     }
 
-
     /**
      * 将 {@link Disposable} 添加到 {@link CompositeDisposable} 中统一管理
      * 可在 {@link Activity#onDestroy()} 中使用 {@link #unDispose()} 停止正在执行的 RxJava 任务,避免内存泄漏(框架已自行处理)
@@ -128,5 +127,4 @@ public class BasePresenter<M extends IModel> implements IPresenter, LifecycleObs
             mCompositeDisposable.clear();//保证 Activity 结束时取消所有正在执行的订阅
         }
     }
-
 }
