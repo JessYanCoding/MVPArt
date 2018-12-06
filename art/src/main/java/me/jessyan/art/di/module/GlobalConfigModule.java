@@ -25,6 +25,11 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -45,6 +50,7 @@ import me.jessyan.art.utils.Preconditions;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.internal.Util;
 
 /**
  * ================================================
@@ -72,6 +78,7 @@ public class GlobalConfigModule {
     private RequestInterceptor.Level mPrintHttpLogLevel;
     private FormatPrinter mFormatPrinter;
     private Cache.Factory mCacheFactory;
+    private ExecutorService mExecutorService;
 
     private GlobalConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
@@ -88,6 +95,7 @@ public class GlobalConfigModule {
         this.mPrintHttpLogLevel = builder.printHttpLogLevel;
         this.mFormatPrinter = builder.formatPrinter;
         this.mCacheFactory = builder.cacheFactory;
+        this.mExecutorService = builder.executorService;
     }
 
     public static Builder builder() {
@@ -231,6 +239,18 @@ public class GlobalConfigModule {
         } : mCacheFactory;
     }
 
+    /**
+     * 返回一个全局公用的线程池,适用于大多数异步需求。
+     * 避免多个线程池创建带来的资源消耗。
+     *
+     * @return {@link Executor}
+     */
+    @Singleton
+    @Provides
+    ExecutorService provideExecutorService() {
+        return mExecutorService == null ? new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS,
+                new SynchronousQueue<Runnable>(), Util.threadFactory("Art Executor", false)) : mExecutorService;
+    }
 
     public static final class Builder {
         private HttpUrl apiUrl;
@@ -247,6 +267,7 @@ public class GlobalConfigModule {
         private RequestInterceptor.Level printHttpLogLevel;
         private FormatPrinter formatPrinter;
         private Cache.Factory cacheFactory;
+        private ExecutorService executorService;
 
         private Builder() {
         }
@@ -326,6 +347,11 @@ public class GlobalConfigModule {
 
         public Builder cacheFactory(Cache.Factory cacheFactory) {
             this.cacheFactory = cacheFactory;
+            return this;
+        }
+
+        public Builder executorService(ExecutorService executorService) {
+            this.executorService = executorService;
             return this;
         }
 

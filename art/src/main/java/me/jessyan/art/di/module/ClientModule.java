@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
@@ -39,6 +40,7 @@ import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.utils.DataHelper;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
+import okhttp3.Dispatcher;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -103,7 +105,7 @@ public abstract class ClientModule {
     @Singleton
     @Provides
     static OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration, OkHttpClient.Builder builder, Interceptor intercept
-            , @Nullable List<Interceptor> interceptors, @Nullable GlobalHttpHandler handler) {
+            , @Nullable List<Interceptor> interceptors, @Nullable GlobalHttpHandler handler, ExecutorService executorService) {
         builder
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
@@ -122,6 +124,9 @@ public abstract class ClientModule {
                 builder.addInterceptor(interceptor);
             }
         }
+
+        //为 OkHttp 设置默认的线程池。
+        builder.dispatcher(new Dispatcher(executorService));
 
         if (configuration != null)
             configuration.configOkhttp(application, builder);
