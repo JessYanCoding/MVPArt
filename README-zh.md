@@ -1,8 +1,8 @@
 <h1 align="center">MVPArt</h1>
 
 <p align="center">
-   <a href="https://bintray.com/jessyancoding/maven/MVPArt/2.4.1/link">
-    <img src="https://img.shields.io/badge/Jcenter-v2.4.1-brightgreen.svg?style=flat-square" alt="Latest Stable Version" />
+   <a href="https://bintray.com/jessyancoding/maven/MVPArt/_latestVersion">
+    <img src="https://img.shields.io/badge/Jcenter-v2.5.0-brightgreen.svg?style=flat-square" alt="Latest Stable Version" />
   </a>
   <a href="https://travis-ci.org/JessYanCoding/MVPArt">
     <img src="https://travis-ci.org/JessYanCoding/MVPArt.svg?branch=complete" alt="Build Status" />
@@ -51,7 +51,7 @@
 
 ## Download
 ``` gradle
- implementation 'me.jessyan:art:2.4.1'  //rxjava2
+ implementation 'me.jessyan:art:2.5.0'  //rxjava2
 
  implementation 'me.jessyan:art:1.4.3' //rxjava1(不再维护)
 ```
