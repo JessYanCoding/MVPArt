@@ -59,7 +59,10 @@ dependencies {
     implementation(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
         exclude module: 'gson'
     }
-    api rootProject.ext.dependencies["rxpermissions2"]
+    api(rootProject.ext.dependencies["rxpermissions2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'support-annotations'
+    }
     api rootProject.ext.dependencies['rxerrorhandler2']
 
     //network
