@@ -30,6 +30,7 @@ import javax.inject.Singleton;
 import me.jessyan.art.di.module.GlobalConfigModule;
 import me.jessyan.art.http.GlobalHttpHandler;
 import me.jessyan.art.utils.CharacterHandler;
+import me.jessyan.art.utils.UrlEncoderUtils;
 import me.jessyan.art.utils.ZipHelper;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -218,7 +219,11 @@ public class RequestInterceptor implements Interceptor {
             if (contentType != null) {
                 charset = contentType.charset(charset);
             }
-            return CharacterHandler.jsonFormat(URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset)));
+            String json = requestbuffer.readString(charset);
+            if (UrlEncoderUtils.hasUrlEncoded(json)) {
+                json = URLDecoder.decode(json, convertCharset(charset));
+            }
+            return CharacterHandler.jsonFormat(json);
         } catch (IOException e) {
             e.printStackTrace();
             return "{\"error\": \"" + e.getMessage() + "\"}";
