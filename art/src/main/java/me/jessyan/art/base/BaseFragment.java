@@ -15,6 +15,7 @@
  */
 package me.jessyan.art.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +45,7 @@ import me.jessyan.art.utils.ArtUtils;
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment<P> {
     protected final String TAG = this.getClass().getSimpleName();
     private Cache<String, Object> mCache;
+    protected Context mContext;
     protected P mPresenter;
 
     @NonNull
@@ -53,6 +55,12 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
             mCache = ArtUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
         }
         return mCache;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Nullable
@@ -74,6 +82,12 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
+    }
+
     /**
      * 是否使用 EventBus
      * Art 核心库现在并不会依赖某个 EventBus, 要想使用 EventBus, 还请在项目中自行依赖对应的 EventBus
@@ -87,5 +101,4 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     public boolean useEventBus() {
         return true;
     }
-
 }
