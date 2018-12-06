@@ -26,3 +26,5 @@ dependencies {
     }
     compileOnly project(':art')
 }
+
+apply from: '../bintray.gradle'
