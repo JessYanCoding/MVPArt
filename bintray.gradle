@@ -21,7 +21,7 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = 'MVPArt'
+        name = POM_NAME
         licenses = ["Apache-2.0"]
         websiteUrl = siteUrl
         vcsUrl = gitUrl
@@ -39,7 +39,6 @@ bintray {
 }
 
 
-
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -47,7 +46,7 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                name 'MVPArt'
+                name POM_NAME
                 description 'A New Android MVP Architecture.'
                 url siteUrl
                 // Set your license
