@@ -51,9 +51,15 @@
 
 ## Download
 ``` gradle
- implementation 'me.jessyan:art:2.5.0'  //rxjava2
+ implementation 'me.jessyan:art:2.5.0'
 
- implementation 'me.jessyan:art:1.4.3' //rxjava1(不再维护)
+ ---------------------- 以下是扩展库 ----------------------
+ 
+ //想使用 Glide 请依赖 art-imageloader-glide 扩展库
+ implementation 'me.jessyan:art-imageloader-glide:2.5.0' 
+ 
+ //想使用 AndroidAutoLayout 请依赖 art-autolayout 扩展库
+ implementation 'me.jessyan:art-autolayout:2.5.0'
 ```
 
 ## About Me
