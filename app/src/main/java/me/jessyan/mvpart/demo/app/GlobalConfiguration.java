@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import me.jessyan.art.base.delegate.AppDelegate;
 import me.jessyan.art.base.delegate.AppLifecycles;
 import me.jessyan.art.di.module.GlobalConfigModule;
+import me.jessyan.art.http.imageloader.glide.GlideImageLoaderStrategy;
 import me.jessyan.art.http.log.RequestInterceptor;
 import me.jessyan.art.integration.ConfigModule;
 import me.jessyan.art.integration.ManifestParser;
@@ -63,7 +64,7 @@ public final class GlobalConfiguration implements ConfigModule {
         builder.baseurl(Api.APP_DOMAIN)
                 //强烈建议自己自定义图片加载逻辑,因为默认提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
                 //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
-//                .imageLoaderStrategy(new CustomLoaderStrategy())
+                .imageLoaderStrategy(new GlideImageLoaderStrategy())
 
                 //想支持多 BaseUrl, 以及运行时动态切换任意一个 BaseUrl, 请使用 https://github.com/JessYanCoding/RetrofitUrlManager
                 //如果 BaseUrl 在 App 启动时不能确定, 需要请求服务器接口动态获取, 请使用以下代码
