@@ -15,6 +15,7 @@
  */
 package me.jessyan.mvpart.demo.mvp.ui.holder;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,18 +47,20 @@ public class UserItemHolder extends BaseHolder<User> {
     @BindView(R.id.tv_name)
     TextView mName;
     private AppComponent mAppComponent;
-    private ImageLoader mImageLoader;//用于加载图片的管理类,默认使用glide,使用策略模式,可替换框架
+    /**
+     * 用于加载图片的管理类, 默认使用 Glide, 使用策略模式, 可替换框架
+     */
+    private ImageLoader mImageLoader;
 
     public UserItemHolder(View itemView) {
         super(itemView);
-        //可以在任何可以拿到Application的地方,拿到AppComponent,从而得到用Dagger管理的单例对象
+        //可以在任何可以拿到Application的地方, 拿到AppComponent, 从而得到用 Dagger 管理的单例对象
         mAppComponent = ArtUtils.obtainAppComponentFromContext(itemView.getContext());
         mImageLoader = mAppComponent.imageLoader();
     }
 
     @Override
-    public void setData(User data, int position) {
-
+    public void setData(@NonNull User data, int position) {
         mName.setText(data.getLogin());
 
         //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
