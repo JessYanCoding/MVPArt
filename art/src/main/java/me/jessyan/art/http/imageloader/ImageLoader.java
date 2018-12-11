@@ -45,7 +45,6 @@ public final class ImageLoader {
     public ImageLoader() {
     }
 
-
     /**
      * 加载图片
      *
@@ -69,7 +68,6 @@ public final class ImageLoader {
         Preconditions.checkNotNull(mStrategy, "Please implement BaseImageLoaderStrategy and call GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy) in the applyOptions method of ConfigModule");
         this.mStrategy.clear(context, config);
     }
-
 
     /**
      * 可在运行时随意切换 {@link BaseImageLoaderStrategy}
