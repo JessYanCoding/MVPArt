@@ -177,7 +177,6 @@ public class RequestInterceptor implements Interceptor {
         }
     }
 
-
     /**
      * 解析服务器响应的内容
      *
@@ -280,5 +279,4 @@ public class RequestInterceptor implements Interceptor {
             return s;
         return s.substring(i + 1, s.length() - 1);
     }
-
 }
