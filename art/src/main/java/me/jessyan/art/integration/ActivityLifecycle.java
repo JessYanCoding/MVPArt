@@ -91,7 +91,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         registerFragmentCallbacks(activity);
     }
 
-
     @Override
     public void onActivityStarted(Activity activity) {
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
