@@ -71,7 +71,6 @@ public class BaseApplication extends Application implements App {
             this.mAppDelegate.onTerminate(this);
     }
 
-
     /**
      *将 {@link AppComponent} 返回出去, 供其它地方使用, {@link AppComponent} 接口中声明的方法所返回的实例, 在 {@link #getAppComponent()} 拿到对象后都可以直接使用
      *
@@ -85,5 +84,4 @@ public class BaseApplication extends Application implements App {
         Preconditions.checkState(mAppDelegate instanceof App, "%s must be implements %s", mAppDelegate.getClass().getName(), App.class.getName());
         return ((App) mAppDelegate).getAppComponent();
     }
-
 }

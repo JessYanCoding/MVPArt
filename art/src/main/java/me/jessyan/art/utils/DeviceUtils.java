@@ -213,7 +213,6 @@ public class DeviceUtils {
         return 0;
     }
 
-
     public static boolean hasBigScreen(Context context) {
         boolean flag = true;
         if (_hasBigScreen == null) {
@@ -371,7 +370,6 @@ public class DeviceUtils {
         return _isTablet.booleanValue();
     }
 
-
     public static void showAnimatedView(View view) {
         if (PRE_HC && view != null)
             view.setPadding(0, 0, 0, 0);
@@ -432,7 +430,6 @@ public class DeviceUtils {
         str = nf.format(p3);
         return str;
     }
-
 
     public static boolean isHaveMarket(Context context) {
         Intent intent = new Intent();
@@ -719,7 +716,6 @@ public class DeviceUtils {
         return sbar;
     }
 
-
     public static boolean hasStatusBar(Activity activity) {
         WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
         if ((attrs.flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
@@ -798,8 +794,6 @@ public class DeviceUtils {
         else
             return false;
     }
-
-
 }
 
 

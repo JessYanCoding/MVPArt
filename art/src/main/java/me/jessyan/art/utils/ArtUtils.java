@@ -76,7 +76,6 @@ public class ArtUtils {
         v.setHint(new SpannedString(ss)); // 一定要进行转换,否则属性会消失
     }
 
-
     /**
      * dp 转 px
      *
@@ -269,7 +268,6 @@ public class ArtUtils {
         AppManager.getAppManager().showSnackbar(text, true);
     }
 
-
     /**
      * 通过资源id获得drawable
      *
@@ -279,7 +277,6 @@ public class ArtUtils {
     public static Drawable getDrawablebyResource(Context context, int rID) {
         return getResources(context).getDrawable(rID);
     }
-
 
     /**
      * 跳转界面 1, 通过 {@link AppManager#startActivity(Class)}
@@ -298,7 +295,6 @@ public class ArtUtils {
     public static void startActivity(Intent content) {
         AppManager.getAppManager().startActivity(content);
     }
-
 
     /**
      * 跳转界面 3
@@ -320,7 +316,6 @@ public class ArtUtils {
         activity.startActivity(intent);
     }
 
-
     /**
      * 获得屏幕的宽度
      *
@@ -338,7 +333,6 @@ public class ArtUtils {
     public static int getScreenHeidth(Context context) {
         return getResources(context).getDisplayMetrics().heightPixels;
     }
-
 
     /**
      * 获得颜色
@@ -374,7 +368,6 @@ public class ArtUtils {
         return false;
     }
 
-
     /**
      * MD5
      *
@@ -400,7 +393,6 @@ public class ArtUtils {
         return hex.toString();
     }
 
-
     /**
      * 全屏,并且沉侵式状态栏
      *
@@ -413,7 +405,6 @@ public class ArtUtils {
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
-
 
     /**
      * 配置 RecyclerView
@@ -464,5 +455,4 @@ public class ArtUtils {
         Preconditions.checkState(context.getApplicationContext() instanceof App, "%s must be implements %s", context.getApplicationContext().getClass().getName(), App.class.getName());
         return ((App) context.getApplicationContext()).getAppComponent();
     }
-
 }

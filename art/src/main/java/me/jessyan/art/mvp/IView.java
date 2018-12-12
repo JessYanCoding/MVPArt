@@ -67,5 +67,4 @@ public interface IView {
      * @param message {@link Message} 对象, 不能为 {@code null}
      */
     void handleMessage(@NonNull Message message);
-
 }

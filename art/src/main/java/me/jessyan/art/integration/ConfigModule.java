@@ -38,6 +38,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
  * ================================================
  */
 public interface ConfigModule {
+
     /**
      * 使用 {@link GlobalConfigModule.Builder} 给框架配置一些配置参数
      *

@@ -99,7 +99,6 @@ public class RepositoryManager implements IRepositoryManager {
         return repositoryInstance;
     }
 
-
     /**
      * 根据传入的 Class 创建对应的 Retrofit service
      *
@@ -207,7 +206,6 @@ public class RepositoryManager implements IRepositoryManager {
     public Context getContext() {
         return mApplication;
     }
-
 
     private static Constructor<? extends IModel> findConstructorForClass(Class<?> cls) {
         Constructor<? extends IModel> bindingCtor;

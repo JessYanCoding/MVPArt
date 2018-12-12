@@ -53,7 +53,6 @@ public class ZipHelper {
         return decompressToStringForZlib(bytesToDecompress, "UTF-8");
     }
 
-
     /**
      * zlib decompress 2 String
      *
@@ -84,7 +83,6 @@ public class ZipHelper {
         return returnValue;
 
     }
-
 
     /**
      * zlib decompress 2 byte

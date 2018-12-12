@@ -209,7 +209,6 @@ public class DataHelper {
         return "/mnt/sdcard/" + packageName;
     }
 
-
     /**
      * 创建未存在的文件夹
      * @param file
@@ -272,7 +271,6 @@ public class DataHelper {
         return true;
     }
 
-
     public static String bytyToString(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -284,5 +282,4 @@ public class DataHelper {
         out.close();
         return result;
     }
-
 }

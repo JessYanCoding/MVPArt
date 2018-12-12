@@ -39,7 +39,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     private IActivity iActivity;
     private IPresenter iPresenter;
 
-
     public ActivityDelegateImpl(@NonNull Activity activity) {
         this.mActivity = activity;
         this.iActivity = (IActivity) activity;

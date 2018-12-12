@@ -34,7 +34,6 @@ import android.view.View;
  * ================================================
  */
 public interface FragmentDelegate {
-
     String FRAGMENT_DELEGATE = "FRAGMENT_DELEGATE";
 
     void onAttach(@NonNull Context context);

@@ -44,7 +44,6 @@ public class BasePresenter<M extends IModel> implements IPresenter, LifecycleObs
     protected CompositeDisposable mCompositeDisposable;
     protected M mModel;
 
-
     public BasePresenter() {
         onStart();
     }

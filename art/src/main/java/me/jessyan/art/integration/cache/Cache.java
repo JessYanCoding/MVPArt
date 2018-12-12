@@ -36,6 +36,7 @@ import me.jessyan.art.di.module.GlobalConfigModule;
  * ================================================
  */
 public interface Cache<K, V> {
+
     interface Factory {
 
         /**
